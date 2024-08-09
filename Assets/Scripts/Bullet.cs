@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float bounceNumber = 3;
+    [SerializeField] private float bounceNumber;
     [SerializeField] private float speed;
 
     private Vector2 direction;
@@ -22,7 +22,9 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("FallBox"))
+        string[] validTags = { "Wall", "FallBox", "Box", "Joint" };
+        //if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("FallBox") || other.gameObject.CompareTag("Box") || other.gameObject.CompareTag("Joint"))
+        if (System.Array.Exists(validTags, tag => tag == other.gameObject.tag))
         {
             bounceNumber--;
             if (bounceNumber < 0)
@@ -33,6 +35,13 @@ public class Bullet : MonoBehaviour
             var firstContact = other.contacts[0];
             Vector2 newVelocity = Vector2.Reflect(direction.normalized, firstContact.normal);
             Shoot(newVelocity.normalized);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Joint"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     public LineRenderer lineRenderer;
-    private bool canDraw = true;
 
     Vector2 MousePos
     {

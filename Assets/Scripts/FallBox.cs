@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FallBox : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb;
+    private Rigidbody2D rb;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
