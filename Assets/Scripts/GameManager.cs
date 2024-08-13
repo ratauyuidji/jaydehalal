@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private IconHandler iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
-    //public GameObject loss;
+    [SerializeField] private GameObject weapon;
 
     public static GameManager Instance;
     public int maxNumberOfShoot = 4;
@@ -48,35 +49,48 @@ public class GameManager : MonoBehaviour
     {
         if(useNumberOfShoot == maxNumberOfShoot)
         {
-            StartCoroutine(CheckAfterWaitTime());
+            StartCoroutine(CheckAfterLastShoot());
         }
     }
-    private IEnumerator CheckAfterWaitTime()
+    private IEnumerator CheckAfterLastShoot()
     {
         yield return new WaitForSeconds(3f);
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
-            win.SetActive(true);
+            WinGame();
         }
         else
         {
             Debug.Log("Loss");
             lose.SetActive(true);
         }
-
     }
     public void RemoveEnemy(Enemy enemy)
     {
         enemylist.Remove(enemy);
-        CheckAllEnemyDeath();
+        StartCoroutine(CheckAllEnemyDeath());
     }
-    private void CheckAllEnemyDeath()
+    private IEnumerator CheckAllEnemyDeath()
     {
+        yield return new WaitForSeconds(3f);
         if(enemylist.Count == 0)
         {
             Debug.Log("Win");
-            win.SetActive(true);
+            WinGame();
         }
+    }
+    public void WinGame()
+    {
+        win.SetActive(true);
+        weapon.SetActive(false);
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

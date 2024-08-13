@@ -22,7 +22,7 @@ public class Laser : MonoBehaviour
 
         lineRenderer.SetPosition(0, transform.position);
 
-        if (hit.collider != null && (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("FallBox")))
+        if (hit.collider != null && (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("FallBox") || hit.collider.CompareTag("Joint")))
         {
             lineRenderer.SetPosition(1, hit.point); 
         }
