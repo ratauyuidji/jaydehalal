@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bounceNumber;
     [SerializeField] private float speed;
+
 
     private Vector2 direction;
 
@@ -23,7 +24,6 @@ public class Bullet : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         string[] validTags = { "Wall", "FallBox", "Box", "Joint" };
-        //if (other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("FallBox") || other.gameObject.CompareTag("Box") || other.gameObject.CompareTag("Joint"))
         if (System.Array.Exists(validTags, tag => tag == other.gameObject.tag))
         {
             bounceNumber--;
@@ -39,9 +39,27 @@ public class Bullet : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("aaaa");
+            Rigidbody2D erb  = other.GetComponent<Rigidbody2D>();
+            Vector2 impactDirection = transform.position - other.transform.position;
+            erb.AddForce(impactDirection * 40f,ForceMode2D.Impulse);
+        }
         if (other.gameObject.CompareTag("Joint"))
         {
             Destroy(other.gameObject);
         }
+
+
+        /*if (other.gameObject.CompareTag("WallTrigger"))
+        {
+            circleCollider.isTrigger = false;
+        }
+        if (other.gameObject.CompareTag("EnemyTrigger"))
+        {
+            circleCollider.isTrigger = true;
+        }*/
     }
 }

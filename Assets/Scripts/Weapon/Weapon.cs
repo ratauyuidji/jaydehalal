@@ -8,7 +8,13 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform spawnPos;
     [SerializeField] private float shootDelay;
     [SerializeField] private Laser laser;
+    //SoundManager soundManager;
     private bool canShoot = true;
+
+    private void Awake()
+    {
+        //soundManager = GameObject.FindGameObjectWithTag("Sound").GetComponent<SoundManager>();
+    }
 
     Vector2 MousePos
     {
@@ -20,12 +26,14 @@ public class Weapon : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0) && canShoot)
+        if(Input.GetMouseButtonUp(0) && canShoot)
         {
             if (GameManager.Instance.HasEnoughShoot())
             {
                 Vector2 direction = MousePos - (Vector2)transform.position;
                 Bullet bullet = Instantiate(bulletPrefab, spawnPos.position, Quaternion.identity);
+                //soundManager.PlaySFX(soundManager.bounce);
+                //SoundManager.Instance.PlaySFX(SoundManager.Instance.gunShot);
                 bullet.Shoot(direction.normalized);
                 GameManager.Instance.UseShoot();
                 canShoot = false;

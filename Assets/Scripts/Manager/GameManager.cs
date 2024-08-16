@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,12 +9,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private IconHandler iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
-    [SerializeField] private GameObject weapon;
+    [SerializeField] private GameObject player;
+    Coroutine CWin;
+    Coroutine CCheckEnemy;
 
     public static GameManager Instance;
-    public int maxNumberOfShoot = 4;
+    public int maxNumberOfShoot;
     private int useNumberOfShoot;
     private List<Enemy> enemylist = new List<Enemy>(); 
+    private int currentStarsNum = 0;
+    public int levelIndex;
+    public StarDisplay starDisplay;
 
     private void Awake()
     {
@@ -58,12 +64,14 @@ public class GameManager : MonoBehaviour
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
+            Debug.Log(useNumberOfShoot);
             WinGame();
         }
         else
         {
             Debug.Log("Loss");
             lose.SetActive(true);
+            CheckStar(0);
         }
     }
     public void RemoveEnemy(Enemy enemy)
@@ -74,16 +82,20 @@ public class GameManager : MonoBehaviour
     private IEnumerator CheckAllEnemyDeath()
     {
         yield return new WaitForSeconds(3f);
-        if(enemylist.Count == 0)
+        if (enemylist.Count == 0)
         {
             Debug.Log("Win");
+            Debug.Log(useNumberOfShoot);
             WinGame();
         }
     }
     public void WinGame()
     {
+        int remainShoot = maxNumberOfShoot - useNumberOfShoot;
+        CheckStar(remainShoot);
         win.SetActive(true);
-        weapon.SetActive(false);
+        starDisplay.DisplayStar(remainShoot);
+        player.SetActive(false);
     }
     public void RestartGame()
     {
@@ -93,4 +105,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void CheckStar(int starsNum)
+    {
+        currentStarsNum = starsNum;
+        if(currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
+        {
+            PlayerPrefs.SetInt("Lv" + levelIndex, starsNum);
+        }
+        Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
+    }
+    
 }
