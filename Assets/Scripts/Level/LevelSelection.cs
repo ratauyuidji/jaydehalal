@@ -23,9 +23,9 @@ public class LevelSelection : MonoBehaviour
     }
     private void UpdateLevelStatus()
     {
-        //if the current lv is 5, the pre should be 4
+        //if current lv is 5, the pre should be 4
         int previousLevelNum = int.Parse(gameObject.name) - 1;
-        if (PlayerPrefs.GetInt("Lv" + previousLevelNum.ToString()) > 0)//If the firts level star is bigger than 0, second level can play
+        if (PlayerPrefs.GetInt("Lv" + previousLevelNum.ToString()) > 0)//If star > 0, next level can play
         {
             unlocked = true;
         }
@@ -47,6 +47,7 @@ public class LevelSelection : MonoBehaviour
             {
                 stars[i].gameObject.SetActive(true);
             }
+            //int starCount = Mathf.Min(PlayerPrefs.GetInt("Lv" + gameObject.name), stars.Length);
             for (int i = 0; i < PlayerPrefs.GetInt("Lv" + gameObject.name); i++)
             {
                 stars[i].gameObject.GetComponent<Image>().sprite = starSprite;

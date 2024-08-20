@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Joint"))
         {
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
         }
 
 
