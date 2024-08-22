@@ -105,12 +105,16 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void CheckStar(int starsNum)
     {
         currentStarsNum = starsNum;
         if(currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
         {
-            PlayerPrefs.SetInt("Lv" + levelIndex, starsNum);
+            PlayerPrefs.SetInt("Lv" + levelIndex, currentStarsNum);
         }
         Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
     }

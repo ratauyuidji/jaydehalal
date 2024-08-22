@@ -280,9 +280,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1179317005}
-        m_TargetAssemblyTypeName: SingleLevel, Assembly-CSharp
-        m_MethodName: BackButton
+      - m_Target: {fileID: 1179317004}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1117,6 +1117,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 509792205}
+  laserPos: {fileID: 0}
+  offsetDistance: 0
+  yOffset: 0
 --- !u!212 &509792204
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1722,9 +1725,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1179317005}
-        m_TargetAssemblyTypeName: SingleLevel, Assembly-CSharp
-        m_MethodName: BackButton
+      - m_Target: {fileID: 1179317004}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1907,6 +1910,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 778231939}
+  laserPos: {fileID: 0}
+  offsetDistance: 0
+  yOffset: 0
 --- !u!120 &778231939
 LineRenderer:
   serializedVersion: 2
@@ -2195,7 +2201,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1179317003}
   - component: {fileID: 1179317004}
-  - component: {fileID: 1179317005}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2237,18 +2242,6 @@ MonoBehaviour:
   maxNumberOfShoot: 4
   levelIndex: 3
   starDisplay: {fileID: 1076192042}
---- !u!114 &1179317005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179317002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1940d2b7bca4fb24ca60be8161bc2d90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1276466926
 GameObject:
   m_ObjectHideFlags: 0
@@ -5355,9 +5348,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1179317005}
-        m_TargetAssemblyTypeName: SingleLevel, Assembly-CSharp
-        m_MethodName: BackButton
+      - m_Target: {fileID: 1179317004}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
