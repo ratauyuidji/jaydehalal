@@ -1,14 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bom : MonoBehaviour
+public class Rocket : Projectile
 {
-    [SerializeField] private GameObject deathVFXPrefab;
-    //[SerializeField] private Enemy enemy;
-    public float radius;
-    public float force;
-    public LayerMask layerToHit;
+    public float speed = 8f;
+    public float force = 700f;
+    public float radius = 5f;
+    public GameObject deathVFXPrefab;
+
+    public override void Shoot(Vector2 direction)
+    {
+        GetComponent<Rigidbody2D>().velocity = direction * speed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Explode();
+        Destroy(this.gameObject);
+    }
 
     public void Explode()
     {
@@ -41,20 +49,6 @@ public class Bom : MonoBehaviour
                     rb.AddForce(direction.normalized * force);
                 }
             }
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Bullet") || other.gameObject.CompareTag("Enemy"))
-        {
-            Explode();
-            Destroy(this.gameObject);
         }
     }
 }

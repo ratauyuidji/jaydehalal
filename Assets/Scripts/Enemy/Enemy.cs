@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 3f;
     [SerializeField] public float damageThreshold = 1f;
-    private Rigidbody2D rb;
     private float currentHealth;
     private bool isDied;
 
@@ -15,10 +14,7 @@ public class Enemy : MonoBehaviour
         currentHealth = maxHealth;
         isDied = false;
     }
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    
 
 
     public void TakeDamage(float damageAmount)

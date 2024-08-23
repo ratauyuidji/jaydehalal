@@ -16,7 +16,6 @@ public class Laser : MonoBehaviour
             return pos;
         }
     }
-
     private void Update()
     {
         if (!enabled) return;

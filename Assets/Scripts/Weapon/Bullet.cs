@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : Projectile
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bounceNumber;
@@ -10,12 +10,12 @@ public class Bullet : MonoBehaviour
 
 
     private Vector2 direction;
-
-    public void Shoot(Vector2 direction)
+    public override void Shoot(Vector2 direction)
     {
         this.direction = direction;
         rb.velocity = direction * speed;
     }
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -51,15 +51,5 @@ public class Bullet : MonoBehaviour
         {
             //Destroy(other.gameObject);
         }
-
-
-        /*if (other.gameObject.CompareTag("WallTrigger"))
-        {
-            circleCollider.isTrigger = false;
-        }
-        if (other.gameObject.CompareTag("EnemyTrigger"))
-        {
-            circleCollider.isTrigger = true;
-        }*/
     }
 }
