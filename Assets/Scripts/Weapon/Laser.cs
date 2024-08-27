@@ -1,30 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Laser : MonoBehaviour
 {
     public LineRenderer lineRenderer;
     public Transform laserPos;
-    public float offsetDistance ;
-    public float yOffset;
-    Vector2 MousePos
+    public Transform target; 
+ 
+
+    Vector2 TargetPos
     {
         get
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            return pos;
+            if (target != null)
+            {
+                return target.position;
+            }
+            return Vector2.zero;
         }
     }
+
     private void Update()
     {
         if (!enabled) return;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            lineRenderer.enabled = false;
+            return;
+        }
+
         if (Input.GetMouseButton(0))
         {
             lineRenderer.enabled = true;
-            Vector2 dir = MousePos - (Vector2)laserPos.transform.position;
-            Vector2 startLaserPos = (Vector2)laserPos.transform.position + dir.normalized * offsetDistance;
-            startLaserPos.y += yOffset;
+            Vector2 dir = TargetPos - (Vector2)laserPos.transform.position;
+            Vector2 startLaserPos = (Vector2)laserPos.transform.position + dir.normalized;
 
             RaycastHit2D hit = Physics2D.Raycast(startLaserPos, dir, 50f);
 

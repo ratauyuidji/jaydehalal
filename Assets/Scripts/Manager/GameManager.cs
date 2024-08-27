@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
     [SerializeField] private GameObject player;
+    [SerializeField] private int maxReloadTime = 10;
+    [SerializeField] private TextMeshProUGUI reloadText;
+    [SerializeField] private TextMeshProUGUI moneyEarnedText;
+
+
     Coroutine CWin;
     Coroutine CCheckEnemy;
 
@@ -20,7 +26,17 @@ public class GameManager : MonoBehaviour
     private int currentStarsNum = 0;
     public int levelIndex;
     public StarDisplay starDisplay;
+    private int currentReloadTime;
+    private bool canReload = true;
+    private bool hasWon = false;
 
+
+
+    private void Start()
+    {
+        currentReloadTime = 1;
+        UpdateReloadText();
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -39,6 +55,25 @@ public class GameManager : MonoBehaviour
         useNumberOfShoot++;
         iconHandler.UseShot(useNumberOfShoot);
         CheckLastShoot();
+    }
+    public void PlusBullet()
+    {
+        if (useNumberOfShoot > 0 && canReload)
+        {
+            useNumberOfShoot--;
+            currentReloadTime--;
+            UpdateReloadText();
+            if(currentReloadTime == 0)
+            {
+                canReload = false;
+            }
+            iconHandler.PlusShot(useNumberOfShoot);
+            Debug.Log("Số lần bắn còn lại: " + (maxNumberOfShoot - useNumberOfShoot));
+        }
+        else
+        {
+            Debug.Log("Không thể thêm");
+        }
     }
     public bool HasEnoughShoot()
     {
@@ -91,7 +126,18 @@ public class GameManager : MonoBehaviour
     }
     public void WinGame()
     {
+        if (hasWon) return;
+        hasWon = true;
+
         int remainShoot = maxNumberOfShoot - useNumberOfShoot;
+        remainShoot = Mathf.Clamp(remainShoot, 0, 3);
+        int moneyEarned = remainShoot * 10;
+        EconomyManager.Instance.IncreaseMoney(moneyEarned);
+        Debug.Log("money: " + moneyEarned);
+        if (moneyEarnedText != null)
+        {
+            moneyEarnedText.text = "+" + moneyEarned.ToString();
+        }
         CheckStar(remainShoot);
         win.SetActive(true);
         starDisplay.DisplayStar(remainShoot);
@@ -118,5 +164,23 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
     }
-    
+    public void AddReloadTime(int reload)
+    {
+        currentReloadTime = Mathf.Clamp(currentReloadTime + reload, 0, maxReloadTime);
+        if (currentReloadTime > 0)
+        {
+            canReload = true;
+        }
+        UpdateReloadText();
+    }
+
+    private void UpdateReloadText()
+    {
+        if (reloadText != null)
+        {
+            reloadText.text = currentReloadTime.ToString();
+        }
+    }
+
+
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Rocket : Projectile
 {
     public float speed = 8f;
-    public float force = 700f;
+    public float force = 1000f;
     public float radius = 5f;
     public GameObject deathVFXPrefab;
 

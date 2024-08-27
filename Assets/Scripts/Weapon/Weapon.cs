@@ -1,6 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+
 
 public class Weapon : MonoBehaviour
 {
@@ -8,7 +12,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform spawnPos;
     [SerializeField] private float shootDelay;
     [SerializeField] private Laser laser;
+
     private bool canShoot = true;
+    private ChangeWeapon changeWeapon;
 
     Vector2 MousePos
     {
@@ -18,9 +24,19 @@ public class Weapon : MonoBehaviour
             return pos;
         }
     }
+
+    private void Start()
+    {
+        changeWeapon = FindObjectOfType<ChangeWeapon>();
+    }
+
     private void Update()
     {
-        if(Input.GetMouseButtonUp(0) && canShoot)
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+        if (Input.GetMouseButtonUp(0))
         {
             if (GameManager.Instance.HasEnoughShoot())
             {
@@ -28,14 +44,19 @@ public class Weapon : MonoBehaviour
                 Projectile projectile = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
                 projectile.Shoot(direction.normalized);
                 GameManager.Instance.UseShoot();
-                canShoot = false;
+                /*canShoot = false;
                 if (GameManager.Instance.HasEnoughShoot())
                 {
                     StartCoroutine(WaitForNextShot());
-                }
+                }*/
                 laser.DeactivateLaser();
+
+                if (changeWeapon.currentWeaponIndex == 1)
+                {
+                    changeWeapon.SwitchToFirstWeapon();
+                }
             }
-            
+
         }
     }
     private IEnumerator WaitForNextShot()

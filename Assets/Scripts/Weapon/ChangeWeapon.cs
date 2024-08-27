@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,13 +10,14 @@ public class ChangeWeapon : MonoBehaviour
     public GameObject[] guns;
     public GameObject weaponHolder;
     public GameObject currentGun;
+    private Weapon weapon;
 
     private void Start()
     {
         totalWeapon = weaponHolder.transform.childCount;
         guns = new GameObject[totalWeapon];
 
-        for(int i = 0; i < totalWeapon; i++)
+        for (int i = 0; i < totalWeapon; i++)
         {
             guns[i] = weaponHolder.transform.GetChild(i).gameObject;
             guns[i].SetActive(false);
@@ -25,16 +26,17 @@ public class ChangeWeapon : MonoBehaviour
         currentGun = guns[0];
         currentWeaponIndex = 0;
     }
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            if(currentWeaponIndex < totalWeapon - 1)
+            if (currentWeaponIndex < totalWeapon - 1)
             {
                 guns[currentWeaponIndex].SetActive(false);
                 currentWeaponIndex++;
                 guns[currentWeaponIndex].SetActive(true);
-                currentGun = guns[currentWeaponIndex];
+                currentGun = guns[currentWeaponIndex];         
             }
         }
         if (Input.GetKeyDown(KeyCode.Q))
@@ -44,8 +46,26 @@ public class ChangeWeapon : MonoBehaviour
                 guns[currentWeaponIndex].SetActive(false);
                 currentWeaponIndex--;
                 guns[currentWeaponIndex].SetActive(true);
-                currentGun = guns[currentWeaponIndex];
+                currentGun = guns[currentWeaponIndex];            
             }
         }
+    }
+    public void SwitchToGun2()
+    {
+        if (currentWeaponIndex != 1)
+        {
+            guns[currentWeaponIndex].SetActive(false);
+            currentWeaponIndex = 1;
+            guns[currentWeaponIndex].SetActive(true);
+            currentGun = guns[currentWeaponIndex];
+        }
+    }
+
+    public void SwitchToFirstWeapon()
+    {
+        guns[currentWeaponIndex].SetActive(false);
+        currentWeaponIndex = 0;
+        guns[currentWeaponIndex].SetActive(true);
+        currentGun = guns[currentWeaponIndex];    
     }
 }
