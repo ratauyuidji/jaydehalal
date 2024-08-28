@@ -23,7 +23,13 @@ public class Rocket : Projectile
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D obj in objects)
         {
-            if (obj.gameObject.CompareTag("Enemy"))
+            Bom bom = obj.GetComponent<Bom>();
+            if (bom != null)
+            {
+                bom.Explode();
+                Destroy(bom.gameObject);
+            }
+            else if (obj.gameObject.CompareTag("Enemy"))
             {
                 Enemy enemy = obj.GetComponentInParent<Enemy>();
                 if (enemy != null)

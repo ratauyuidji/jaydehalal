@@ -143,6 +143,19 @@ public class GameManager : MonoBehaviour
         starDisplay.DisplayStar(remainShoot);
         player.SetActive(false);
     }
+    public void SkipLevel()
+    {
+        EconomyManager.Instance.IncreaseMoney(30);
+        Debug.Log("money: " + 30);
+        if (moneyEarnedText != null)
+        {
+            moneyEarnedText.text = "+" + 30;
+        }
+        CheckStar(3);
+        win.SetActive(true);
+        starDisplay.DisplayStar(3);
+        player.SetActive(false);
+    }
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

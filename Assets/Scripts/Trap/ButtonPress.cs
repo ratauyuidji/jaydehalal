@@ -9,9 +9,16 @@ public class ButtonPress : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
-            bom.Explode();
-            Destroy(this.gameObject);
-            Destroy(bom.gameObject);
+            if(bom != null)
+            {
+                bom.Explode();
+                Destroy(this.gameObject);
+                Destroy(bom.gameObject);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 }

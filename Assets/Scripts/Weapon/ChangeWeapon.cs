@@ -60,6 +60,16 @@ public class ChangeWeapon : MonoBehaviour
             currentGun = guns[currentWeaponIndex];
         }
     }
+    public void SwitchToNade()
+    {
+        if (currentWeaponIndex != 2)
+        {
+            guns[currentWeaponIndex].SetActive(false);
+            currentWeaponIndex = 2;
+            guns[currentWeaponIndex].SetActive(true);
+            currentGun = guns[currentWeaponIndex];
+        }
+    }
 
     public void SwitchToFirstWeapon()
     {
