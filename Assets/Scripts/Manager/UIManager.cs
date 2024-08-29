@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -11,12 +11,17 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject mapSelectionPanel;
     public GameObject[] levelSelectionPanels;
+    public GameObject settingPanel;
     public int stars;
     public MapSelection[] mapSelection;
     public TextMeshProUGUI[] questStarsText;
     public TextMeshProUGUI[] lockedStarsText;
     public TextMeshProUGUI[] unlockedStarsText;
     public TextMeshProUGUI startText;
+    public Button[] buttons;
+    public Image[] checkmarks;
+    private bool[] states;
+
 
     private void Awake()
     {
@@ -32,6 +37,22 @@ public class UIManager : MonoBehaviour
             }
             DontDestroyOnLoad(gameObject);
         }
+    }
+    void Start()
+    {
+        states = new bool[buttons.Length];
+
+        for (int i = 0; i < states.Length; i++)
+        {
+            states[i] = true;
+            int index = i;
+            buttons[i].onClick.AddListener(() => Toggle(index));
+        }
+    }
+    void Toggle(int index)
+    {
+        states[index] = !states[index];
+        checkmarks[index].gameObject.SetActive(states[index]);
     }
     private void Update()
     {
@@ -59,13 +80,20 @@ public class UIManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    unlockedStarsText[i].text = (PlayerPrefs.GetInt("Lv" + 1) + PlayerPrefs.GetInt("Lv" + 2) + PlayerPrefs.GetInt("Lv" + 3)) + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    int totalStars = 0;
+                    for (int lv = 1; lv <= 12; lv++)
+                    {
+                        totalStars += PlayerPrefs.GetInt("Lv" + lv);
+                    }
+                    int maxStars = (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    unlockedStarsText[i].text = totalStars + "/" + maxStars;
                     break;
+
                 case 1:
-                    unlockedStarsText[i].text = (PlayerPrefs.GetInt("Lv" +4) + PlayerPrefs.GetInt("Lv" + 5) + PlayerPrefs.GetInt("Lv" + 6)) + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    unlockedStarsText[i].text = 0 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     break;
                 case 2:
-                    unlockedStarsText[i].text = (PlayerPrefs.GetInt("Lv" + 7) + PlayerPrefs.GetInt("Lv" + 8)) + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    unlockedStarsText[i].text = 0 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     break;
             }
         }
@@ -77,7 +105,7 @@ public class UIManager : MonoBehaviour
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 24;
+        startText.text = stars.ToString() + "/" + 36;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -99,7 +127,36 @@ public class UIManager : MonoBehaviour
             levelSelectionPanels[i].gameObject.SetActive(false);
         }
     }
-    
+    public void LoadHighestUnlockedLevel()
+    {
+        int highestUnlockedLevel = 1; 
+
+        for (int i = 1; i <= 3; i++) // 3 level
+        {
+            if (PlayerPrefs.GetInt("Lv" + i) > 0)
+            {
+                highestUnlockedLevel = i +1;
+            }
+            else
+            {
+                break; // stop if level lock
+            }
+        }
+
+        string levelName = "Level" + highestUnlockedLevel;
+        Debug.Log("Loading highest unlocked level: " + levelName);
+        SceneManager.LoadScene(levelName);
+    }
+    public void TurnOnSettingPanel()
+    {
+        settingPanel.SetActive(true);
+    }
+    public void TurnOffSettingPanel()
+    {
+        settingPanel.SetActive(false);
+    }
+
+
 
 
     //public TextMeshProUGUI starsText;

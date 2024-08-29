@@ -247,14 +247,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 417590483181178671, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 764744245941895883, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
-      propertyPath: m_TagString
-      value: ArmWithGun
-      objectReference: {fileID: 0}
     - target: {fileID: 1231029782679588988, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
       propertyPath: ammoText
       value: 
@@ -306,10 +298,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 764744245941895883, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1374438894}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
 --- !u!1 &519420028
 GameObject:
@@ -528,11 +517,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78409b4bf413a5e41958ccd9f952125f, type: 3}
---- !u!1 &815683743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 764744245941895883, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
-  m_PrefabInstance: {fileID: 389068199}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &821850172
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -882,6 +866,7 @@ MonoBehaviour:
   maxReloadTime: 10
   reloadText: {fileID: 3015681666415321869}
   moneyEarnedText: {fileID: 1275985600}
+  economyManagerPrefab: {fileID: 5405888366277221154, guid: 81bd478a7c716bd469f0f5796cbe8ff6, type: 3}
   maxNumberOfShoot: 4
   levelIndex: 1
   starDisplay: {fileID: 6388913761808150820}
@@ -1059,47 +1044,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7233238471416531377, guid: 5c18c992a87e87f45a3b8b34d21373ad, type: 3}
   m_PrefabInstance: {fileID: 389068199}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815683743}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6640e30dbb965f44847f3c12b7b94da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!70 &1374438894
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815683743}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0022576826, y: -0.4945446}
-  m_Size: {x: 0.23046874, y: 1.0351561}
-  m_Direction: 0
 --- !u!1 &1425442578
 GameObject:
   m_ObjectHideFlags: 0

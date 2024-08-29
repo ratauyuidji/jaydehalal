@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 
 public class Weapon : MonoBehaviour
@@ -20,7 +21,7 @@ public class Weapon : MonoBehaviour
     {
         get
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             return pos;
         }
     }
@@ -36,7 +37,7 @@ public class Weapon : MonoBehaviour
         {
             return;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             if (GameManager.Instance.HasEnoughShoot())
             {

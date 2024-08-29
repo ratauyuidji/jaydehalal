@@ -68,4 +68,5 @@ public class LevelSelection : MonoBehaviour
             Debug.Log("Level is locked, cannot load scene.");
         }
     }
+    
 }

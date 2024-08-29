@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int maxReloadTime = 10;
     [SerializeField] private TextMeshProUGUI reloadText;
     [SerializeField] private TextMeshProUGUI moneyEarnedText;
+    [SerializeField] private GameObject economyManagerPrefab;
 
 
     Coroutine CWin;
@@ -36,6 +37,10 @@ public class GameManager : MonoBehaviour
     {
         currentReloadTime = 1;
         UpdateReloadText();
+        if (EconomyManager.Instance == null)
+        {
+            Instantiate(economyManagerPrefab); // economyManagerPrefab là prefab chứa EconomyManager
+        }
     }
     private void Awake()
     {

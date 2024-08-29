@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PointTowardMouse : MonoBehaviour
 {
@@ -8,13 +9,13 @@ public class PointTowardMouse : MonoBehaviour
     {
         get
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             return pos;
         }
     }
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Mouse.current.leftButton.isPressed)
         {
             Vector2 dir = (Vector2)transform.position - MousePos;
             float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);

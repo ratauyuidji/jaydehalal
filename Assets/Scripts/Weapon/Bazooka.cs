@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class Bazooka : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class Bazooka : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButtonUp(0) && canShoot)
+        if (Mouse.current.leftButton.wasReleasedThisFrame && canShoot)
         {
             if (currentAmmo > 0)
             {
@@ -58,7 +59,7 @@ public class Bazooka : MonoBehaviour
 
     private void Shoot()
     {
-        Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition) - (Vector2)transform.position;
+        Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - (Vector2)transform.position;
         Projectile projectile = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
         projectile.Shoot(direction.normalized);
         canShoot = false;

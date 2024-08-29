@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class Laser : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class Laser : MonoBehaviour
             return;
         }
 
-        if (Input.GetMouseButton(0))
+        if (Mouse.current.leftButton.isPressed)
         {
             lineRenderer.enabled = true;
             Vector2 dir = TargetPos - (Vector2)laserPos.transform.position;
@@ -55,7 +56,7 @@ public class Laser : MonoBehaviour
 
     public void DeactivateLaser()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             lineRenderer.enabled = false;
         }
