@@ -370,6 +370,7 @@ GameObject:
   - component: {fileID: 4507515233444299503}
   - component: {fileID: 7233238471416531377}
   - component: {fileID: 2640096717305273368}
+  - component: {fileID: 2720915290946172373}
   m_Layer: 0
   m_Name: ArmWithGun
   m_TagString: ArmWithGun
@@ -507,12 +508,25 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0022576826, y: -0.4945446}
   m_Size: {x: 0.23046874, y: 1.0351561}
   m_Direction: 0
+--- !u!114 &2720915290946172373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 764744245941895883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad18fc1f93af9144bd7ed5ece96ace1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 1800
 --- !u!1 &1231094426135575713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1478,6 +1492,7 @@ MonoBehaviour:
   maxDistance: 2
   maxAmmo: 10
   ammoText: {fileID: 0}
+  rotateArm: {fileID: 2720915290946172373}
   nadePrefab: {fileID: 7993856341392900034, guid: 98b2c9bc8f260094c9be85a1fba92594, type: 3}
   throwPoint: {fileID: 5780187422961679196}
   baseThrowForce: 2

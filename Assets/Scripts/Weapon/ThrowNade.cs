@@ -12,7 +12,7 @@ public class ThrowNade : MonoBehaviour
     [SerializeField] private int maxAmmo = 10;
     [SerializeField] private TextMeshProUGUI ammoText;
     private ChangeWeapon changeWeapon;
-
+    public RotateArm rotateArm;
     public GameObject nadePrefab;
     public Transform throwPoint;
     public float baseThrowForce = 20f;
@@ -84,8 +84,11 @@ public class ThrowNade : MonoBehaviour
         throwForce = CalculateThrowForce();
         rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
         StartCoroutine(ExplodeAfterDelay(nade, 3f));
-
-        /*if (changeWeapon.currentWeaponIndex == 2)
+        if (rotateArm != null)
+        {
+            Debug.Log("Calling ArmRotate");
+            rotateArm.ArmRotate();
+        }        /*if (changeWeapon.currentWeaponIndex == 2)
         {
             changeWeapon.SwitchToFirstWeapon();
         }*/
