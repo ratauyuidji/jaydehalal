@@ -26,6 +26,7 @@ public class ThrowNade : MonoBehaviour
         UpdateNadeNumberText();
         changeWeapon = FindObjectOfType<ChangeWeapon>();
     }
+
     private void OnEnable()
     {
         if (currentNadeNumber > 0)
@@ -33,32 +34,45 @@ public class ThrowNade : MonoBehaviour
             canThrow = true;
         }
     }
+
     void Update()
     {
         if (EventSystem.current.IsPointerOverGameObject())
         {
             return;
         }
-        if (Input.GetMouseButtonUp(0) && canThrow)
+
+        bool isMouseOverArmWithGun = IsMouseOverArmWithGun();
+
+        if (isMouseOverArmWithGun)
         {
-            if(currentNadeNumber > 0)
+            lineRenderer.enabled = false;
+        }
+        else if (canThrow)
+        {
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
             {
-                lineRenderer.enabled = false;
-                ThrowGrenade();
-                currentNadeNumber--;
-                UpdateNadeNumberText();
-                if (currentNadeNumber == 0)
+                if (currentNadeNumber > 0)
                 {
-                    canThrow = false;
+                    ThrowGrenade();
+                    currentNadeNumber--;
+                    UpdateNadeNumberText();
+                    if (currentNadeNumber == 0)
+                    {
+                        canThrow = false;
+                    }
                 }
+                lineRenderer.enabled = false;
+            }
+
+            if (Mouse.current.leftButton.isPressed)
+            {
+                lineRenderer.enabled = true;
+                DrawLine();
             }
         }
-        if (Mouse.current.leftButton.isPressed && canThrow)
-        {
-            lineRenderer.enabled = true;
-            DrawLine();
-        }
     }
+
 
     void ThrowGrenade()
     {
@@ -76,6 +90,7 @@ public class ThrowNade : MonoBehaviour
             changeWeapon.SwitchToFirstWeapon();
         }*/
     }
+
     private IEnumerator ExplodeAfterDelay(GameObject nade, float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -105,6 +120,7 @@ public class ThrowNade : MonoBehaviour
         float normalizedLength = lineLength / maxDistance;
         return baseThrowForce * normalizedLength;
     }
+
     public void AddNade(int ammo)
     {
         currentNadeNumber = Mathf.Clamp(currentNadeNumber + ammo, 0, maxAmmo);
@@ -114,11 +130,33 @@ public class ThrowNade : MonoBehaviour
         }
         UpdateNadeNumberText();
     }
+
     private void UpdateNadeNumberText()
     {
         if (ammoText != null)
         {
             ammoText.text = currentNadeNumber.ToString();
         }
+    }
+
+    private bool IsMouseOverArmWithGun()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Hit detected on: " + hit.collider.name);
+            Transform parent = hit.collider.transform;
+            foreach (Transform child in parent.GetComponentsInChildren<Transform>())
+            {
+                if (child.CompareTag("ArmWithGun"))
+                {
+                    Debug.Log("Mouse is over ArmWithGun");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
