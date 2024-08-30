@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour
     {
         get
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 pos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
             return pos;
         }
     }
@@ -33,11 +33,9 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
+        if (TouchUI.IsPointerOverUI())
             return;
-        }
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Input.GetMouseButtonUp(0))
         {
             if (GameManager.Instance.HasEnoughShoot())
             {
@@ -65,4 +63,5 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(shootDelay);
         canShoot = true;
     }
+    
 }

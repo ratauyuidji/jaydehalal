@@ -37,10 +37,8 @@ public class ThrowNade : MonoBehaviour
 
     void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
+        if (TouchUI.IsPointerOverUI())
             return;
-        }
 
         bool isMouseOverArmWithGun = IsMouseOverArmWithGun();
 
@@ -50,7 +48,7 @@ public class ThrowNade : MonoBehaviour
         }
         else if (canThrow)
         {
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            if (InputManager.wasLeftMouseButtonReleased)
             {
                 if (currentNadeNumber > 0)
                 {
@@ -65,7 +63,7 @@ public class ThrowNade : MonoBehaviour
                 lineRenderer.enabled = false;
             }
 
-            if (Mouse.current.leftButton.isPressed)
+            if (InputManager.IsLeftMousePressed)
             {
                 lineRenderer.enabled = true;
                 DrawLine();
@@ -76,7 +74,7 @@ public class ThrowNade : MonoBehaviour
 
     void ThrowGrenade()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
         Vector2 throwDirection = (mousePos - (Vector2)throwPoint.position).normalized;
         GameObject nade = Instantiate(nadePrefab, throwPoint.position, throwPoint.rotation);
         Rigidbody2D rb = nade.GetComponent<Rigidbody2D>();
@@ -102,7 +100,7 @@ public class ThrowNade : MonoBehaviour
 
     private void DrawLine()
     {
-        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector3 touchPosition = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
         SetLine(touchPosition);
     }
 
@@ -144,7 +142,7 @@ public class ThrowNade : MonoBehaviour
 
     private bool IsMouseOverArmWithGun()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = Camera.main.ScreenPointToRay(InputManager.MousePosition);
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
 
         if (hit.collider != null)

@@ -25,15 +25,11 @@ public class Laser : MonoBehaviour
 
     private void Update()
     {
+        
         if (!enabled) return;
-
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            lineRenderer.enabled = false;
+        if (TouchUI.IsPointerOverUI())
             return;
-        }
-
-        if (Mouse.current.leftButton.isPressed)
+        if (InputManager.IsLeftMousePressed)
         {
             lineRenderer.enabled = true;
             Vector2 dir = TargetPos - (Vector2)laserPos.transform.position;
@@ -56,7 +52,7 @@ public class Laser : MonoBehaviour
 
     public void DeactivateLaser()
     {
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (InputManager.wasLeftMouseButtonReleased)
         {
             lineRenderer.enabled = false;
         }

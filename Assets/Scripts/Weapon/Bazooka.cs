@@ -37,12 +37,10 @@ public class Bazooka : MonoBehaviour
 
     private void Update()
     {
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
+        if (TouchUI.IsPointerOverUI())
             return;
-        }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame && canShoot)
+        if (InputManager.wasLeftMouseButtonReleased && canShoot)
         {
             if (currentAmmo > 0)
             {
@@ -59,7 +57,7 @@ public class Bazooka : MonoBehaviour
 
     private void Shoot()
     {
-        Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue()) - (Vector2)transform.position;
+        Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(InputManager.MousePosition) - (Vector2)transform.position;
         Projectile projectile = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
         projectile.Shoot(direction.normalized);
         canShoot = false;

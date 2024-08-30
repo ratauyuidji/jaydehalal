@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PointTowardMouse : MonoBehaviour
@@ -9,17 +10,31 @@ public class PointTowardMouse : MonoBehaviour
     {
         get
         {
-            Vector2 pos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector2 pos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
             return pos;
         }
     }
     private void Update()
     {
-        if (Mouse.current.leftButton.isPressed)
+        if (TouchUI.IsPointerOverUI())
+            return;
+        if (Input.GetMouseButton(0))
         {
             Vector2 dir = (Vector2)transform.position - MousePos;
             float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
             transform.eulerAngles = new Vector3(0f, 0f, angle - 90f);
         }
+//#if UNITY_EDITOR
+
+//#else
+//        if (Input.touches.Length > 0)//(InputManager.IsLeftMousePressed)
+//        {
+//            Vector2 dir = (Vector2)transform.position - MousePos;
+//            float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+//            transform.eulerAngles = new Vector3(0f, 0f, angle - 90f);
+//        }
+//#endif
+
     }
+
 }
