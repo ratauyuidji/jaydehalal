@@ -23,7 +23,7 @@ public class Bullet : Projectile
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        string[] validTags = { "Wall", "FallBox", "Box", "Joint" };
+        string[] validTags = { "Wall", "FallBox", "Box"};
         if (System.Array.Exists(validTags, tag => tag == other.gameObject.tag))
         {
             bounceNumber--;

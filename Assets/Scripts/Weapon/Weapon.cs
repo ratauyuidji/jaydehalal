@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class Weapon : MonoBehaviour
 {
@@ -35,33 +35,31 @@ public class Weapon : MonoBehaviour
     {
         if (TouchUI.IsPointerOverUI())
             return;
-        if (Input.GetMouseButtonUp(0))
+
+        if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire())
         {
             if (GameManager.Instance.HasEnoughShoot())
             {
-                Vector2 direction = MousePos - (Vector2)transform.position;
-                Projectile projectile = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
-                projectile.Shoot(direction.normalized);
+                Shoot();
                 GameManager.Instance.UseShoot();
-                /*canShoot = false;
-                if (GameManager.Instance.HasEnoughShoot())
-                {
-                    StartCoroutine(WaitForNextShot());
-                }*/
                 laser.DeactivateLaser();
-
-                if (changeWeapon.currentWeaponIndex == 1)
-                {
-                    changeWeapon.SwitchToFirstWeapon();
-                }
             }
-
         }
     }
+
+
+
+    private void Shoot()
+    {
+        Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(InputManager.MousePosition) - (Vector2)transform.position;
+        Projectile projectile = Instantiate(projectilePrefab, spawnPos.position, Quaternion.identity);
+        projectile.Shoot(direction.normalized);
+        laser.DeactivateLaser();
+    }
+
     private IEnumerator WaitForNextShot()
     {
         yield return new WaitForSeconds(shootDelay);
         canShoot = true;
     }
-    
 }

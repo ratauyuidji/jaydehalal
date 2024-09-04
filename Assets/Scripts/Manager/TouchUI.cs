@@ -7,7 +7,7 @@ public static class TouchUI
     {
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            Debug.Log("mouse");
+            //Debug.Log("mouse");
             return true;
         }
         if (Input.touches.Length > 0)
@@ -16,7 +16,7 @@ public static class TouchUI
             {
                 return true;
             }
-        }       
+        }
 
         return false;
     }

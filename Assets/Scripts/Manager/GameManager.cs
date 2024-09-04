@@ -39,7 +39,14 @@ public class GameManager : MonoBehaviour
         UpdateReloadText();
         if (EconomyManager.Instance == null)
         {
-            Instantiate(economyManagerPrefab); // economyManagerPrefab là prefab chứa EconomyManager
+            Instantiate(economyManagerPrefab);
+        }
+    }
+    private void Update()
+    {
+        if (InputManager.wasLeftMouseButtonPressed)
+        {
+            RaycastForCanFire();
         }
     }
     private void Awake()
@@ -199,6 +206,24 @@ public class GameManager : MonoBehaviour
             reloadText.text = currentReloadTime.ToString();
         }
     }
+    public bool RaycastForCanFire()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+
+        if (hit.collider != null)
+        {
+            Debug.Log("Raycast hit: " + hit.collider.name);
+            if (hit.collider.CompareTag("CanFire"))
+            {
+                return true;
+            }
+        }
+
+        Debug.Log("Raycast did not hit the specified object.");
+        return false;
+    }
+
 
 
 }

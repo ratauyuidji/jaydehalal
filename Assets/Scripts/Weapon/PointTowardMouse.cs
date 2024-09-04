@@ -18,7 +18,7 @@ public class PointTowardMouse : MonoBehaviour
     {
         if (TouchUI.IsPointerOverUI())
             return;
-        if (Input.GetMouseButton(0))
+        if (InputManager.IsLeftMousePressed && GameManager.Instance.RaycastForCanFire())
         {
             Vector2 dir = (Vector2)transform.position - MousePos;
             float angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);

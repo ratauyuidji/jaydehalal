@@ -48,7 +48,7 @@ public class ThrowNade : MonoBehaviour
         }
         else if (canThrow)
         {
-            if (InputManager.wasLeftMouseButtonReleased)
+            if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire())
             {
                 if (currentNadeNumber > 0)
                 {
@@ -86,7 +86,8 @@ public class ThrowNade : MonoBehaviour
         {
             Debug.Log("Calling ArmRotate");
             rotateArm.ArmRotate();
-        }        /*if (changeWeapon.currentWeaponIndex == 2)
+        }        
+        /*if (changeWeapon.currentWeaponIndex == 2)
         {
             changeWeapon.SwitchToFirstWeapon();
         }*/

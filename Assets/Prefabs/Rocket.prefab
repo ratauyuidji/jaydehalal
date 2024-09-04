@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -8991814091619875239}
   - component: {fileID: 8646984597840144508}
   - component: {fileID: 3817247332646280207}
+  - component: {fileID: 3480129193817122184}
   m_Layer: 8
   m_Name: Rocket
   m_TagString: Bullet
@@ -277,5 +278,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   force: 600
+  radius: 3
+  deathVFXPrefab: {fileID: 1367351114251052912, guid: c133f16e955387648bcbaa41b91e8bf8, type: 3}
+--- !u!114 &3480129193817122184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8569966735383778164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd13fb7613ca1340bb911028de948b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  force: 800
   radius: 3
   deathVFXPrefab: {fileID: 1367351114251052912, guid: c133f16e955387648bcbaa41b91e8bf8, type: 3}

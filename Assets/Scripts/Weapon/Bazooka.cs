@@ -40,7 +40,7 @@ public class Bazooka : MonoBehaviour
         if (TouchUI.IsPointerOverUI())
             return;
 
-        if (InputManager.wasLeftMouseButtonReleased && canShoot)
+        if (InputManager.wasLeftMouseButtonReleased && canShoot && GameManager.Instance.RaycastForCanFire())
         {
             if (currentAmmo > 0)
             {
