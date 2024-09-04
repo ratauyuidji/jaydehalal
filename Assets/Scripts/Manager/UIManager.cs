@@ -101,7 +101,7 @@ public class UIManager : MonoBehaviour
     private void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 8; i++)
+        for (int i = 1; i <= 12; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }

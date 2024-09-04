@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 3f;
+    [SerializeField] private float maxHealth = 5f;
     [SerializeField] public float damageThreshold = 1f;
     private float currentHealth;
     private bool isDied;

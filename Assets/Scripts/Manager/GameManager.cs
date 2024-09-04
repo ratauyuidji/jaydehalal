@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI reloadText;
     [SerializeField] private TextMeshProUGUI moneyEarnedText;
     [SerializeField] private GameObject economyManagerPrefab;
+    [SerializeField] private CanvasGroup backgroundUI;
+
 
 
     Coroutine CWin;
@@ -119,6 +121,12 @@ public class GameManager : MonoBehaviour
             Debug.Log("Loss");
             lose.SetActive(true);
             CheckStar(0);
+            player.SetActive(false);
+            if (backgroundUI != null)
+            {
+                backgroundUI.interactable = false;
+                backgroundUI.blocksRaycasts = false;
+            }
         }
     }
     public void RemoveEnemy(Enemy enemy)
@@ -154,6 +162,12 @@ public class GameManager : MonoBehaviour
         win.SetActive(true);
         starDisplay.DisplayStar(remainShoot);
         player.SetActive(false);
+
+        if (backgroundUI != null)
+        {
+            backgroundUI.interactable = false;
+            backgroundUI.blocksRaycasts = false;
+        }
     }
     public void SkipLevel()
     {
@@ -167,6 +181,11 @@ public class GameManager : MonoBehaviour
         win.SetActive(true);
         starDisplay.DisplayStar(3);
         player.SetActive(false);
+        if (backgroundUI != null)
+        {
+            backgroundUI.interactable = false;
+            backgroundUI.blocksRaycasts = false;
+        }
     }
     public void RestartGame()
     {
@@ -213,7 +232,7 @@ public class GameManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            Debug.Log("Raycast hit: " + hit.collider.name);
+            //Debug.Log("Raycast hit: " + hit.collider.name);
             if (hit.collider.CompareTag("CanFire"))
             {
                 return true;
