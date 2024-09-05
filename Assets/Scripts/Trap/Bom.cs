@@ -4,11 +4,22 @@ using UnityEngine;
 
 public class Bom : MonoBehaviour
 {
-    [SerializeField] private GameObject deathVFXPrefab;
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] public float damageThreshold = 1f;
+    private float currentHealth;
     public float radius;
-    public float force;
     private bool hasExploded = false;
+    private Explosive explosive; 
 
+    private void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
+    private void Start()
+    {
+        explosive = GetComponent<Explosive>();
+    }
     public void Explode()
     {
         if (hasExploded) return;
@@ -25,29 +36,11 @@ public class Bom : MonoBehaviour
             }
             else if (obj.gameObject.CompareTag("Enemy"))
             {
-                Enemy enemy = obj.GetComponentInParent<Enemy>();
-                if (enemy != null)
-                {
-                    GameManager.Instance.RemoveEnemy(enemy);
-                    Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
-
-                    Rigidbody2D rb = enemy.GetComponentInChildren<Rigidbody2D>();
-                    if (rb != null)
-                    {
-                        Vector2 direction = rb.transform.position - transform.position;
-                        rb.AddForce(direction.normalized * force);
-                        Debug.Log(rb.transform.name);
-                    }
-                }
+                explosive.HandleEnemy(obj);
             }
-            else
-            {
-                Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
-                if (rb != null)
-                {
-                    Vector2 direction = rb.transform.position - transform.position;
-                    rb.AddForce(direction.normalized * force);
-                }
+            else if(explosive != null)
+{
+                explosive.ApplyForceToObject(obj);
             }
         }
     }
@@ -61,6 +54,25 @@ public class Bom : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Bullet"))
+        {
+            Explode();
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            float impactVelocity = other.relativeVelocity.magnitude;
+            if (impactVelocity > damageThreshold)
+            {
+                Debug.Log(impactVelocity);
+                TakeDamage(impactVelocity);
+            }
+        }
+    }
+    public void TakeDamage(float damageAmount)
+    {
+        currentHealth -= damageAmount;
+        Debug.Log("takedame");
+        if (currentHealth <= 0)
         {
             Explode();
             Destroy(this.gameObject);

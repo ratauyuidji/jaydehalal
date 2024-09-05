@@ -13,6 +13,10 @@ public class Nade : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         explosive = GetComponent<Explosive>();
     }
+    private void Start()
+    {
+        Invoke("Explode", 3f);
+    }
     public void Explode()
     {
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, radius);

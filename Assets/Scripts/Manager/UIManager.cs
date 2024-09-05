@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public Button[] buttons;
     public Image[] checkmarks;
     private bool[] states;
+    private Vector3[] initialPositions;
+
 
 
     private void Awake()
@@ -36,6 +38,11 @@ public class UIManager : MonoBehaviour
                 Destroy(gameObject);
             }
             DontDestroyOnLoad(gameObject);
+        }
+        initialPositions = new Vector3[levelSelectionPanels.Length];
+        for (int i = 0; i < levelSelectionPanels.Length; i++)
+        {
+            initialPositions[i] = levelSelectionPanels[i].GetComponent<RectTransform>().anchoredPosition;
         }
     }
     void Start()
@@ -111,14 +118,38 @@ public class UIManager : MonoBehaviour
     {
         if (mapSelection[mapIndex].isUnlock == true)
         {
-            levelSelectionPanels[mapIndex].gameObject.SetActive(true);
             mapSelectionPanel.gameObject.SetActive(false);
+            StartCoroutine(ShowPanel(levelSelectionPanels[mapIndex], mapIndex));
         }
         else
         {
             Debug.Log("You can not open this map now");
         }
     }
+
+    private IEnumerator ShowPanel(GameObject panel, int mapIndex)
+    {
+        panel.SetActive(true);
+
+        RectTransform rectTransform = panel.GetComponent<RectTransform>();
+        Vector3 startPosition = new Vector3(0, -Screen.height, 0);
+        Vector3 targetPosition = initialPositions[mapIndex];
+
+        float elapsedTime = 0f;
+        float duration = 0.5f;
+
+        rectTransform.anchoredPosition = startPosition;
+
+        while (elapsedTime < duration)
+        {
+            rectTransform.anchoredPosition = Vector3.Lerp(startPosition, targetPosition, (elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rectTransform.anchoredPosition = targetPosition;
+    }
+
     public void BackMapButton()
     {
         mapSelectionPanel.gameObject.SetActive(true);

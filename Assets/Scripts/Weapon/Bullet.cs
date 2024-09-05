@@ -23,7 +23,7 @@ public class Bullet : Projectile
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        string[] validTags = { "Wall", "FallBox", "Box"};
+        string[] validTags = { "Wall", "FallBox", "Box", "CanDestroyBox" };
         if (System.Array.Exists(validTags, tag => tag == other.gameObject.tag))
         {
             bounceNumber--;
@@ -36,6 +36,10 @@ public class Bullet : Projectile
             Vector2 newVelocity = Vector2.Reflect(direction.normalized, firstContact.normal);
             Shoot(newVelocity.normalized);
         }
+        if (other.gameObject.CompareTag("CanDestroyBox"))
+        {
+            Destroy(other.gameObject);
+        }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -47,9 +51,6 @@ public class Bullet : Projectile
             Vector2 impactDirection = transform.position - other.transform.position;
             erb.AddForce(impactDirection * 40f,ForceMode2D.Impulse);
         }
-        if (other.gameObject.CompareTag("Joint"))
-        {
-            //Destroy(other.gameObject);
-        }
+        
     }
 }

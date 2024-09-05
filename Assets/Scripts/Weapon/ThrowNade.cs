@@ -81,23 +81,18 @@ public class ThrowNade : MonoBehaviour
 
         throwForce = CalculateThrowForce();
         rb.AddForce(throwDirection * throwForce, ForceMode2D.Impulse);
-        StartCoroutine(ExplodeAfterDelay(nade, 3f));
         if (rotateArm != null)
         {
             Debug.Log("Calling ArmRotate");
             rotateArm.ArmRotate();
         }        
-        /*if (changeWeapon.currentWeaponIndex == 2)
+        if (changeWeapon.currentWeaponIndex == 2)
         {
             changeWeapon.SwitchToFirstWeapon();
-        }*/
+        }
     }
 
-    private IEnumerator ExplodeAfterDelay(GameObject nade, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        nade.GetComponent<Nade>().Explode();
-    }
+    
 
     private void DrawLine()
     {
