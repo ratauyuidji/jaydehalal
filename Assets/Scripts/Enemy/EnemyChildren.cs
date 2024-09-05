@@ -18,6 +18,10 @@ public class EnemyChildren : MonoBehaviour
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentEnemy.damageThreshold)
             {
+                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+            }
+            if (impactVelocity > parentEnemy.damageThreshold && !parentEnemy.isDied)
+            {
                 Debug.Log(impactVelocity);
                 parentEnemy.TakeDamage(impactVelocity);
                 Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
@@ -27,10 +31,11 @@ public class EnemyChildren : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Bullet"))
+        if (other.gameObject.CompareTag("Bullet") )
         {
             parentEnemy.OnBulletHit(other);
             Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
         }
     }
+
 }

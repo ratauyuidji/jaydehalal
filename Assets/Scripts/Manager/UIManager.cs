@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars = 0;
-                    for (int lv = 1; lv <= 12; lv++)
+                    for (int lv = 1; lv <= 32; lv++)
                     {
                         totalStars += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -108,11 +108,11 @@ public class UIManager : MonoBehaviour
     private void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 12; i++)
+        for (int i = 1; i <= 32; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 36;
+        startText.text = stars.ToString() + "/" + 96;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -162,7 +162,7 @@ public class UIManager : MonoBehaviour
     {
         int highestUnlockedLevel = 1; 
 
-        for (int i = 1; i <= 11; i++) // 3 level
+        for (int i = 1; i <= 31; i++) // 3 level
         {
             if (PlayerPrefs.GetInt("Lv" + i) > 0)
             {

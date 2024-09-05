@@ -7,6 +7,7 @@ public class Bullet : Projectile
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float bounceNumber;
     [SerializeField] private float speed;
+    [SerializeField] private GameObject destroyVFXPrefab;
 
 
     private Vector2 direction;
@@ -38,6 +39,7 @@ public class Bullet : Projectile
         }
         if (other.gameObject.CompareTag("CanDestroyBox"))
         {
+            Instantiate(destroyVFXPrefab, other.transform.position, Quaternion.identity);
             Destroy(other.gameObject);
         }
     }
@@ -49,7 +51,7 @@ public class Bullet : Projectile
             Debug.Log("aaaa");
             Rigidbody2D erb  = other.GetComponent<Rigidbody2D>();
             Vector2 impactDirection = transform.position - other.transform.position;
-            erb.AddForce(impactDirection * 40f,ForceMode2D.Impulse);
+            erb.AddForce(impactDirection * 50f,ForceMode2D.Impulse);
         }
         
     }

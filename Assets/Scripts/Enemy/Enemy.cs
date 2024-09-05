@@ -7,44 +7,29 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float maxHealth = 5f;
     [SerializeField] public float damageThreshold = 1f;
     private float currentHealth;
-    private bool isDied;
+    public bool isDied;
 
     private void Awake()
     {
         currentHealth = maxHealth;
         isDied = false;
     }
-    
+
 
 
     public void TakeDamage(float damageAmount)
     {
         if (isDied) return;
+        Debug.Log($"TakeDamage called with damageAmount: {damageAmount}");
         currentHealth -= damageAmount;
-        Debug.Log("takedame");
+        Debug.Log($"Current Health: {currentHealth}");
         if (currentHealth <= 0)
         {
             isDied = true;
+            Debug.Log("Enemy Died");
             GameManager.Instance.RemoveEnemy(this);
         }
     }
-    /*private void OnCollisionEnter2D(Collision2D collision)
-    {
-        float impactVelocity = collision.relativeVelocity.magnitude;
-        if (impactVelocity > damageThreshold)
-        {
-            TakeDamage(impactVelocity);
-        }
-    }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Bullet"))
-        {
-            GameManager.Instance.RemoveEnemy(this);
-            Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
-        }
-    }*/
     public void OnBulletHit(Collider2D other)
     {
         GameManager.Instance.RemoveEnemy(this);
