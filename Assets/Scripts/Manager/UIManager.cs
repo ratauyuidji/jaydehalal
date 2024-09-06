@@ -67,11 +67,11 @@ public class UIManager : MonoBehaviour
         UpdateUnlockedStarUI();
         UpdateStarUI();
     }
-    private void UpdateLockedStarUI()
+    public void UpdateLockedStarUI()
     {
         for(int i = 0;i < mapSelection.Length;i++)
         {
-            questStarsText[i].text = mapSelection[i].questNum.ToString();
+            questStarsText[i].text = stars.ToString() + "/" + mapSelection[i].questNum.ToString();
             if (mapSelection[i].isUnlock == false)
             {
                 lockedStarsText[i].text = stars.ToString() + "/" + mapSelection[i].endLevel * 3;
@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour
         }
 
     }
-    private void UpdateUnlockedStarUI()
+    public void UpdateUnlockedStarUI()
     {
         for(int i = 0; i < mapSelection.Length; i++)
         {
@@ -105,7 +105,7 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-    private void UpdateStarUI()
+    public void UpdateStarUI()
     {
         stars = 0;
         for (int i = 1; i <= 32; i++)
@@ -120,10 +120,18 @@ public class UIManager : MonoBehaviour
         {
             mapSelectionPanel.gameObject.SetActive(false);
             StartCoroutine(ShowPanel(levelSelectionPanels[mapIndex], mapIndex));
+
+            // Get all LevelSelection components in the map's level selection panel and update their status/images
+            LevelSelection[] levels = levelSelectionPanels[mapIndex].GetComponentsInChildren<LevelSelection>();
+            foreach (LevelSelection level in levels)
+            {
+                level.UpdateLevelStatus();
+                level.UpdateLevelImage();
+            }
         }
         else
         {
-            Debug.Log("You can not open this map now");
+            Debug.Log("You cannot open this map now");
         }
     }
 
@@ -152,6 +160,11 @@ public class UIManager : MonoBehaviour
 
     public void BackMapButton()
     {
+        foreach (MapSelection map in mapSelection)
+        {
+            map.UpdateMapStatus();
+            map.UnlockMap();
+        }
         mapSelectionPanel.gameObject.SetActive(true);
         for(int i = 0;i < mapSelection.Length; i++)
         {
@@ -186,26 +199,4 @@ public class UIManager : MonoBehaviour
     {
         settingPanel.SetActive(false);
     }
-
-
-
-
-    //public TextMeshProUGUI starsText;
-
-    /*private void Update()
-    {
-        UpdateStarsUI();
-    }
-
-    public void UpdateStarsUI()
-    {
-        int sum = 0;
-
-        for (int i = 1; i < 9; i++)
-        {
-            sum += PlayerPrefs.GetInt("Lv" + i.ToString());//Add level 1,2... stars number
-
-            starsText.text = sum + "/" + 24;
-        }
-    }*/
 }

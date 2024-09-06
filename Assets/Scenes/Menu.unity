@@ -1253,7 +1253,6 @@ GameObject:
   - component: {fileID: 43836545}
   - component: {fileID: 43836544}
   - component: {fileID: 43836543}
-  - component: {fileID: 43836542}
   m_Layer: 5
   m_Name: 7
   m_TagString: Untagged
@@ -1285,25 +1284,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &43836542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 43836540}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 2091980439}
-  stars:
-  - {fileID: 1207239990}
-  - {fileID: 1435168066}
-  - {fileID: 28287900}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &43836543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1348,7 +1328,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 43836542}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -1410,7 +1390,6 @@ GameObject:
   - component: {fileID: 49777463}
   - component: {fileID: 49777462}
   - component: {fileID: 49777461}
-  - component: {fileID: 49777460}
   m_Layer: 5
   m_Name: 9
   m_TagString: Untagged
@@ -1442,25 +1421,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &49777460
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 49777458}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 744159948}
-  stars:
-  - {fileID: 747087468}
-  - {fileID: 1987549597}
-  - {fileID: 1145315200}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &49777461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1505,7 +1465,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 49777460}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -2060,7 +2020,6 @@ GameObject:
   - component: {fileID: 105331459}
   - component: {fileID: 105331458}
   - component: {fileID: 105331457}
-  - component: {fileID: 105331456}
   m_Layer: 5
   m_Name: 11
   m_TagString: Untagged
@@ -2092,25 +2051,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &105331456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 105331454}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 118754550}
-  stars:
-  - {fileID: 1949253958}
-  - {fileID: 1064203156}
-  - {fileID: 2077679326}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &105331457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,7 +2095,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 105331456}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -6294,7 +6234,6 @@ GameObject:
   - component: {fileID: 308322854}
   - component: {fileID: 308322853}
   - component: {fileID: 308322852}
-  - component: {fileID: 308322851}
   m_Layer: 5
   m_Name: 5
   m_TagString: Untagged
@@ -6326,25 +6265,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &308322851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 308322849}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1394922100}
-  stars:
-  - {fileID: 1550063861}
-  - {fileID: 1109435270}
-  - {fileID: 1355472487}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &308322852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6389,7 +6309,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308322851}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -6451,7 +6371,6 @@ GameObject:
   - component: {fileID: 309564726}
   - component: {fileID: 309564725}
   - component: {fileID: 309564724}
-  - component: {fileID: 309564723}
   m_Layer: 5
   m_Name: 3
   m_TagString: Untagged
@@ -6483,25 +6402,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &309564723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 309564721}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1909767399}
-  stars:
-  - {fileID: 851190767}
-  - {fileID: 1276183206}
-  - {fileID: 1482679287}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &309564724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6546,7 +6446,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 309564723}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -7042,7 +6942,6 @@ GameObject:
   - component: {fileID: 324827945}
   - component: {fileID: 324827944}
   - component: {fileID: 324827943}
-  - component: {fileID: 324827942}
   m_Layer: 5
   m_Name: 10
   m_TagString: Untagged
@@ -7074,25 +6973,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &324827942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324827940}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 318482155}
-  stars:
-  - {fileID: 760543607}
-  - {fileID: 800628804}
-  - {fileID: 149712385}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &324827943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7137,7 +7017,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 324827942}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -8764,8 +8644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -57}
-  m_SizeDelta: {x: 49.9273, y: 50}
+  m_AnchoredPosition: {x: 138.8, y: 0}
+  m_SizeDelta: {x: 176.7858, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417828281
 MonoBehaviour:
@@ -8787,9 +8667,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '5
-
-'
+  m_text: 0/20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8816,14 +8694,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -9448,7 +9326,6 @@ GameObject:
   - component: {fileID: 436317428}
   - component: {fileID: 436317427}
   - component: {fileID: 436317426}
-  - component: {fileID: 436317425}
   m_Layer: 5
   m_Name: 7
   m_TagString: Untagged
@@ -9480,25 +9357,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &436317425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436317423}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 2113051614}
-  stars:
-  - {fileID: 756412866}
-  - {fileID: 1792833901}
-  - {fileID: 415160253}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &436317426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9543,7 +9401,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 436317425}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -10302,9 +10160,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlocked: {fileID: 1993168679}
   locked: {fileID: 1707452990}
-  questNum: 12
-  startLevel: 9
-  endLevel: 8
+  questNum: 40
+  startLevel: 1
+  endLevel: 0
   isUnlock: 0
 --- !u!114 &477729343
 MonoBehaviour:
@@ -11105,7 +10963,6 @@ GameObject:
   - component: {fileID: 520881030}
   - component: {fileID: 520881029}
   - component: {fileID: 520881028}
-  - component: {fileID: 520881027}
   m_Layer: 5
   m_Name: 3
   m_TagString: Untagged
@@ -11137,25 +10994,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &520881027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 520881025}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 670896453}
-  stars:
-  - {fileID: 1913530116}
-  - {fileID: 1113306759}
-  - {fileID: 1269666170}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &520881028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11200,7 +11038,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 520881027}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -12197,7 +12035,6 @@ GameObject:
   - component: {fileID: 570186500}
   - component: {fileID: 570186499}
   - component: {fileID: 570186498}
-  - component: {fileID: 570186497}
   m_Layer: 5
   m_Name: 4
   m_TagString: Untagged
@@ -12229,25 +12066,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &570186497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 570186495}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1532620924}
-  stars:
-  - {fileID: 2053142336}
-  - {fileID: 1510886036}
-  - {fileID: 321398180}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &570186498
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12292,7 +12110,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 570186497}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -13130,7 +12948,6 @@ GameObject:
   - component: {fileID: 614058289}
   - component: {fileID: 614058288}
   - component: {fileID: 614058287}
-  - component: {fileID: 614058286}
   m_Layer: 5
   m_Name: 9
   m_TagString: Untagged
@@ -13162,25 +12979,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &614058286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614058284}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1661317943}
-  stars:
-  - {fileID: 396472756}
-  - {fileID: 222668767}
-  - {fileID: 1685088771}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &614058287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13225,7 +13023,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 614058286}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -13287,7 +13085,6 @@ GameObject:
   - component: {fileID: 625349172}
   - component: {fileID: 625349171}
   - component: {fileID: 625349170}
-  - component: {fileID: 625349169}
   m_Layer: 5
   m_Name: 12
   m_TagString: Untagged
@@ -13319,25 +13116,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &625349169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 625349167}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1203774744}
-  stars:
-  - {fileID: 933063352}
-  - {fileID: 560638705}
-  - {fileID: 700965824}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &625349170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13382,7 +13160,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 625349169}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -15551,7 +15329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &758380764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16627,7 +16405,6 @@ GameObject:
   - component: {fileID: 844865821}
   - component: {fileID: 844865820}
   - component: {fileID: 844865819}
-  - component: {fileID: 844865818}
   m_Layer: 5
   m_Name: 12
   m_TagString: Untagged
@@ -16659,25 +16436,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &844865818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844865816}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 593484015}
-  stars:
-  - {fileID: 1526541563}
-  - {fileID: 788211480}
-  - {fileID: 78401371}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &844865819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16722,7 +16480,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 844865818}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -18530,7 +18288,6 @@ GameObject:
   - component: {fileID: 908618797}
   - component: {fileID: 908618796}
   - component: {fileID: 908618795}
-  - component: {fileID: 908618794}
   m_Layer: 5
   m_Name: 11
   m_TagString: Untagged
@@ -18562,25 +18319,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &908618794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 908618792}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 61272314}
-  stars:
-  - {fileID: 375672689}
-  - {fileID: 1073485372}
-  - {fileID: 2035446933}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &908618795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18625,7 +18363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 908618794}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -19421,7 +19159,6 @@ GameObject:
   - component: {fileID: 972547621}
   - component: {fileID: 972547620}
   - component: {fileID: 972547619}
-  - component: {fileID: 972547618}
   m_Layer: 5
   m_Name: 2
   m_TagString: Untagged
@@ -19453,25 +19190,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &972547618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972547616}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1350784916}
-  stars:
-  - {fileID: 1591188324}
-  - {fileID: 367313034}
-  - {fileID: 1099132875}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &972547619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19516,7 +19234,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 972547618}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -22255,7 +21973,6 @@ GameObject:
   - component: {fileID: 1136599281}
   - component: {fileID: 1136599280}
   - component: {fileID: 1136599279}
-  - component: {fileID: 1136599278}
   m_Layer: 5
   m_Name: 2
   m_TagString: Untagged
@@ -22287,25 +22004,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1136599278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136599276}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1332050314}
-  stars:
-  - {fileID: 814375955}
-  - {fileID: 1392594094}
-  - {fileID: 473506147}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1136599279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22350,7 +22048,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1136599278}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -25995,7 +25693,6 @@ GameObject:
   - component: {fileID: 1262076309}
   - component: {fileID: 1262076308}
   - component: {fileID: 1262076307}
-  - component: {fileID: 1262076306}
   m_Layer: 5
   m_Name: 6
   m_TagString: Untagged
@@ -26027,25 +25724,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1262076306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262076304}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 135974543}
-  stars:
-  - {fileID: 527134555}
-  - {fileID: 1901957416}
-  - {fileID: 404280716}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1262076307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26090,7 +25768,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1262076306}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -29428,7 +29106,6 @@ GameObject:
   - component: {fileID: 1408268521}
   - component: {fileID: 1408268520}
   - component: {fileID: 1408268519}
-  - component: {fileID: 1408268518}
   m_Layer: 5
   m_Name: 8
   m_TagString: Untagged
@@ -29460,25 +29137,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1408268518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1408268516}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 159350252}
-  stars:
-  - {fileID: 1665472519}
-  - {fileID: 1887265009}
-  - {fileID: 1043329050}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1408268519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29523,7 +29181,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1408268518}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -33265,7 +32923,6 @@ GameObject:
   - component: {fileID: 1545576683}
   - component: {fileID: 1545576682}
   - component: {fileID: 1545576681}
-  - component: {fileID: 1545576680}
   m_Layer: 5
   m_Name: 5
   m_TagString: Untagged
@@ -33297,25 +32954,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1545576680
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545576678}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 79276745}
-  stars:
-  - {fileID: 25812519}
-  - {fileID: 1373419469}
-  - {fileID: 267157019}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1545576681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33360,7 +32998,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1545576680}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -33879,7 +33517,6 @@ GameObject:
   - component: {fileID: 1553257905}
   - component: {fileID: 1553257904}
   - component: {fileID: 1553257903}
-  - component: {fileID: 1553257902}
   m_Layer: 5
   m_Name: 1
   m_TagString: Untagged
@@ -33911,25 +33548,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1553257902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1553257900}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 1
-  lockImage: {fileID: 966650096}
-  stars:
-  - {fileID: 1063112643}
-  - {fileID: 300725751}
-  - {fileID: 1528383169}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1553257903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33974,7 +33592,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1553257902}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -34691,9 +34309,9 @@ RectTransform:
   - {fileID: 417828280}
   m_Father: {fileID: 218042232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 259, y: 76}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 159, y: -72}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1591008191
@@ -34826,7 +34444,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1593896579
 RectTransform:
   m_ObjectHideFlags: 0
@@ -35031,7 +34649,6 @@ GameObject:
   - component: {fileID: 1603627194}
   - component: {fileID: 1603627193}
   - component: {fileID: 1603627192}
-  - component: {fileID: 1603627191}
   m_Layer: 5
   m_Name: 10
   m_TagString: Untagged
@@ -35063,25 +34680,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1603627191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603627189}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 2062710241}
-  stars:
-  - {fileID: 757260163}
-  - {fileID: 1887542258}
-  - {fileID: 1122205668}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1603627192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35126,7 +34724,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1603627191}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -35495,7 +35093,6 @@ GameObject:
   - component: {fileID: 1618740263}
   - component: {fileID: 1618740262}
   - component: {fileID: 1618740261}
-  - component: {fileID: 1618740260}
   m_Layer: 5
   m_Name: 10
   m_TagString: Untagged
@@ -35527,25 +35124,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1618740260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618740258}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 2088357644}
-  stars:
-  - {fileID: 155564838}
-  - {fileID: 907453395}
-  - {fileID: 33796699}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1618740261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35590,7 +35168,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1618740260}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -36261,8 +35839,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1, y: -57}
-  m_SizeDelta: {x: 49.9273, y: 50}
+  m_AnchoredPosition: {x: 138.8, y: 0}
+  m_SizeDelta: {x: 176.7858, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1667206040
 MonoBehaviour:
@@ -36284,7 +35862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12
+  m_text: 0/20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -36311,14 +35889,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -36775,7 +36353,6 @@ GameObject:
   - component: {fileID: 1675025949}
   - component: {fileID: 1675025948}
   - component: {fileID: 1675025947}
-  - component: {fileID: 1675025946}
   m_Layer: 5
   m_Name: 4
   m_TagString: Untagged
@@ -36807,25 +36384,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1675025946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1675025944}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 19990987}
-  stars:
-  - {fileID: 374853768}
-  - {fileID: 469588959}
-  - {fileID: 1849668392}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1675025947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36870,7 +36428,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1675025946}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -39410,7 +38968,6 @@ GameObject:
   - component: {fileID: 1803724477}
   - component: {fileID: 1803724476}
   - component: {fileID: 1803724475}
-  - component: {fileID: 1803724474}
   m_Layer: 5
   m_Name: 9
   m_TagString: Untagged
@@ -39442,25 +38999,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1803724474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1803724472}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1029633877}
-  stars:
-  - {fileID: 1303060633}
-  - {fileID: 1447728727}
-  - {fileID: 424261497}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1803724475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39505,7 +39043,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1803724474}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -40282,7 +39820,6 @@ GameObject:
   - component: {fileID: 1847245998}
   - component: {fileID: 1847245997}
   - component: {fileID: 1847245996}
-  - component: {fileID: 1847245995}
   m_Layer: 5
   m_Name: 8
   m_TagString: Untagged
@@ -40314,25 +39851,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1847245995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847245993}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 739184582}
-  stars:
-  - {fileID: 312457406}
-  - {fileID: 1755696604}
-  - {fileID: 332589510}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1847245996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40377,7 +39895,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1847245995}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -42013,7 +41531,6 @@ GameObject:
   - component: {fileID: 1920972314}
   - component: {fileID: 1920972313}
   - component: {fileID: 1920972312}
-  - component: {fileID: 1920972311}
   m_Layer: 5
   m_Name: 6
   m_TagString: Untagged
@@ -42045,25 +41562,6 @@ RectTransform:
   m_AnchoredPosition: {x: 440, y: -322.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1920972311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920972309}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 188954489}
-  stars:
-  - {fileID: 1847169484}
-  - {fileID: 433994530}
-  - {fileID: 1831833004}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &1920972312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42108,7 +41606,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1920972311}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -43690,7 +43188,6 @@ GameObject:
   - component: {fileID: 2022800177}
   - component: {fileID: 2022800176}
   - component: {fileID: 2022800175}
-  - component: {fileID: 2022800174}
   m_Layer: 5
   m_Name: 12
   m_TagString: Untagged
@@ -43722,25 +43219,6 @@ RectTransform:
   m_AnchoredPosition: {x: 840, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2022800174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022800172}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 1032793712}
-  stars:
-  - {fileID: 129011358}
-  - {fileID: 959965896}
-  - {fileID: 236565619}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &2022800175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43785,7 +43263,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2022800174}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -45337,9 +44815,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlocked: {fileID: 1718878246}
   locked: {fileID: 1895641484}
-  questNum: 5
-  startLevel: 8
-  endLevel: 7
+  questNum: 20
+  startLevel: 1
+  endLevel: 0
   isUnlock: 0
 --- !u!114 &2088515535
 MonoBehaviour:
@@ -46104,7 +45582,6 @@ GameObject:
   - component: {fileID: 2118461525}
   - component: {fileID: 2118461524}
   - component: {fileID: 2118461523}
-  - component: {fileID: 2118461522}
   m_Layer: 5
   m_Name: 11
   m_TagString: Untagged
@@ -46136,25 +45613,6 @@ RectTransform:
   m_AnchoredPosition: {x: 640, y: -522.46497}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2118461522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118461520}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 0
-  lockImage: {fileID: 171379960}
-  stars:
-  - {fileID: 1695228462}
-  - {fileID: 1547166015}
-  - {fileID: 32692572}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &2118461523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46199,7 +45657,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2118461522}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -46621,7 +46079,6 @@ GameObject:
   - component: {fileID: 2139837774}
   - component: {fileID: 2139837773}
   - component: {fileID: 2139837772}
-  - component: {fileID: 2139837771}
   m_Layer: 5
   m_Name: 1
   m_TagString: Untagged
@@ -46653,25 +46110,6 @@ RectTransform:
   m_AnchoredPosition: {x: 240, y: -122.465}
   m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2139837771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2139837769}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee617783fd9123b478598c330be43c1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unlocked: 1
-  lockImage: {fileID: 2011939834}
-  stars:
-  - {fileID: 1307128553}
-  - {fileID: 1144777419}
-  - {fileID: 544636532}
-  starSprite: {fileID: 21300000, guid: b73957c913530b44f9070acfb9b6a932, type: 3}
 --- !u!114 &2139837772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46716,7 +46154,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2139837771}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: LevelSelection, Assembly-CSharp
         m_MethodName: PressSelection
         m_Mode: 3
@@ -46799,9 +46237,9 @@ RectTransform:
   - {fileID: 1667206039}
   m_Father: {fileID: 1209942321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 259, y: 76}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 159, y: -72}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2142735543

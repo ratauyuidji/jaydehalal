@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 
 public class MapSelection : MonoBehaviour
@@ -12,14 +13,15 @@ public class MapSelection : MonoBehaviour
     public int endLevel;
     public bool isUnlock = false;
 
+    
     private void Update()
     {
-        UpdateMapStatus();
         UnlockMap();
+        UpdateMapStatus();
     }
-    private void UpdateMapStatus()
+    public void UpdateMapStatus()
     {
-        if(isUnlock) //unlock
+        if (isUnlock) //unlock
         {
             unlocked.gameObject.SetActive(true);
             locked.gameObject.SetActive(false);
@@ -30,8 +32,9 @@ public class MapSelection : MonoBehaviour
             locked.gameObject.SetActive(true);
         }
     }
-    private void UnlockMap()
+    public void UnlockMap()
     {
+
         if (UIManager.Instance.stars >= questNum)
         {
             isUnlock = true;

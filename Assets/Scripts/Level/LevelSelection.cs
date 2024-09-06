@@ -11,17 +11,19 @@ public class LevelSelection : MonoBehaviour
     public Image lockImage;
     public GameObject[] stars;
     public Sprite starSprite;
-
+    
     private void Start()
     {
         //PlayerPrefs.DeleteAll();
     }
+
+    
     private void Update()
     {
-        UpdateLevelImage();
-        UpdateLevelStatus();
+        //UpdateLevelImage();
+        //UpdateLevelStatus();
     }
-    private void UpdateLevelStatus()
+    public void UpdateLevelStatus()
     {
         //if current lv is 5, the pre should be 4
         int previousLevelNum = int.Parse(gameObject.name) - 1;
@@ -30,7 +32,7 @@ public class LevelSelection : MonoBehaviour
             unlocked = true;
         }
     }
-    private void UpdateLevelImage()
+    public void UpdateLevelImage()
     {
         if (!unlocked) // level lock
         {
