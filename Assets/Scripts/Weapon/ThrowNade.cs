@@ -97,6 +97,8 @@ public class ThrowNade : MonoBehaviour
     private void DrawLine()
     {
         Vector3 touchPosition = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
+        Vector3 direction = (startPosition.position - touchPosition).normalized;
+        touchPosition += direction * 7f;
         SetLine(touchPosition);
     }
 

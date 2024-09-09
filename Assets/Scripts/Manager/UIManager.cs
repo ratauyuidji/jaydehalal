@@ -177,7 +177,7 @@ public class UIManager : MonoBehaviour
 
         for (int i = 1; i <= 31; i++) // 3 level
         {
-            if (PlayerPrefs.GetInt("Lv" + i) > 0)
+            if (PlayerPrefs.GetInt("Lv" + i) >= 0 && PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
                 highestUnlockedLevel = i +1;
             }

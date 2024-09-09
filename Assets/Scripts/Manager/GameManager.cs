@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CanvasGroup backgroundUI;
 
 
-
     Coroutine CWin;
     Coroutine CCheckEnemy;
     public static GameManager Instance;
@@ -30,7 +29,7 @@ public class GameManager : MonoBehaviour
     public StarDisplay starDisplay;
     private int currentReloadTime;
     private bool canReload = true;
-    private bool hasWon = false;
+    public bool hasWon = false;
 
 
 
@@ -158,6 +157,7 @@ public class GameManager : MonoBehaviour
             moneyEarnedText.text = "+" + moneyEarned.ToString();
         }
         CheckStar(remainShoot);
+        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
         starDisplay.DisplayStar(remainShoot);
         player.SetActive(false);
