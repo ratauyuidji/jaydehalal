@@ -196,11 +196,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoadMenu()
     {
-        UIManager.Instance.UpdateLockedStarUI();
-        UIManager.Instance.UpdateUnlockedStarUI();
-        UIManager.Instance.UpdateStarUI();
         SceneManager.LoadScene(0);
-
     }
     public void CheckStar(int starsNum)
     {

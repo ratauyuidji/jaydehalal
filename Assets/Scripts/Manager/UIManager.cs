@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
@@ -77,7 +76,6 @@ public class UIManager : MonoBehaviour
                 lockedStarsText[i].text = stars.ToString() + "/" + mapSelection[i].endLevel * 3;
             }
         }
-
     }
     public void UpdateUnlockedStarUI()
     {

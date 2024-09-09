@@ -51,7 +51,7 @@ public class Bullet : Projectile
             Debug.Log("aaaa");
             Rigidbody2D erb  = other.GetComponent<Rigidbody2D>();
             Vector2 impactDirection = transform.position - other.transform.position;
-            erb.AddForce(impactDirection * 50f,ForceMode2D.Impulse);
+            erb.AddForce(impactDirection * 100f,ForceMode2D.Impulse);
         }
         
     }

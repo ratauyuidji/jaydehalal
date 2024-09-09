@@ -5,8 +5,9 @@ using UnityEngine;
 public class Nade : MonoBehaviour
 {
     private Rigidbody2D rb;
-    public float radius = 5f;
     private Explosive explosive;
+    public float radius = 5f;
+    private bool hasExploded = false;
 
     private void Awake()
     {
@@ -19,6 +20,9 @@ public class Nade : MonoBehaviour
     }
     public void Explode()
     {
+        if (hasExploded) return;
+        hasExploded = true;
+
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D obj in objects)
         {
@@ -27,6 +31,12 @@ public class Nade : MonoBehaviour
             {
                 bom.Explode();
                 Destroy(bom.gameObject);
+            }
+            Nade nade = obj.GetComponent<Nade>();
+            if (nade != null)
+            {
+                nade.Explode();
+                Destroy(nade.gameObject);
             }
             else if (obj.gameObject.CompareTag("Enemy"))
             {

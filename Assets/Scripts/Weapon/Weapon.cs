@@ -47,8 +47,6 @@ public class Weapon : MonoBehaviour
         }
     }
 
-
-
     private void Shoot()
     {
         Vector2 direction = (Vector2)Camera.main.ScreenToWorldPoint(InputManager.MousePosition) - (Vector2)transform.position;
