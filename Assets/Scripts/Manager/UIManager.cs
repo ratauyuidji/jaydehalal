@@ -85,17 +85,22 @@ public class UIManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    int totalStars = 0;
+                    int totalStars0 = 0;
                     for (int lv = 1; lv <= 32; lv++)
                     {
-                        totalStars += PlayerPrefs.GetInt("Lv" + lv);
+                        totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
                     int maxStars = (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
-                    unlockedStarsText[i].text = totalStars + "/" + maxStars;
+                    unlockedStarsText[i].text = totalStars0 + "/" + maxStars;
                     break;
 
                 case 1:
-                    unlockedStarsText[i].text = 0 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    int totalStars1 = 0;
+                    for (int lv = 33; lv <= 44; lv++)
+                    {
+                        totalStars1 += PlayerPrefs.GetInt("Lv" + lv);
+                    }
+                    unlockedStarsText[i].text = totalStars1 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     break;
                 case 2:
                     unlockedStarsText[i].text = 0 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
@@ -106,11 +111,11 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 32; i++)
+        for (int i = 1; i <= 44; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 96;
+        startText.text = stars.ToString() + "/" + 132;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -119,7 +124,6 @@ public class UIManager : MonoBehaviour
             mapSelectionPanel.gameObject.SetActive(false);
             StartCoroutine(ShowPanel(levelSelectionPanels[mapIndex], mapIndex));
 
-            // Get all LevelSelection components in the map's level selection panel and update their status/images
             LevelSelection[] levels = levelSelectionPanels[mapIndex].GetComponentsInChildren<LevelSelection>();
             foreach (LevelSelection level in levels)
             {

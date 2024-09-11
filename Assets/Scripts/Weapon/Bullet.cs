@@ -45,14 +45,17 @@ public class Bullet : Projectile
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Hostages"))
         {
-            Debug.Log("aaaa");
-            Rigidbody2D erb  = other.GetComponent<Rigidbody2D>();
+            Rigidbody2D erb = other.GetComponent<Rigidbody2D>();
             Vector2 impactDirection = transform.position - other.transform.position;
-            erb.AddForce(impactDirection * 100f,ForceMode2D.Impulse);
+            erb.AddForce(impactDirection * 100f, ForceMode2D.Impulse);
+
+            if (other.gameObject.CompareTag("Hostages"))
+            {
+                GameManager.Instance.LoseGame();
+            }
         }
-        
     }
+
 }

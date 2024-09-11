@@ -42,8 +42,13 @@ public class Nade : MonoBehaviour
             {
                 explosive.HandleEnemy(obj);
             }
-            else
+            else if (obj.gameObject.CompareTag("Hostages"))
             {
+                explosive.HandleHostage(obj);
+            }
+
+            else
+                    {
                 explosive.ApplyForceToObject(obj);
             }
         }

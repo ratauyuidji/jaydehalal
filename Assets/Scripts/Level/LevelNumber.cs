@@ -12,10 +12,16 @@ public class LevelNumber : MonoBehaviour
     {
         CurrentLevelNumber();
     }
+
     private void CurrentLevelNumber()
     {
         int currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        levelNumber.text = "Level " + (currentLevelIndex).ToString();
-    }
 
+        if (currentLevelIndex > 32)
+        {
+            currentLevelIndex -= 32;
+        }
+
+        levelNumber.text = "Level " + currentLevelIndex.ToString();
+    }
 }

@@ -38,6 +38,10 @@ public class Bom : MonoBehaviour
             {
                 explosive.HandleEnemy(obj);
             }
+            else if (obj.gameObject.CompareTag("Hostages"))
+            {
+                explosive.HandleHostage(obj);
+            }
             else if(explosive != null)
 {
                 explosive.ApplyForceToObject(obj);

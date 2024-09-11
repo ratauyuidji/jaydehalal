@@ -24,6 +24,23 @@ public class Explosive : MonoBehaviour
             }
         }
     }
+    public void HandleHostage(Collider2D obj)
+    {
+        Hostages hostages = obj.GetComponentInParent<Hostages>();
+        if (hostages != null)
+        {
+            GameManager.Instance.LoseGame();
+            Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
+
+            Rigidbody2D rb = hostages.GetComponentInChildren<Rigidbody2D>();
+            if (rb != null)
+            {
+                Vector2 direction = rb.transform.position - transform.position;
+                rb.AddForce(direction.normalized * force);
+                Debug.Log(rb.transform.name);
+            }
+        }
+    }
 
     public void ApplyForceToObject(Collider2D obj)
     {

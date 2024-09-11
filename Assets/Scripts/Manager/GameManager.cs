@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     private int currentReloadTime;
     private bool canReload = true;
     public bool hasWon = false;
+    private bool hasLost = false;
 
 
 
@@ -41,6 +42,8 @@ public class GameManager : MonoBehaviour
         {
             Instantiate(economyManagerPrefab);
         }
+        hasLost = false;
+        hasWon = false;
     }
     private void Update()
     {
@@ -117,14 +120,7 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Loss");
-            lose.SetActive(true);
-            CheckStar(0);
-            player.SetActive(false);
-            if (backgroundUI != null)
-            {
-                backgroundUI.interactable = false;
-                backgroundUI.blocksRaycasts = false;
-            }
+            LoseGame();
         }
     }
     public void RemoveEnemy(Enemy enemy)
@@ -144,7 +140,7 @@ public class GameManager : MonoBehaviour
     }
     public void WinGame()
     {
-        if (hasWon) return;
+        if (hasWon || hasLost) return;
         hasWon = true;
 
         int remainShoot = maxNumberOfShoot - useNumberOfShoot;
@@ -162,6 +158,20 @@ public class GameManager : MonoBehaviour
         starDisplay.DisplayStar(remainShoot);
         player.SetActive(false);
 
+        if (backgroundUI != null)
+        {
+            backgroundUI.interactable = false;
+            backgroundUI.blocksRaycasts = false;
+        }
+    }
+    public void LoseGame()
+    {
+        if (hasLost) return;
+        hasLost = true;
+
+        lose.SetActive(true);
+        CheckStar(0);
+        player.SetActive(false);
         if (backgroundUI != null)
         {
             backgroundUI.interactable = false;
