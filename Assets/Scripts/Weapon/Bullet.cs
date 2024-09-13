@@ -16,7 +16,7 @@ public class Bullet : Projectile
         this.direction = direction;
         rb.velocity = direction * speed;
     }
-    
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();

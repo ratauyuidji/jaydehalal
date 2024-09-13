@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Rocket : Projectile
 {
+    [SerializeField] private GameObject explosionEffect;
+
     public float speed = 8f;
     public float radius = 5f;
     private Explosive explosive;
@@ -23,6 +25,8 @@ public class Rocket : Projectile
 
     public void Explode()
     {
+        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(explosion, 1f);
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D obj in objects)
         {

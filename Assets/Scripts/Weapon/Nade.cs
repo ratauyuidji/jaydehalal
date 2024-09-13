@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Nade : MonoBehaviour
 {
+    [SerializeField] private GameObject explosionEffect;
+
     private Rigidbody2D rb;
     private Explosive explosive;
     public float radius = 5f;
@@ -22,6 +24,8 @@ public class Nade : MonoBehaviour
     {
         if (hasExploded) return;
         hasExploded = true;
+        GameObject explosion = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(explosion, 1f);
 
         Collider2D[] objects = Physics2D.OverlapCircleAll(transform.position, radius);
         foreach (Collider2D obj in objects)

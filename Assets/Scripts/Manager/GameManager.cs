@@ -180,6 +180,10 @@ public class GameManager : MonoBehaviour
     }
     public void SkipLevel()
     {
+        if (lose.activeSelf)
+        {
+            lose.SetActive(false);
+        }
         EconomyManager.Instance.IncreaseMoney(30);
         Debug.Log("money: " + 30);
         if (moneyEarnedText != null)
@@ -187,6 +191,7 @@ public class GameManager : MonoBehaviour
             moneyEarnedText.text = "+" + 30;
         }
         CheckStar(3);
+        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
         starDisplay.DisplayStar(3);
         player.SetActive(false);

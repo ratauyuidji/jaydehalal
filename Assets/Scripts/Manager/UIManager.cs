@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private TextMeshProUGUI completedLevelsMap1Text;
+    [SerializeField] private TextMeshProUGUI completedLevelsMap2Text;
+    [SerializeField] private TextMeshProUGUI starMap1Text;
+    [SerializeField] private TextMeshProUGUI starMap2Text;
+
     public static UIManager Instance;
     public GameObject mapSelectionPanel;
     public GameObject[] levelSelectionPanels;
@@ -17,10 +22,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI[] lockedStarsText;
     public TextMeshProUGUI[] unlockedStarsText;
     public TextMeshProUGUI startText;
-    public Button[] buttons;
     public Image[] checkmarks;
-    private bool[] states;
     private Vector3[] initialPositions;
+    public Button[] buttons;
+    public TextMeshProUGUI[] buttonTexts;
+    private int starMap1;
+    private int starMap2;
 
 
 
@@ -44,27 +51,49 @@ public class UIManager : MonoBehaviour
             initialPositions[i] = levelSelectionPanels[i].GetComponent<RectTransform>().anchoredPosition;
         }
     }
+    private bool[] buttonStates;
+
     void Start()
     {
-        states = new bool[buttons.Length];
+        buttonStates = new bool[buttons.Length];
 
-        for (int i = 0; i < states.Length; i++)
+        for (int i = 0; i < buttons.Length; i++)
         {
-            states[i] = true;
             int index = i;
-            buttons[i].onClick.AddListener(() => Toggle(index));
+            buttons[i].onClick.AddListener(() => ToggleButton(index));
+            buttonStates[i] = true;
+        }
+        UpdateAllButtonTexts();
+    }
+    void ToggleButton(int index)
+    {
+        buttonStates[index] = !buttonStates[index];
+        UpdateAllButtonTexts();
+    }
+    void UpdateAllButtonTexts()
+    {
+        for (int i = 0; i < buttonTexts.Length; i++)
+        {
+            buttonTexts[i].text = $"{buttonTexts[i].name}: " + (buttonStates[i] ? "On" : "Off");
         }
     }
-    void Toggle(int index)
-    {
-        states[index] = !states[index];
-        checkmarks[index].gameObject.SetActive(states[index]);
-    }
+
     private void Update()
     {
         UpdateLockedStarUI();
         UpdateUnlockedStarUI();
         UpdateStarUI();
+        UpdateCompletedLevelsText();
+    }
+    private void UpdateCompletedLevelsText()
+    {
+        int completedLevels1Count = GetCompletedLevels1Count();
+        int completedLevels2Count = GetCompletedLevels2Count();
+
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "32";
+        completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "12";
+        starMap1Text.text = starMap1.ToString();
+        starMap2Text.text = starMap2.ToString();
     }
     public void UpdateLockedStarUI()
     {
@@ -92,6 +121,7 @@ public class UIManager : MonoBehaviour
                     }
                     int maxStars = (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     unlockedStarsText[i].text = totalStars0 + "/" + maxStars;
+                    starMap1 = totalStars0;
                     break;
 
                 case 1:
@@ -101,6 +131,7 @@ public class UIManager : MonoBehaviour
                         totalStars1 += PlayerPrefs.GetInt("Lv" + lv);
                     }
                     unlockedStarsText[i].text = totalStars1 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    starMap2 = totalStars1;
                     break;
                 case 2:
                     unlockedStarsText[i].text = 0 + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
@@ -195,10 +226,40 @@ public class UIManager : MonoBehaviour
     }
     public void TurnOnSettingPanel()
     {
+        mapSelectionPanel.gameObject.SetActive(false);
         settingPanel.SetActive(true);
     }
     public void TurnOffSettingPanel()
     {
+        mapSelectionPanel.gameObject.SetActive(true);
         settingPanel.SetActive(false);
+    }
+    public int GetCompletedLevels1Count()
+    {
+        int completedLevels1Count = 0;
+
+        for (int i = 1; i <= 32; i++)
+        {
+            if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
+            {
+                completedLevels1Count++;
+            }
+        }
+
+        return completedLevels1Count;
+    }
+    public int GetCompletedLevels2Count()
+    {
+        int completedLevels2Count = 0;
+
+        for (int i = 33; i <= 44; i++)
+        {
+            if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
+            {
+                completedLevels2Count++;
+            }
+        }
+
+        return completedLevels2Count;
     }
 }
