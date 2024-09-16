@@ -90,8 +90,8 @@ public class UIManager : MonoBehaviour
         int completedLevels1Count = GetCompletedLevels1Count();
         int completedLevels2Count = GetCompletedLevels2Count();
 
-        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "32";
-        completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "12";
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "36";
+        completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "24";
         starMap1Text.text = starMap1.ToString();
         starMap2Text.text = starMap2.ToString();
     }
@@ -115,7 +115,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars0 = 0;
-                    for (int lv = 1; lv <= 32; lv++)
+                    for (int lv = 1; lv <= 36; lv++)
                     {
                         totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -126,7 +126,7 @@ public class UIManager : MonoBehaviour
 
                 case 1:
                     int totalStars1 = 0;
-                    for (int lv = 33; lv <= 44; lv++)
+                    for (int lv = 37; lv <= 60; lv++)
                     {
                         totalStars1 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -142,11 +142,11 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 44; i++)
+        for (int i = 1; i <= 60; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 132;
+        startText.text = stars.ToString() + "/" + 180;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -208,7 +208,7 @@ public class UIManager : MonoBehaviour
     {
         int highestUnlockedLevel = 1; 
 
-        for (int i = 1; i <= 31; i++) // 3 level
+        for (int i = 1; i <= 35; i++) // 3 level
         {
             if (PlayerPrefs.GetInt("Lv" + i) >= 0 && PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
@@ -238,7 +238,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = 0;
 
-        for (int i = 1; i <= 32; i++)
+        for (int i = 1; i <= 36; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
@@ -252,7 +252,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels2Count = 0;
 
-        for (int i = 33; i <= 44; i++)
+        for (int i = 37; i <= 60; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
