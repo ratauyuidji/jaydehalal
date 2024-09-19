@@ -15,8 +15,6 @@ public class Enemy : MonoBehaviour
         isDied = false;
     }
 
-
-
     public void TakeDamage(float damageAmount)
     {
         if (isDied) return;

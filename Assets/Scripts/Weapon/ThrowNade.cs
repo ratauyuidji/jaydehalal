@@ -20,9 +20,19 @@ public class ThrowNade : MonoBehaviour
     private int currentNadeNumber;
     private bool canThrow = true;
 
+    private const string NadeKey = "CurrentNadeNumber";
+
     private void Awake()
     {
-        currentNadeNumber = 1;
+        if (PlayerPrefs.HasKey(NadeKey))
+        {
+            currentNadeNumber = PlayerPrefs.GetInt(NadeKey);
+        }
+        else
+        {
+            currentNadeNumber = 0;
+        }
+
         UpdateNadeNumberText();
         changeWeapon = FindObjectOfType<ChangeWeapon>();
     }
@@ -55,6 +65,7 @@ public class ThrowNade : MonoBehaviour
                     ThrowGrenade();
                     currentNadeNumber--;
                     UpdateNadeNumberText();
+                    SaveNadeNumber();
                     if (currentNadeNumber == 0)
                     {
                         canThrow = false;
@@ -71,7 +82,6 @@ public class ThrowNade : MonoBehaviour
         }
     }
 
-
     void ThrowGrenade()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
@@ -85,14 +95,12 @@ public class ThrowNade : MonoBehaviour
         {
             Debug.Log("Calling ArmRotate");
             rotateArm.ArmRotate();
-        }        
+        }
         if (changeWeapon.currentWeaponIndex == 2)
         {
             changeWeapon.SwitchToFirstWeapon();
         }
     }
-
-    
 
     private void DrawLine()
     {
@@ -128,6 +136,8 @@ public class ThrowNade : MonoBehaviour
             canThrow = true;
         }
         UpdateNadeNumberText();
+        SaveNadeNumber();
+        GameManager.Instance.TurnOffAddPanel();
     }
 
     private void UpdateNadeNumberText()
@@ -136,6 +146,12 @@ public class ThrowNade : MonoBehaviour
         {
             ammoText.text = currentNadeNumber.ToString();
         }
+    }
+
+    private void SaveNadeNumber()
+    {
+        PlayerPrefs.SetInt(NadeKey, currentNadeNumber);
+        PlayerPrefs.Save();
     }
 
     private bool IsMouseOverArmWithGun()

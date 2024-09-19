@@ -204,15 +204,25 @@ public class UIManager : MonoBehaviour
             levelSelectionPanels[i].gameObject.SetActive(false);
         }
     }
-    public void LoadHighestUnlockedLevel()
+    public void LoadHighestUnlockedLevelMode1()
     {
-        int highestUnlockedLevel = 1; 
+        LoadHighestUnlockedLevel(1, 35);
+    }
 
-        for (int i = 1; i <= 35; i++) // 3 level
+    public void LoadHighestUnlockedLevelMode2()
+    {
+        LoadHighestUnlockedLevel(37, 59);
+    }
+
+    private void LoadHighestUnlockedLevel(int start, int end)
+    {
+        int highestUnlockedLevel = start;
+
+        for (int i = start; i <= end; i++)
         {
             if (PlayerPrefs.GetInt("Lv" + i) >= 0 && PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
-                highestUnlockedLevel = i +1;
+                highestUnlockedLevel = i + 1;
             }
             else
             {

@@ -18,15 +18,24 @@ public class Bazooka : MonoBehaviour
 
     private int currentAmmo;
     private bool canShoot = true;
+    private const string AmmoKey = "CurrentAmmo";
 
     private void Awake()
     {
-        currentAmmo = 1;
+        if (PlayerPrefs.HasKey(AmmoKey))
+        {
+            currentAmmo = PlayerPrefs.GetInt(AmmoKey);
+        }
+        else
+        {
+            currentAmmo = 0;
+        }
+
         UpdateAmmoText();
         changeWeapon = FindObjectOfType<ChangeWeapon>();
         Debug.Log(currentAmmo);
     }
-    
+
     private void OnEnable()
     {
         if (currentAmmo > 0)
@@ -47,6 +56,7 @@ public class Bazooka : MonoBehaviour
                 Shoot();
                 currentAmmo--;
                 UpdateAmmoText();
+                SaveAmmo();
                 if (currentAmmo == 0)
                 {
                     canShoot = false;
@@ -83,6 +93,8 @@ public class Bazooka : MonoBehaviour
             canShoot = true;
         }
         UpdateAmmoText();
+        SaveAmmo();
+        GameManager.Instance.TurnOffAddPanel();
     }
 
     private void UpdateAmmoText()
@@ -91,5 +103,11 @@ public class Bazooka : MonoBehaviour
         {
             ammoText.text = currentAmmo.ToString();
         }
+    }
+
+    private void SaveAmmo()
+    {
+        PlayerPrefs.SetInt(AmmoKey, currentAmmo);
+        PlayerPrefs.Save();
     }
 }

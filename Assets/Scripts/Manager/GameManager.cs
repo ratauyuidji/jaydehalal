@@ -16,10 +16,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyEarnedText;
     [SerializeField] private GameObject economyManagerPrefab;
     [SerializeField] private CanvasGroup backgroundUI;
+    [SerializeField] private GameObject addBazookaPanel;
+    [SerializeField] private GameObject addNadePanel;
+    [SerializeField] private GameObject addBulletPanel;
+    [SerializeField] private Animator transitionAnim;
+
 
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
+    private const string ReloadTimeKey = "CurrentReloadTime";
     public static GameManager Instance;
     public int maxNumberOfShoot;
     private int useNumberOfShoot;
@@ -36,7 +42,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        currentReloadTime = 1;
+        if (PlayerPrefs.HasKey(ReloadTimeKey))
+        {
+            currentReloadTime = PlayerPrefs.GetInt(ReloadTimeKey);
+        }
+        else
+        {
+            currentReloadTime = 0;
+        }
         UpdateReloadText();
         if (EconomyManager.Instance == null)
         {
@@ -78,7 +91,8 @@ public class GameManager : MonoBehaviour
             useNumberOfShoot--;
             currentReloadTime--;
             UpdateReloadText();
-            if(currentReloadTime == 0)
+            SaveReloadTime();
+            if (currentReloadTime == 0)
             {
                 canReload = false;
             }
@@ -130,7 +144,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator CheckAllEnemyDeath()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
@@ -184,16 +198,16 @@ public class GameManager : MonoBehaviour
         {
             lose.SetActive(false);
         }
-        EconomyManager.Instance.IncreaseMoney(30);
-        Debug.Log("money: " + 30);
+        EconomyManager.Instance.IncreaseMoney(0);
+        Debug.Log("money: " + 0);
         if (moneyEarnedText != null)
         {
-            moneyEarnedText.text = "+" + 30;
+            moneyEarnedText.text = "+" + 0;
         }
-        CheckStar(3);
+        CheckStar(0);
         PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
-        starDisplay.DisplayStar(3);
+        starDisplay.DisplayStar(0);
         player.SetActive(false);
         if (backgroundUI != null)
         {
@@ -207,7 +221,16 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        transitionAnim.SetTrigger("End");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        transitionAnim.SetTrigger("Start");
+    }
+    IEnumerator LoadLevel()
+    {
+        transitionAnim.SetTrigger("End");
+        yield return new WaitForSeconds(0.00001f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        transitionAnim.SetTrigger("Start");        
     }
     public void LoadMenu()
     {
@@ -230,6 +253,8 @@ public class GameManager : MonoBehaviour
             canReload = true;
         }
         UpdateReloadText();
+        SaveReloadTime();
+        GameManager.Instance.TurnOffAddPanel();
     }
 
     private void UpdateReloadText()
@@ -238,6 +263,11 @@ public class GameManager : MonoBehaviour
         {
             reloadText.text = currentReloadTime.ToString();
         }
+    }
+    private void SaveReloadTime()
+    {
+        PlayerPrefs.SetInt(ReloadTimeKey, currentReloadTime);
+        PlayerPrefs.Save();
     }
     public bool RaycastForCanFire()
     {
@@ -252,11 +282,38 @@ public class GameManager : MonoBehaviour
                 return true;
             }
         }
-
         Debug.Log("Raycast did not hit the specified object.");
         return false;
     }
+    public void TurnOnAddPanel(string panelName)
+    {
+        DisableAllPanels();
+        switch (panelName)
+        {
+            case "GetBazookaPanel":
+                addBazookaPanel.SetActive(true);
+                break;
+            case "GetNadePanel":
+                addNadePanel.SetActive(true);
+                break;
+            case "GetBulletPanel":
+                addBulletPanel.SetActive(true);
+                break;
+        }
+        player.SetActive(false);
+    }
 
+    public void TurnOffAddPanel()
+    {
+        DisableAllPanels();
+        player.SetActive(true);
+    }
+    private void DisableAllPanels()
+    {
+        addBazookaPanel.SetActive(false);
+        addNadePanel.SetActive(false);
+        addBulletPanel.SetActive(false);
+    }
 
 
 }

@@ -22,7 +22,6 @@ public class EnemyChildren : MonoBehaviour
             }
             if (impactVelocity > parentEnemy.damageThreshold && !parentEnemy.isDied)
             {
-                Debug.Log(impactVelocity);
                 parentEnemy.TakeDamage(impactVelocity);
                 Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
             }
@@ -31,11 +30,9 @@ public class EnemyChildren : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Bullet") )
+        if (other.gameObject.CompareTag("Bullet"))
         {
+            Debug.Log("Bullet hit detected.");
             parentEnemy.OnBulletHit(other);
             Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
-        }
-    }
-
-}
+} } }
