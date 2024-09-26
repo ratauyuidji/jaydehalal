@@ -49,7 +49,7 @@ public class Bullet : Projectile
         {
             Rigidbody2D erb = other.GetComponent<Rigidbody2D>();
             Vector2 impactDirection = transform.position - other.transform.position;
-            erb.AddForce(impactDirection * 100f, ForceMode2D.Impulse);
+            erb.AddForce(impactDirection * 50f, ForceMode2D.Impulse);
 
             if (other.gameObject.CompareTag("Hostages"))
             {

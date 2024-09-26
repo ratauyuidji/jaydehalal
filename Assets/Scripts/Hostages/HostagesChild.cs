@@ -15,7 +15,7 @@ public class HostagesChild : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("FallBox") || other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.CompareTag("CanDestroyBox") || other.gameObject.CompareTag("Wall"))
         {
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentHostages.damageThreshold)
@@ -35,6 +35,7 @@ public class HostagesChild : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Bullet"))
         {
+            parentHostages.ActivateDeadSprite();
             Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
         }
     }

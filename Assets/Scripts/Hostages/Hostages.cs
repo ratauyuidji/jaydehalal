@@ -6,6 +6,8 @@ public class Hostages : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 5f;
     [SerializeField] public float damageThreshold = 1f;
+    public GameObject head;
+    public Sprite deadHeadSprite;
     private float currentHealth;
     public bool isDied;
 
@@ -25,8 +27,13 @@ public class Hostages : MonoBehaviour
         Debug.Log($"Current Health: {currentHealth}");
         if (currentHealth <= 0)
         {
+            ActivateDeadSprite();
             isDied = true;
             GameManager.Instance.LoseGame();
         }
+    }
+    public void ActivateDeadSprite()
+    {
+        head.gameObject.GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
     }
 }

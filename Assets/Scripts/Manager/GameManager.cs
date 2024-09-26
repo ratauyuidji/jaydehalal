@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private IconHandler iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
-    [SerializeField] private GameObject player;
     [SerializeField] private int maxReloadTime = 10;
     [SerializeField] private TextMeshProUGUI reloadText;
     [SerializeField] private TextMeshProUGUI moneyEarnedText;
@@ -31,17 +30,24 @@ public class GameManager : MonoBehaviour
     private int useNumberOfShoot;
     private List<Enemy> enemylist = new List<Enemy>(); 
     private int currentStarsNum = 0;
-    public int levelIndex;
+    private int levelIndex;
     public StarDisplay starDisplay;
     private int currentReloadTime;
     private bool canReload = true;
     public bool hasWon = false;
     private bool hasLost = false;
-
+    private GameObject player;
 
 
     private void Start()
     {
+#if !UNITY_EDITOR
+        Application.targetFrameRate = 60;
+#endif
+        string sceneName = SceneManager.GetActiveScene().name;
+
+        levelIndex = ExtractLevelIndex(sceneName);
+        Debug.Log("Level Index: " + levelIndex);
         if (PlayerPrefs.HasKey(ReloadTimeKey))
         {
             currentReloadTime = PlayerPrefs.GetInt(ReloadTimeKey);
@@ -57,6 +63,16 @@ public class GameManager : MonoBehaviour
         }
         hasLost = false;
         hasWon = false;
+        Weapon weaponScript = FindObjectOfType<Weapon>();
+
+        if (weaponScript != null)
+        {
+            player = weaponScript.gameObject;
+        }
+        else
+        {
+            Debug.LogWarning("Không tìm thấy đối tượng Player có gắn script Weapon");
+        }
     }
     private void Update()
     {
@@ -77,7 +93,17 @@ public class GameManager : MonoBehaviour
             enemylist.Add(enemy[i]);
         }
     }
-    
+    private int ExtractLevelIndex(string sceneName)
+    {
+        for (int i = 0; i < sceneName.Length; i++)
+        {
+            if (char.IsDigit(sceneName[i]))
+            {
+                return int.Parse(sceneName.Substring(i));
+            }
+        }
+        return 0;
+    }
     public void UseShoot()
     {
         useNumberOfShoot++;
@@ -89,7 +115,7 @@ public class GameManager : MonoBehaviour
         if (useNumberOfShoot > 0 && canReload)
         {
             useNumberOfShoot--;
-            currentReloadTime--;
+            currentReloadTime = Mathf.Clamp(currentReloadTime - 1, 0, maxReloadTime);
             UpdateReloadText();
             SaveReloadTime();
             if (currentReloadTime == 0)
@@ -144,7 +170,7 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator CheckAllEnemyDeath()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
@@ -180,7 +206,7 @@ public class GameManager : MonoBehaviour
     }
     public void LoseGame()
     {
-        if (hasLost) return;
+        if (hasWon || hasLost) return;
         hasLost = true;
 
         lose.SetActive(true);

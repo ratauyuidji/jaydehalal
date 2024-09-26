@@ -3,6 +3,8 @@ using UnityEngine;
 public class Rocket : Projectile
 {
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private GameObject destroyVFXPrefab;
+
 
     public float speed = 8f;
     public float radius = 5f;
@@ -15,6 +17,8 @@ public class Rocket : Projectile
     public override void Shoot(Vector2 direction)
     {
         GetComponent<Rigidbody2D>().velocity = direction * speed;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -43,6 +47,11 @@ public class Rocket : Projectile
             else if (obj.gameObject.CompareTag("Hostages"))
             {
                 explosive.HandleHostage(obj);
+            }
+            else if (obj.gameObject.CompareTag("CanDestroyBox"))
+            {
+                Instantiate(destroyVFXPrefab, obj.transform.position, Quaternion.identity);
+                Destroy(obj.gameObject);
             }
             else
             {

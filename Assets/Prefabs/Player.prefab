@@ -584,6 +584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1397135066660108308}
   - component: {fileID: 1577239339687847525}
+  - component: {fileID: 1017459208045280388}
   m_Layer: 0
   m_Name: Char_Jw_body
   m_TagString: Untagged
@@ -658,6 +659,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1017459208045280388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2958131632036022985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8aa3425529d304fa290fea596478ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: edc9b3b3ca999134ca84e3e23e01a902, type: 3}
+  - {fileID: 21300000, guid: 5b14cd9d409be4b4687c52aae085185a, type: 3}
+  - {fileID: 21300000, guid: c0a77f41187f164489fff27592fad75d, type: 3}
+  - {fileID: 21300000, guid: 1a4358d422c30ae4bbb210b0ee0509a2, type: 3}
+  - {fileID: 21300000, guid: 20278ba57ac457548a730a35c3d2b3af, type: 3}
 --- !u!1 &3549153200508361800
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +702,7 @@ Transform:
   m_GameObject: {fileID: 3549153200508361800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.36, y: -2.1, z: 0}
+  m_LocalPosition: {x: 0.36, y: -1.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1402,7 +1421,7 @@ Transform:
   m_GameObject: {fileID: 8912148002947078963}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.26, y: 0.13, z: 0}
+  m_LocalPosition: {x: -0.488, y: 0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

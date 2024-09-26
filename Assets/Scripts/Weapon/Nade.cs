@@ -5,6 +5,8 @@ using UnityEngine;
 public class Nade : MonoBehaviour
 {
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private GameObject destroyVFXPrefab;
+
 
     private Rigidbody2D rb;
     private Explosive explosive;
@@ -49,6 +51,11 @@ public class Nade : MonoBehaviour
             else if (obj.gameObject.CompareTag("Hostages"))
             {
                 explosive.HandleHostage(obj);
+            }
+            else if (obj.gameObject.CompareTag("CanDestroyBox"))
+            {
+                Instantiate(destroyVFXPrefab, obj.transform.position, Quaternion.identity);
+                Destroy(obj.gameObject);
             }
 
             else

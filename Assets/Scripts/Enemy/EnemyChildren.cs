@@ -3,7 +3,7 @@
 public class EnemyChildren : MonoBehaviour
 {
     [SerializeField] private GameObject deathVFXPrefab;
-
+    
     private Enemy parentEnemy;
 
     private void Start()
@@ -13,7 +13,7 @@ public class EnemyChildren : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("FallBox") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("CanDestroyBox") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
         {
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentEnemy.damageThreshold)
@@ -35,4 +35,7 @@ public class EnemyChildren : MonoBehaviour
             Debug.Log("Bullet hit detected.");
             parentEnemy.OnBulletHit(other);
             Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
-} } }
+        } 
+    }
+    
+}

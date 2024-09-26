@@ -7,6 +7,8 @@ public class Bom : MonoBehaviour
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] public float damageThreshold = 1f;
     [SerializeField] private GameObject explosionEffect;
+    [SerializeField] private GameObject destroyVFXPrefab;
+
     private float currentHealth;
     public float radius;
     private bool hasExploded = false;
@@ -44,6 +46,11 @@ public class Bom : MonoBehaviour
             else if (obj.gameObject.CompareTag("Hostages"))
             {
                 explosive.HandleHostage(obj);
+            }
+            else if (obj.gameObject.CompareTag("CanDestroyBox"))
+            {
+                Instantiate(destroyVFXPrefab, obj.transform.position, Quaternion.identity);
+                Destroy(obj.gameObject);
             }
             else if(explosive != null)
 {
