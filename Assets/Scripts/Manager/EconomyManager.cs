@@ -11,13 +11,17 @@ public class EconomyManager : MonoBehaviour
 
     private void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
-
+    private void Update()
+    {
+        //UpdateMoney();
+    }
     private void Start()
     {
         currentMoney = PlayerPrefs.GetInt("CurrentMoney", 0); 
@@ -38,6 +42,11 @@ public class EconomyManager : MonoBehaviour
     public void IncreaseMoney(int money)
     {
         currentMoney += money;
+        UpdateMoney();
+    }
+    public void BuySkin(int cost)
+    {
+        currentMoney -= cost;
         UpdateMoney();
     }
 

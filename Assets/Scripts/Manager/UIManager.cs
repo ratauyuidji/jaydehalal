@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     public GameObject mapSelectionPanel;
     public GameObject[] levelSelectionPanels;
     public GameObject settingPanel;
+    public GameObject shopPanel;
     public int stars;
     public MapSelection[] mapSelection;
     public TextMeshProUGUI[] questStarsText;
@@ -243,6 +244,16 @@ public class UIManager : MonoBehaviour
     {
         mapSelectionPanel.gameObject.SetActive(true);
         settingPanel.SetActive(false);
+    }
+    public void TurnOnShopPanel()
+    {
+        mapSelectionPanel.gameObject.SetActive(false);
+        shopPanel.SetActive(true);
+    }
+    public void TurnOffShopPanel()
+    {
+        mapSelectionPanel.gameObject.SetActive(true);
+        shopPanel.SetActive(false);
     }
     public int GetCompletedLevels1Count()
     {
