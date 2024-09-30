@@ -4,6 +4,8 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,8 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addNadePanel;
     [SerializeField] private GameObject addBulletPanel;
     [SerializeField] private Animator transitionAnim;
-
-
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
@@ -38,12 +38,12 @@ public class GameManager : MonoBehaviour
     private bool hasLost = false;
     private GameObject player;
 
-
     private void Start()
     {
 #if !UNITY_EDITOR
         Application.targetFrameRate = 60;
 #endif
+
         string sceneName = SceneManager.GetActiveScene().name;
 
         levelIndex = ExtractLevelIndex(sceneName);
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         {
             RaycastForCanFire();
         }
+
     }
     private void Awake()
     {
@@ -192,9 +193,29 @@ public class GameManager : MonoBehaviour
         {
             moneyEarnedText.text = "+" + moneyEarned.ToString();
         }
+        
         CheckStar(remainShoot);
         PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
+        TextMeshProUGUI winText = win.transform.Find("WinText").GetComponent<TextMeshProUGUI>();
+        if (winText != null)
+        {
+            switch (remainShoot)
+            {
+                case 3:
+                    winText.text = "FANTASTIC!";
+                    break;
+                case 2:
+                    winText.text = "AWESOME!";
+                    break;
+                case 1:
+                    winText.text = "WELL DONE!";
+                    break;
+                case 0:
+                    winText.text = "GOOD!";
+                    break;
+            }
+        }
         starDisplay.DisplayStar(remainShoot);
         player.SetActive(false);
 
