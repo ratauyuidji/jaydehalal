@@ -6,7 +6,7 @@ using TMPro;
 public class EconomyManager : MonoBehaviour
 {
     public static EconomyManager Instance;
-    public TextMeshProUGUI moneyText;
+    [SerializeField] private TextMeshProUGUI moneyText;
     private int currentMoney;
 
     private void Awake()
@@ -20,13 +20,14 @@ public class EconomyManager : MonoBehaviour
     }
     private void Update()
     {
-        //UpdateMoney();
+        
     }
     private void Start()
     {
-        currentMoney = PlayerPrefs.GetInt("CurrentMoney", 0); 
+        currentMoney = PlayerPrefs.GetInt("CurrentMoney", 0);
         UpdateMoney();
     }
+
 
     public void UpdateMoney()
     {
@@ -38,7 +39,13 @@ public class EconomyManager : MonoBehaviour
         PlayerPrefs.SetInt("CurrentMoney", currentMoney);
         PlayerPrefs.Save();
     }
-
+    public void AssignMoneyText()
+    {
+        if (moneyText == null)
+        {
+            moneyText = GameObject.Find("MoneyText").GetComponent<TextMeshProUGUI>();
+        }
+    }
     public void IncreaseMoney(int money)
     {
         currentMoney += money;
@@ -47,6 +54,8 @@ public class EconomyManager : MonoBehaviour
     public void BuySkin(int cost)
     {
         currentMoney -= cost;
+        PlayerPrefs.SetInt("CurrentMoney", currentMoney);
+        PlayerPrefs.Save();
         UpdateMoney();
     }
 
@@ -54,5 +63,9 @@ public class EconomyManager : MonoBehaviour
     {
         currentMoney = 0;
         UpdateMoney();
+    }
+    public int GetCurrentMoney()
+    {
+        return currentMoney;
     }
 }

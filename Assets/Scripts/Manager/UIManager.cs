@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Hapiga.Ads;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,8 +26,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI startText;
     public Image[] checkmarks;
     private Vector3[] initialPositions;
-    public Button[] buttons;
-    public TextMeshProUGUI[] buttonTexts;
     private int starMap1;
     private int starMap2;
 
@@ -56,29 +55,10 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        buttonStates = new bool[buttons.Length];
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int index = i;
-            buttons[i].onClick.AddListener(() => ToggleButton(index));
-            buttonStates[i] = true;
-        }
-        UpdateAllButtonTexts();
+        AdManager.Instance.ShowBanner();
+        EconomyManager.Instance.AssignMoneyText();
     }
-    void ToggleButton(int index)
-    {
-        buttonStates[index] = !buttonStates[index];
-        UpdateAllButtonTexts();
-    }
-    void UpdateAllButtonTexts()
-    {
-        for (int i = 0; i < buttonTexts.Length; i++)
-        {
-            buttonTexts[i].text = $"{buttonTexts[i].name}: " + (buttonStates[i] ? "On" : "Off");
-        }
-    }
-
+    
     private void Update()
     {
         UpdateLockedStarUI();

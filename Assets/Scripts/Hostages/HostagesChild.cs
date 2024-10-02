@@ -5,11 +5,13 @@ using UnityEngine;
 public class HostagesChild : MonoBehaviour
 {
     [SerializeField] private GameObject deathVFXPrefab;
-
+    private bool isDeathVFXEnabled = true;
     private Hostages parentHostages;
 
     private void Start()
     {
+        bool isVFXEnabled = PlayerPrefs.GetInt("ButtonState_3", 1) == 1;
+        ToggleDeathVFX(isVFXEnabled);
         parentHostages = GetComponentInParent<Hostages>();
     }
 
@@ -20,13 +22,19 @@ public class HostagesChild : MonoBehaviour
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentHostages.damageThreshold)
             {
-                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                if (isDeathVFXEnabled)
+                {
+                    Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                }
             }
             if (impactVelocity > parentHostages.damageThreshold && !parentHostages.isDied)
             {
                 Debug.Log(impactVelocity);
                 parentHostages.TakeDamage(impactVelocity);
-                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                if (isDeathVFXEnabled)
+                {
+                    Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                }
             }
         }
     }
@@ -36,7 +44,14 @@ public class HostagesChild : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             parentHostages.ActivateDeadSprite();
-            Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+            if (isDeathVFXEnabled)
+            {
+                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+            }
         }
+    }
+    public void ToggleDeathVFX(bool isEnabled)
+    {
+        isDeathVFXEnabled = isEnabled;
     }
 }

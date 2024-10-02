@@ -6,15 +6,23 @@ public class Explosive : MonoBehaviour
 {
     public float force = 800f;
     public GameObject deathVFXPrefab;
+    private bool isDeathVFXEnabled = true;
 
+    private void Start()
+    {
+        bool isVFXEnabled = PlayerPrefs.GetInt("ButtonState_3", 1) == 1;
+        ToggleDeathVFX(isVFXEnabled);
+    }
     public void HandleEnemy(Collider2D obj)
     {
         Enemy enemy = obj.GetComponentInParent<Enemy>();
         if (enemy != null)
         {
             GameManager.Instance.RemoveEnemy(enemy);
-            Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
-
+            if (isDeathVFXEnabled)
+            {
+                Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
+            }
             Rigidbody2D rb = enemy.GetComponentInChildren<Rigidbody2D>();
             if (rb != null)
             {
@@ -30,8 +38,10 @@ public class Explosive : MonoBehaviour
         if (hostages != null)
         {
             GameManager.Instance.LoseGame();
-            Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
-
+            if (isDeathVFXEnabled)
+            {
+                Instantiate(deathVFXPrefab, obj.transform.position, Quaternion.identity);
+            }
             Rigidbody2D rb = hostages.GetComponentInChildren<Rigidbody2D>();
             if (rb != null)
             {
@@ -50,5 +60,9 @@ public class Explosive : MonoBehaviour
             Vector2 direction = rb.transform.position - transform.position;
             rb.AddForce(direction.normalized * force);
         }
+    }
+    public void ToggleDeathVFX(bool isEnabled)
+    {
+        isDeathVFXEnabled = isEnabled;
     }
 }

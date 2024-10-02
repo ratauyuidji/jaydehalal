@@ -274,12 +274,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 542164583447999933, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 542164583447999933, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2081266732}
     - target: {fileID: 542164583447999933, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SkipLevel
+      value: TurnOnAddPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 542164583447999933, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: GetSkipPanel
       objectReference: {fileID: 0}
     - target: {fileID: 613719337317238939, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -509,6 +517,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: GetNadePanel
       objectReference: {fileID: 0}
+    - target: {fileID: 3454115479653984436, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2081266732}
+    - target: {fileID: 3454115479653984436, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TurnOffAddPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 3492005491834196674, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -572,6 +588,18 @@ PrefabInstance:
     - target: {fileID: 3977725957479372534, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023458403298681970, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4023458403298681970, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2081266732}
+    - target: {fileID: 4023458403298681970, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SkipLevel
       objectReference: {fileID: 0}
     - target: {fileID: 4113351138513224739, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_Pivot.x
@@ -1358,6 +1386,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6640e30dbb965f44847f3c12b7b94da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1015541922 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3827908342432630434, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+  m_PrefabInstance: {fileID: 281433835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1553052096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1495,10 @@ PrefabInstance:
       propertyPath: addNadePanel
       value: 
       objectReference: {fileID: 440646971}
+    - target: {fileID: 66819526876591499, guid: 69e18e6c0a9bc4446bc356e69f4f7cf9, type: 3}
+      propertyPath: addSkipPanel
+      value: 
+      objectReference: {fileID: 1015541922}
     - target: {fileID: 66819526876591499, guid: 69e18e6c0a9bc4446bc356e69f4f7cf9, type: 3}
       propertyPath: backgroundUI
       value: 

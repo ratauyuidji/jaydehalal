@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addBazookaPanel;
     [SerializeField] private GameObject addNadePanel;
     [SerializeField] private GameObject addBulletPanel;
+    [SerializeField] private GameObject addSkipPanel;
+
     [SerializeField] private Animator transitionAnim;
 
     Coroutine CWin;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public bool hasWon = false;
     private bool hasLost = false;
     private GameObject player;
+
 
     private void Start()
     {
@@ -256,6 +258,7 @@ public class GameManager : MonoBehaviour
         win.SetActive(true);
         starDisplay.DisplayStar(0);
         player.SetActive(false);
+        addSkipPanel.SetActive(false);
         if (backgroundUI != null)
         {
             backgroundUI.interactable = false;
@@ -329,7 +332,7 @@ public class GameManager : MonoBehaviour
                 return true;
             }
         }
-        Debug.Log("Raycast did not hit the specified object.");
+        //Debug.Log("Raycast did not hit the specified object.");
         return false;
     }
     public void TurnOnAddPanel(string panelName)
@@ -346,6 +349,9 @@ public class GameManager : MonoBehaviour
             case "GetBulletPanel":
                 addBulletPanel.SetActive(true);
                 break;
+            case "GetSkipPanel":
+                addSkipPanel.SetActive(true);
+                break;
         }
         player.SetActive(false);
     }
@@ -360,7 +366,7 @@ public class GameManager : MonoBehaviour
         addBazookaPanel.SetActive(false);
         addNadePanel.SetActive(false);
         addBulletPanel.SetActive(false);
+        addSkipPanel.SetActive(false);
     }
-
-
+    
 }

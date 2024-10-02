@@ -3,11 +3,13 @@
 public class EnemyChildren : MonoBehaviour
 {
     [SerializeField] private GameObject deathVFXPrefab;
-    
+    private bool isDeathVFXEnabled = true;
     private Enemy parentEnemy;
 
     private void Start()
     {
+        bool isVFXEnabled = PlayerPrefs.GetInt("ButtonState_3", 1) == 1;
+        ToggleDeathVFX(isVFXEnabled);
         parentEnemy = GetComponentInParent<Enemy>();
     }
 
@@ -18,12 +20,18 @@ public class EnemyChildren : MonoBehaviour
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentEnemy.damageThreshold)
             {
-                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                if (isDeathVFXEnabled) 
+                {
+                    Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                }
             }
             if (impactVelocity > parentEnemy.damageThreshold && !parentEnemy.isDied)
             {
                 parentEnemy.TakeDamage(impactVelocity);
-                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                if (isDeathVFXEnabled)
+                {
+                    Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+                }
             }
         }
     }
@@ -34,8 +42,14 @@ public class EnemyChildren : MonoBehaviour
         {
             Debug.Log("Bullet hit detected.");
             parentEnemy.OnBulletHit(other);
-            Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+            if (isDeathVFXEnabled)
+            {
+                Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
+            }
         } 
     }
-    
+    public void ToggleDeathVFX(bool isEnabled)
+    {
+        isDeathVFXEnabled = isEnabled;
+    }
 }

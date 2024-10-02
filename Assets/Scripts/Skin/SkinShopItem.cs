@@ -59,17 +59,16 @@ public class SkinShopItem : MonoBehaviour
 
     public void OnBuyButtonPressed()
     {
-        int currentMoney = PlayerPrefs.GetInt("CurrentMoney", 0);
-
+        int currentMoney = EconomyManager.Instance.GetCurrentMoney();
         if (currentMoney >= skin.cost && !skinManager.IsUnlocked(skinIndex))
         {
             EconomyManager.Instance.BuySkin(skin.cost);
             skinManager.Unlock(skinIndex);
             buyButton.gameObject.SetActive(false);
             skinManager.SelectSkin(skinIndex);
-            EconomyManager.Instance.UpdateMoney();
             backgroundImage.SetActive(false);
             shopManager.UpdateAllEquippedIndicators();
+
             if (skinNameText != null)
             {
                 skinNameText.text = skin.nameSkin;
