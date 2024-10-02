@@ -55,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        AdManager.Instance.ShowBanner();
+        //AdManager.Instance.ShowBanner();
         EconomyManager.Instance.AssignMoneyText();
     }
     

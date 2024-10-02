@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     public bool hasWon = false;
     private bool hasLost = false;
     private GameObject player;
-
+    public Button x2Button;
 
     private void Start()
     {
@@ -191,10 +191,9 @@ public class GameManager : MonoBehaviour
         int moneyEarned = remainShoot * 10;
         EconomyManager.Instance.IncreaseMoney(moneyEarned);
         Debug.Log("money: " + moneyEarned);
-        if (moneyEarnedText != null)
-        {
-            moneyEarnedText.text = "+" + moneyEarned.ToString();
-        }
+        StartCoroutine(AnimateMoneyText(moneyEarned));
+
+        
         
         CheckStar(remainShoot);
         PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
@@ -226,6 +225,50 @@ public class GameManager : MonoBehaviour
             backgroundUI.interactable = false;
             backgroundUI.blocksRaycasts = false;
         }
+    }
+    private IEnumerator AnimateMoneyText(int moneyEarned)
+    {
+        float duration = 1.0f;
+        float elapsedTime = 0;
+        int currentMoney = 0;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            currentMoney = Mathf.FloorToInt(Mathf.Lerp(0, moneyEarned, elapsedTime / duration));
+            moneyEarnedText.text = "+" + currentMoney.ToString();
+            yield return null;
+        }
+
+        moneyEarnedText.text = "+" + moneyEarned.ToString();
+    }
+    public void MultiplyMoney()
+    {
+        if (moneyEarnedText != null)
+        {
+            int currentMoney = int.Parse(moneyEarnedText.text.Replace("+", ""));
+            int doubledMoney = currentMoney * 2;
+
+            StartCoroutine(AnimateMultiplyMoney(currentMoney, doubledMoney));
+            x2Button.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator AnimateMultiplyMoney(int currentMoney, int targetMoney)
+    {
+        float duration = 1.0f; 
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            int newMoney = Mathf.FloorToInt(Mathf.Lerp(currentMoney, targetMoney, elapsedTime / duration));
+            moneyEarnedText.text = "+" + newMoney.ToString();
+            yield return null;
+        }
+
+        moneyEarnedText.text = "+" + targetMoney.ToString();
+        EconomyManager.Instance.IncreaseMoney(targetMoney - currentMoney);
     }
     public void LoseGame()
     {
