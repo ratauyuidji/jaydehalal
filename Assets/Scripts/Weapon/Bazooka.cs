@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Hapiga.Ads;
+
 
 public class Bazooka : MonoBehaviour
 {
@@ -87,7 +89,12 @@ public class Bazooka : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        currentAmmo = Mathf.Clamp(currentAmmo + ammo, 0, maxAmmo);
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallback);
+        
+    }
+    void CloseRewardCallback()
+    {
+        currentAmmo = Mathf.Clamp(currentAmmo + 1, 0, maxAmmo);
         if (currentAmmo > 0)
         {
             canShoot = true;

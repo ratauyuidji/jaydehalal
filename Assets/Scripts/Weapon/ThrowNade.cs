@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Hapiga.Ads;
 
 public class ThrowNade : MonoBehaviour
 {
@@ -130,7 +131,11 @@ public class ThrowNade : MonoBehaviour
 
     public void AddNade(int ammo)
     {
-        currentNadeNumber = Mathf.Clamp(currentNadeNumber + ammo, 0, maxAmmo);
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallback);
+    }
+    void CloseRewardCallback()
+    {
+        currentNadeNumber = Mathf.Clamp(currentNadeNumber + 1, 0, maxAmmo);
         if (currentNadeNumber > 0)
         {
             canThrow = true;

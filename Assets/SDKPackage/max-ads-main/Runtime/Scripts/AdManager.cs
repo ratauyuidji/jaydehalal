@@ -38,13 +38,13 @@ namespace Hapiga.Ads
 
         public override void Init()
         {
-            if (Application.isEditor)
-            {
-                isFakeBanner = true;
-                isFakeInter = true;
-                isFakeReward = true;
-                isFakeOpenApp = true;
-            }
+            //if (Application.isEditor)
+            //{
+            //    isFakeBanner = true;
+            //    isFakeInter = true;
+            //    isFakeReward = true;
+            //    isFakeOpenApp = true;
+            //}
 
             CreateAdModule();
             loadAdsTimer = adsConfig.check_load_ads_interval;

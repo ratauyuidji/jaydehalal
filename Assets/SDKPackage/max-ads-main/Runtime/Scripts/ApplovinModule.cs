@@ -54,7 +54,7 @@ namespace Hapiga.Ads
 
             MaxSdk.InitializeSdk();
 #if UNITY_EDITOR
-            MaxSdk.DisableStubAds();
+            //MaxSdk.DisableStubAds();
 #endif
 
             MaxSdkCallbacks.Interstitial.OnAdLoadedEvent += OnInterstitialLoadedEvent;

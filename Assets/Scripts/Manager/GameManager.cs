@@ -5,6 +5,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Hapiga.Ads;
+using Hapiga.Tracking;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,7 +41,6 @@ public class GameManager : MonoBehaviour
     private bool hasLost = false;
     private GameObject player;
     public Button x2Button;
-
     private void Start()
     {
 #if !UNITY_EDITOR
@@ -114,6 +115,10 @@ public class GameManager : MonoBehaviour
         CheckLastShoot();
     }
     public void PlusBullet()
+    {
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
+    }
+    void CloseRewardCallbackReload()
     {
         if (useNumberOfShoot > 0 && canReload)
         {
@@ -192,9 +197,6 @@ public class GameManager : MonoBehaviour
         EconomyManager.Instance.IncreaseMoney(moneyEarned);
         Debug.Log("money: " + moneyEarned);
         StartCoroutine(AnimateMoneyText(moneyEarned));
-
-        
-        
         CheckStar(remainShoot);
         PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
@@ -225,6 +227,20 @@ public class GameManager : MonoBehaviour
             backgroundUI.interactable = false;
             backgroundUI.blocksRaycasts = false;
         }
+
+        CompleteLevel(SceneManager.GetActiveScene().buildIndex);
+        if (SceneManager.GetActiveScene().buildIndex >= 3)
+        {
+            AdManager.Instance.ShowInterstitialAds(null, true);
+        }
+    }
+    public void CompleteLevel(int level)
+    {
+        TrackingManager.TrackEvent($"completed_level_{level:000}");
+        if (level == 64)
+        {
+            TrackingManager.TrackEvent($"archived_level_{level:000}");
+        }
     }
     private IEnumerator AnimateMoneyText(int moneyEarned)
     {
@@ -244,6 +260,10 @@ public class GameManager : MonoBehaviour
     }
     public void MultiplyMoney()
     {
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallback);
+    }
+    void CloseRewardCallback()
+    {
         if (moneyEarnedText != null)
         {
             int currentMoney = int.Parse(moneyEarnedText.text.Replace("+", ""));
@@ -253,6 +273,7 @@ public class GameManager : MonoBehaviour
             x2Button.gameObject.SetActive(false);
         }
     }
+
 
     private IEnumerator AnimateMultiplyMoney(int currentMoney, int targetMoney)
     {
@@ -285,6 +306,10 @@ public class GameManager : MonoBehaviour
         }
     }
     public void SkipLevel()
+    {
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackSkip);
+    }
+    void CloseRewardCallbackSkip()
     {
         if (lose.activeSelf)
         {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Hapiga.Ads;
+using Hapiga.Tracking;
 
 public class SkinShopItem : MonoBehaviour
 {
@@ -48,8 +50,7 @@ public class SkinShopItem : MonoBehaviour
         {
             skinManager.SelectSkin(skinIndex);
             shopManager.UpdateAllEquippedIndicators();
-
-            // Hiển thị tên của skin đã chọn
+            
             if (skinNameText != null)
             {
                 skinNameText.text = skin.nameSkin; 
@@ -64,6 +65,7 @@ public class SkinShopItem : MonoBehaviour
         {
             EconomyManager.Instance.BuySkin(skin.cost);
             skinManager.Unlock(skinIndex);
+            TrackingManager.TrackEvent($"unlock_suit_{skin.nameSkin}");
             buyButton.gameObject.SetActive(false);
             skinManager.SelectSkin(skinIndex);
             backgroundImage.SetActive(false);
