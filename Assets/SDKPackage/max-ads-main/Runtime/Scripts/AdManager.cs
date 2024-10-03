@@ -216,7 +216,7 @@ namespace Hapiga.Ads
 
         public bool ShowRewardedVideo(Action closeRewardCallback, string placement = null)
         {
-            if (Application.isEditor || isFakeReward)
+            if (/*Application.isEditor || */isFakeReward)
             {
                 closeRewardCallback?.Invoke();
                 return true;

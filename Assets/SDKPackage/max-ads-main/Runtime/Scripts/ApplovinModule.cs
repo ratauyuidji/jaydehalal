@@ -46,7 +46,7 @@ namespace Hapiga.Ads
                 LoadInterstitial();
                 LoadRewardedAd();
             };
-            MaxSdk.SetSdkKey(sdkKey);
+            //MaxSdk.SetSdkKey(sdkKey);
             if (adManger.adsConfig.isTestAds)
             {
                 MaxSdk.SetVerboseLogging(true);
@@ -265,6 +265,8 @@ namespace Hapiga.Ads
             MaxSdkCallbacks.Banner.OnAdLoadFailedEvent += OnBannerLoadFailedEvent;
             MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += (x, y) => OnAdRevenuePaidEvent(x, y, AdsType.Banner);
             //  TrackingManager.TrackEvent($"AdsBanner_CallLoad");
+            if (!Application.isEditor)
+                ShowBanner();
 #endif
         }
 #if APPLOVIN_MAX
