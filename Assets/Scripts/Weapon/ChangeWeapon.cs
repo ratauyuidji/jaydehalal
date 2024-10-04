@@ -14,6 +14,7 @@ public class ChangeWeapon : MonoBehaviour
     private GameObject gun2Background;  
     private GameObject nadeBackground;
 
+
     private void Start()
     {
         totalWeapon = weaponHolder.transform.childCount;

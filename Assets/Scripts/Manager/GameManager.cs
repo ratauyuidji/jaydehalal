@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -116,10 +115,6 @@ public class GameManager : MonoBehaviour
     }
     public void PlusBullet()
     {
-        AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
-    }
-    void CloseRewardCallbackReload()
-    {
         if (useNumberOfShoot > 0 && canReload)
         {
             useNumberOfShoot--;
@@ -231,7 +226,7 @@ public class GameManager : MonoBehaviour
         CompleteLevel(SceneManager.GetActiveScene().buildIndex);
         if (SceneManager.GetActiveScene().buildIndex >= 3)
         {
-            AdManager.Instance.ShowInterstitialAds(null, true);
+            AdManager.Instance.ShowInterstitialAds(null, false);
         }
     }
     public void CompleteLevel(int level)
@@ -365,7 +360,11 @@ public class GameManager : MonoBehaviour
     }
     public void AddReloadTime(int reload)
     {
-        currentReloadTime = Mathf.Clamp(currentReloadTime + reload, 0, maxReloadTime);
+        AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
+    }
+    void CloseRewardCallbackReload()
+    {
+        currentReloadTime = Mathf.Clamp(currentReloadTime + 1, 0, maxReloadTime);
         if (currentReloadTime > 0)
         {
             canReload = true;
@@ -427,6 +426,11 @@ public class GameManager : MonoBehaviour
     public void TurnOffAddPanel()
     {
         DisableAllPanels();
+        StartCoroutine(TurnOnPlayerGun());
+    }
+    IEnumerator TurnOnPlayerGun()
+    {
+        yield return new WaitForSeconds(0.5f);
         player.SetActive(true);
     }
     private void DisableAllPanels()

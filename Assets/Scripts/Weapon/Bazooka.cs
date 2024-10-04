@@ -117,4 +117,5 @@ public class Bazooka : MonoBehaviour
         PlayerPrefs.SetInt(AmmoKey, currentAmmo);
         PlayerPrefs.Save();
     }
+    
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,13 +15,21 @@ public class SkinShopItem : MonoBehaviour
     [SerializeField] private GameObject backgroundImage;
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private TextMeshProUGUI skinNameText;
+    [SerializeField] private RectTransform moneyPanel;
+    [SerializeField] private GameObject childGameObject;
 
     private Skin skin;
+    private Vector3 moneyPanelOriginalPosition;
 
     void Start()
     {
         skin = skinManager.skins[skinIndex];
-        GetComponent<Image>().sprite = skin.Head;
+        Image childImage = childGameObject.GetComponent<Image>();
+        if (childImage != null)
+        {
+            childImage.sprite = skin.Head;
+        }
+        moneyPanelOriginalPosition = moneyPanel.localPosition;
 
         if (skinManager.IsUnlocked(skinIndex))
         {
@@ -37,27 +44,30 @@ public class SkinShopItem : MonoBehaviour
             backgroundImage.SetActive(true);
             equippedIndicator.SetActive(false);
         }
+        UpdateCosDisplay();
         if (skinNameText != null)
         {
             skinNameText.text = skinManager.GetSelectedSkin().nameSkin;
         }
         UpdateEquippedIndicator();
     }
-
+    private void Update()
+    {
+        UpdateCosDisplay();
+    }
     public void OnSkinPressed()
     {
         if (skinManager.IsUnlocked(skinIndex))
         {
             skinManager.SelectSkin(skinIndex);
             shopManager.UpdateAllEquippedIndicators();
-            
+
             if (skinNameText != null)
             {
-                skinNameText.text = skin.nameSkin; 
+                skinNameText.text = skin.nameSkin;
             }
         }
     }
-
     public void OnBuyButtonPressed()
     {
         int currentMoney = EconomyManager.Instance.GetCurrentMoney();
@@ -78,7 +88,7 @@ public class SkinShopItem : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough money :(");
+            StartCoroutine(ShakeMoneyPanel());
         }
     }
 
@@ -91,6 +101,34 @@ public class SkinShopItem : MonoBehaviour
         else
         {
             equippedIndicator.SetActive(false);
+        }
+    }
+
+    IEnumerator ShakeMoneyPanel()
+    {
+        float duration = 0.5f;
+        float magnitude = 20f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float xOffset = Random.Range(-1f, 1f) * magnitude;
+            moneyPanel.localPosition = new Vector3(moneyPanelOriginalPosition.x + xOffset, moneyPanelOriginalPosition.y, moneyPanelOriginalPosition.z);
+            yield return null;
+        }
+        moneyPanel.localPosition = moneyPanelOriginalPosition;
+    }
+    void UpdateCosDisplay()
+    {
+        int currentMoney = EconomyManager.Instance.GetCurrentMoney();
+        if (currentMoney < skin.cost)
+        {
+            costText.color = Color.red;
+        }
+        else
+        {
+            costText.color = Color.white;
         }
     }
 }
