@@ -12,7 +12,9 @@ public class SkinShopItem : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private GameObject equippedIndicator;
+    [SerializeField] private GameObject equippedBanner;
     [SerializeField] private GameObject backgroundImage;
+    [SerializeField] private GameObject lockImage;
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private TextMeshProUGUI skinNameText;
     [SerializeField] private RectTransform moneyPanel;
@@ -35,14 +37,18 @@ public class SkinShopItem : MonoBehaviour
         {
             buyButton.gameObject.SetActive(false);
             backgroundImage.SetActive(false);
+            lockImage.SetActive(false);
             equippedIndicator.SetActive(false);
+            equippedBanner.SetActive(false);
         }
         else
         {
             buyButton.gameObject.SetActive(true);
             costText.text = skin.cost.ToString();
             backgroundImage.SetActive(true);
+            lockImage.SetActive(true);
             equippedIndicator.SetActive(false);
+            equippedBanner.SetActive(false);
         }
         UpdateCosDisplay();
         if (skinNameText != null)
@@ -79,6 +85,7 @@ public class SkinShopItem : MonoBehaviour
             buyButton.gameObject.SetActive(false);
             skinManager.SelectSkin(skinIndex);
             backgroundImage.SetActive(false);
+            lockImage.SetActive(false);
             shopManager.UpdateAllEquippedIndicators();
 
             if (skinNameText != null)
@@ -97,10 +104,12 @@ public class SkinShopItem : MonoBehaviour
         if (skinManager.GetSelectedSkin() == skin)
         {
             equippedIndicator.SetActive(true);
+            equippedBanner.SetActive(true);
         }
         else
         {
             equippedIndicator.SetActive(false);
+            equippedBanner.SetActive(false);
         }
     }
 
