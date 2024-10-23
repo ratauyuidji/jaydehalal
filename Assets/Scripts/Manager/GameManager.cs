@@ -232,9 +232,10 @@ public class GameManager : MonoBehaviour
     public void CompleteLevel(int level)
     {
         TrackingManager.TrackEvent($"completed_level_{level:000}");
+        Debug.Log(level);
         if (level == 64)
         {
-            TrackingManager.TrackEvent($"archived_level_{level:000}");
+            //TrackingManager.TrackEvent($"archived_level_{level:000}");
         }
     }
     private IEnumerator AnimateMoneyText(int moneyEarned)
