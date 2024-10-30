@@ -27,7 +27,7 @@ public class LevelSelection : MonoBehaviour
         //if current lv is 5, the pre should be 4
         int previousLevelNum = int.Parse(gameObject.name) - 1;
         if (PlayerPrefs.GetInt("Lv" + previousLevelNum.ToString()) >= 0 &&
-        PlayerPrefs.GetInt("Level" + previousLevelNum.ToString() + "_Win") == 1)//If star > 0, next level can play
+        PlayerPrefs.GetInt("Level" + previousLevelNum.ToString() + "_Win") == 1)//If star >= 0 and win, next level can play
         {
             unlocked = true;
         }
@@ -60,15 +60,15 @@ public class LevelSelection : MonoBehaviour
     {
         Debug.Log("Button Pressed!");
         Debug.Log(unlocked);
-        if(unlocked)
+        if (unlocked)
         {
-            string levelname = "Level" + (levelId);
-            SceneManager.LoadScene(levelname);
+            PlayerPrefs.SetInt("SelectedLevel", levelId);
+            SceneManager.LoadScene(1);
         }
         else
         {
             Debug.Log("Level is locked, cannot load scene.");
         }
     }
-    
+
 }

@@ -38,18 +38,28 @@ public class GameManager : MonoBehaviour
     private bool canReload = true;
     public bool hasWon = false;
     private bool hasLost = false;
-    private GameObject player;
+    private GameObject playerarm;
     public Button x2Button;
+
+    public GameObject[] levelPrefabs;
+    private GameObject currentLevel;
+    public Button addAmmoButton;
+    public Button addNadeButton;
+    public Button switchBazookaButton;
+    public Button switchNadeButton;
+
+
     private void Start()
     {
 #if !UNITY_EDITOR
         Application.targetFrameRate = 60;
 #endif
-
-        string sceneName = SceneManager.GetActiveScene().name;
-
-        levelIndex = ExtractLevelIndex(sceneName);
-        Debug.Log("Level Index: " + levelIndex);
+        
+    }
+    public void SetUpWhenLoadLevel()
+    {
+        levelIndex = LevelManager.Instance.GetLevelIndex();
+        Debug.Log("level index get from levelmanager" + levelIndex);
         if (PlayerPrefs.HasKey(ReloadTimeKey))
         {
             currentReloadTime = PlayerPrefs.GetInt(ReloadTimeKey);
@@ -65,16 +75,20 @@ public class GameManager : MonoBehaviour
         }
         hasLost = false;
         hasWon = false;
-        Weapon weaponScript = FindObjectOfType<Weapon>();
+        useNumberOfShoot = 0;
+        iconHandler.ResetIcons();
+        win.SetActive(false);
+        lose.SetActive(false);
 
-        if (weaponScript != null)
+        if (backgroundUI != null)
         {
-            player = weaponScript.gameObject;
+            backgroundUI.interactable = true;
+            backgroundUI.blocksRaycasts = true;
         }
-        else
-        {
-            Debug.LogWarning("Không tìm thấy đối tượng Player có gắn script Weapon");
-        }
+        FindEnemyAndWeapon();
+        starDisplay.ResetStars();
+        //iconHandler.SetMaxNumberOfShoot(5);
+        Debug.Log("maxNumberOfShoot" + maxNumberOfShoot);
     }
     private void Update()
     {
@@ -90,23 +104,29 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+    private void FindEnemyAndWeapon()
+    {
+        enemylist.Clear();
         Enemy[] enemy = FindObjectsOfType<Enemy>();
-        for(int i = 0; i < enemy.Length; i++)
+        for (int i = 0; i < enemy.Length; i++)
         {
             enemylist.Add(enemy[i]);
+            Debug.Log("Added enemy to list: " + enemy[i].name);
         }
-    }
-    private int ExtractLevelIndex(string sceneName)
-    {
-        for (int i = 0; i < sceneName.Length; i++)
+        Debug.Log("Total number of enemies in list: " + enemylist.Count);
+
+        var weaponScript = FindObjectOfType<Weapon>();
+        if (weaponScript != null)
         {
-            if (char.IsDigit(sceneName[i]))
-            {
-                return int.Parse(sceneName.Substring(i));
-            }
+            playerarm = weaponScript.gameObject;
         }
-        return 0;
+        else
+        {
+            Debug.LogWarning("Không tìm thấy đối tượng Player có gắn script Weapon");
+        }
     }
+
     public void UseShoot()
     {
         useNumberOfShoot++;
@@ -215,7 +235,7 @@ public class GameManager : MonoBehaviour
             }
         }
         starDisplay.DisplayStar(remainShoot);
-        player.SetActive(false);
+        playerarm.SetActive(false);
 
         if (backgroundUI != null)
         {
@@ -294,7 +314,7 @@ public class GameManager : MonoBehaviour
 
         lose.SetActive(true);
         CheckStar(0);
-        player.SetActive(false);
+        playerarm.SetActive(false);
         if (backgroundUI != null)
         {
             backgroundUI.interactable = false;
@@ -321,7 +341,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
         win.SetActive(true);
         starDisplay.DisplayStar(0);
-        player.SetActive(false);
+        playerarm.SetActive(false);
         addSkipPanel.SetActive(false);
         if (backgroundUI != null)
         {
@@ -331,20 +351,21 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
+        changeWeapon.PrepareForNextLevel();
+        transitionAnim.SetTrigger("End");
+        LevelManager.Instance.LoadLevel(levelIndex-1);
+        Debug.Log("level index khi ++" + levelIndex);
+        transitionAnim.SetTrigger("Start");
     }
     public void NextLevel()
     {
+        ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
+        changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        transitionAnim.SetTrigger("Start");
-    }
-    IEnumerator LoadLevel()
-    {
-        transitionAnim.SetTrigger("End");
-        yield return new WaitForSeconds(0.00001f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        transitionAnim.SetTrigger("Start");        
+        LevelManager.Instance.LoadLevel(levelIndex);
+        Debug.Log("level index khi ++" + levelIndex);
+        transitionAnim.SetTrigger("Start"); 
     }
     public void LoadMenu()
     {
@@ -359,7 +380,7 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
     }
-    public void AddReloadTime(int reload)
+    public void AddReloadTime()
     {
         AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
     }
@@ -372,7 +393,7 @@ public class GameManager : MonoBehaviour
         }
         UpdateReloadText();
         SaveReloadTime();
-        GameManager.Instance.TurnOffAddPanel();
+        TurnOffAddPanel();
     }
 
     private void UpdateReloadText()
@@ -421,7 +442,7 @@ public class GameManager : MonoBehaviour
                 addSkipPanel.SetActive(true);
                 break;
         }
-        player.SetActive(false);
+        playerarm.SetActive(false);
     }
 
     public void TurnOffAddPanel()
@@ -432,7 +453,7 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnOnPlayerGun()
     {
         yield return new WaitForSeconds(0.5f);
-        player.SetActive(true);
+        playerarm.SetActive(true);
     }
     private void DisableAllPanels()
     {

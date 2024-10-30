@@ -5,19 +5,22 @@ using UnityEngine;
 public class ButtonPress : MonoBehaviour
 {
     public Bom bom;
+    public GameObject trapObject;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (bom != null)
         {
             bom.Explode();
-            Destroy(this.gameObject);
             Destroy(bom.gameObject);
         }
-        else
+
+        if (trapObject != null)
         {
-            Destroy(this.gameObject);
+            Destroy(trapObject.gameObject);
         }
+
+        Destroy(this.gameObject);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -25,12 +28,13 @@ public class ButtonPress : MonoBehaviour
         if (bom != null)
         {
             bom.Explode();
-            Destroy(this.gameObject);
             Destroy(bom.gameObject);
         }
-        else
+
+        if (trapObject != null)
         {
-            Destroy(this.gameObject);
+            Destroy(trapObject.gameObject);
         }
+        Destroy(this.gameObject);
     }
 }

@@ -203,7 +203,7 @@ public class UIManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("Lv" + i) >= 0 && PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
-                highestUnlockedLevel = i + 1;
+                highestUnlockedLevel = i+1;
             }
             else
             {
@@ -211,9 +211,11 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        string levelName = "Level" + highestUnlockedLevel;
-        Debug.Log("Loading highest unlocked level: " + levelName);
-        SceneManager.LoadScene(levelName);
+        //string levelName = "Level" + highestUnlockedLevel;
+        Debug.Log("Loading highest unlocked level: " + highestUnlockedLevel);
+        //SceneManager.LoadScene(levelName);
+        PlayerPrefs.SetInt("SelectedLevel", highestUnlockedLevel);
+        SceneManager.LoadScene(1);
     }
     public void TurnOnSettingPanel()
     {

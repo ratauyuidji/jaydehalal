@@ -15,9 +15,9 @@ public class Bazooka : MonoBehaviour
     [SerializeField] private float shootDelay;
     [SerializeField] private Laser laser;
     [SerializeField] private int maxAmmo = 10;
-    [SerializeField] private TextMeshProUGUI ammoText;
+    
+    private TextMeshProUGUI ammoText;
     private ChangeWeapon changeWeapon;
-
     private int currentAmmo;
     private bool canShoot = true;
     private const string AmmoKey = "CurrentAmmo";
@@ -32,12 +32,16 @@ public class Bazooka : MonoBehaviour
         {
             currentAmmo = 0;
         }
-
+        
         UpdateAmmoText();
         changeWeapon = FindObjectOfType<ChangeWeapon>();
         Debug.Log(currentAmmo);
     }
-
+    public void SetAmmoText(TextMeshProUGUI text)
+    {
+        ammoText = text;
+        UpdateAmmoText();
+    }
     private void OnEnable()
     {
         if (currentAmmo > 0)
@@ -87,7 +91,7 @@ public class Bazooka : MonoBehaviour
         canShoot = true;
     }
 
-    public void AddAmmo(int ammo)
+    public void AddAmmo()
     {
         AdManager.Instance.ShowRewardedVideo(CloseRewardCallback);
         

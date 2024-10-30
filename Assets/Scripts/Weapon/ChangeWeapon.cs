@@ -15,6 +15,18 @@ public class ChangeWeapon : MonoBehaviour
     private GameObject nadeBackground;
 
 
+    public void PrepareForNextLevel()
+    {
+        if (gun2Background != null)
+        {
+            gun2Background.SetActive(true);
+            Debug.Log("gun2Background được bật.");
+        }
+        if (nadeBackground != null)
+        {
+            nadeBackground.SetActive(true);
+        }
+    }
     private void Start()
     {
         totalWeapon = weaponHolder.transform.childCount;
@@ -29,19 +41,38 @@ public class ChangeWeapon : MonoBehaviour
         currentGun = guns[0];
         currentWeaponIndex = 0;
 
-        gun2Background = GameObject.Find("Gun2Background");
-        nadeBackground = GameObject.Find("NadeBackground");
+        if (gun2Background == null)
+        {
+            gun2Background = GameObject.Find("Gun2Background");
+        }
+        if (nadeBackground == null)
+        {
+            nadeBackground = GameObject.Find("NadeBackground");
+        }
 
         if (gun2Background != null)
+        {
             gun2Background.SetActive(false);
+            Debug.Log("Gun2Background đã được tìm thấy và thiết lập lại.");
+        }
+        else
+        {
+        }
+
         if (nadeBackground != null)
+        {
             nadeBackground.SetActive(false);
+            Debug.Log("NadeBackground đã được tìm thấy và thiết lập lại.");
+        }
+        else
+        {
+        }
     }
 
 
     private void Update()
     {
-
+       
     }
 
     public void SwitchToGun2()

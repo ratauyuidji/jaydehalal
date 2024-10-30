@@ -15,12 +15,22 @@ public class EnemyChildren : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (parentEnemy == null)
+        {
+            parentEnemy = GetComponentInParent<Enemy>();
+            if (parentEnemy == null)
+            {
+                Debug.LogWarning("Không tìm thấy đối tượng cha có component 'Enemy'.");
+                return;
+            }
+        }
+
         if (other.gameObject.CompareTag("CanDestroyBox") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
         {
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentEnemy.damageThreshold)
             {
-                if (isDeathVFXEnabled) 
+                if (isDeathVFXEnabled)
                 {
                     Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
                 }
@@ -35,6 +45,7 @@ public class EnemyChildren : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
