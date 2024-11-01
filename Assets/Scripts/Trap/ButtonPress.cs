@@ -5,7 +5,9 @@ using UnityEngine;
 public class ButtonPress : MonoBehaviour
 {
     public Bom bom;
-    public GameObject trapObject;
+    public GameObject trapObject1;
+    public GameObject trapObject2;
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -15,9 +17,13 @@ public class ButtonPress : MonoBehaviour
             Destroy(bom.gameObject);
         }
 
-        if (trapObject != null)
+        if (trapObject1 != null)
         {
-            Destroy(trapObject.gameObject);
+            Destroy(trapObject1.gameObject);
+        }
+        if (trapObject2 != null)
+        {
+            trapObject2.SetActive(true);
         }
 
         Destroy(this.gameObject);
@@ -31,9 +37,13 @@ public class ButtonPress : MonoBehaviour
             Destroy(bom.gameObject);
         }
 
-        if (trapObject != null)
+        if (trapObject1 != null)
         {
-            Destroy(trapObject.gameObject);
+            Destroy(trapObject1.gameObject);
+        }
+        if (trapObject2 != null)
+        {
+            trapObject2.SetActive(true);
         }
         Destroy(this.gameObject);
     }

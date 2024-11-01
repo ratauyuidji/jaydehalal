@@ -18,6 +18,7 @@ public class Explosive : MonoBehaviour
         Enemy enemy = obj.GetComponentInParent<Enemy>();
         if (enemy != null)
         {
+            enemy.TakeDamage(50);
             GameManager.Instance.RemoveEnemy(enemy);
             if (isDeathVFXEnabled)
             {
@@ -37,6 +38,7 @@ public class Explosive : MonoBehaviour
         Hostages hostages = obj.GetComponentInParent<Hostages>();
         if (hostages != null)
         {
+            hostages.TakeDamage(50);
             GameManager.Instance.LoseGame();
             if (isDeathVFXEnabled)
             {

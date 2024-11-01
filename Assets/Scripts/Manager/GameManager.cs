@@ -243,8 +243,8 @@ public class GameManager : MonoBehaviour
             backgroundUI.blocksRaycasts = false;
         }
 
-        CompleteLevel(SceneManager.GetActiveScene().buildIndex);
-        if (SceneManager.GetActiveScene().buildIndex >= 3)
+        CompleteLevel(levelIndex);
+        if (levelIndex >= 3)
         {
             AdManager.Instance.ShowInterstitialAds(null, false);
         }

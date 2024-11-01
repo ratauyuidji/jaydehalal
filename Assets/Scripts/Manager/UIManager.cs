@@ -71,7 +71,7 @@ public class UIManager : MonoBehaviour
         int completedLevels1Count = GetCompletedLevels1Count();
         int completedLevels2Count = GetCompletedLevels2Count();
 
-        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "64";
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "176";
         completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "32";
         starMap1Text.text = starMap1.ToString();
         starMap2Text.text = starMap2.ToString();
@@ -96,7 +96,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars0 = 0;
-                    for (int lv = 1; lv <= 64; lv++)
+                    for (int lv = 1; lv <= 176; lv++)
                     {
                         totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -123,11 +123,11 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 96; i++)
+        for (int i = 1; i <= 176; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 288;
+        startText.text = stars.ToString() + "/" + 528;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -187,7 +187,7 @@ public class UIManager : MonoBehaviour
     }
     public void LoadHighestUnlockedLevelMode1()
     {
-        LoadHighestUnlockedLevel(1, 63);
+        LoadHighestUnlockedLevel(1, 176);
     }
 
     public void LoadHighestUnlockedLevelMode2()
@@ -241,7 +241,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = 0;
 
-        for (int i = 1; i <= 64; i++)
+        for (int i = 1; i <= 176; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {

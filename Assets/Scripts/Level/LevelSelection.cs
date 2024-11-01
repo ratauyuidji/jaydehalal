@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,10 +12,21 @@ public class LevelSelection : MonoBehaviour
     public Image lockImage;
     public GameObject[] stars;
     public Sprite starSprite;
+    public TextMeshProUGUI levelText;
+    private int levelId;
     
     private void Start()
     {
+        Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(PressSelection);
+        }
         //PlayerPrefs.DeleteAll();
+        levelText = GetComponentInChildren<TextMeshProUGUI>();
+        levelId = int.Parse(gameObject.name);
+        levelText.text = levelId.ToString();
     }
 
     private void Update()
@@ -56,13 +68,27 @@ public class LevelSelection : MonoBehaviour
             }
         }
     }
-    public void PressSelection(int levelId)
+    public void PressSelection()
     {
         Debug.Log("Button Pressed!");
         Debug.Log(unlocked);
         if (unlocked)
         {
             PlayerPrefs.SetInt("SelectedLevel", levelId);
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            Debug.Log("Level is locked, cannot load scene.");
+        }
+    }
+    public void PressHostageSelection(int levelHId)
+    {
+        Debug.Log("Button Pressed!");
+        Debug.Log(unlocked);
+        if (unlocked)
+        {
+            PlayerPrefs.SetInt("SelectedLevel", levelHId);
             SceneManager.LoadScene(1);
         }
         else
