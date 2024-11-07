@@ -393,7 +393,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fc5d83102fc844449303df63d1ddd38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 0}
 --- !u!114 &7233238471416531377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +470,7 @@ GameObject:
   - component: {fileID: 6833613127762897455}
   m_Layer: 0
   m_Name: Gun
-  m_TagString: Untagged
+  m_TagString: Gun
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1254,11 +1253,10 @@ MonoBehaviour:
   startPosition: {fileID: 6325573096970045105}
   maxDistance: 2
   maxAmmo: 10
-  ammoText: {fileID: 0}
   rotateArm: {fileID: 2720915290946172373}
   nadePrefab: {fileID: 7993856341392900034, guid: 98b2c9bc8f260094c9be85a1fba92594, type: 3}
   throwPoint: {fileID: 5780187422961679196}
-  baseThrowForce: 2
+  baseThrowForce: 3.5
 --- !u!1 &7427231338256928391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1448,7 +1446,6 @@ MonoBehaviour:
   shootDelay: 0
   laser: {fileID: 7460634403702966650}
   maxAmmo: 10
-  ammoText: {fileID: 0}
 --- !u!1 &8724055938423604853
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class Nade : MonoBehaviour
     }
     private void Start()
     {
-        Invoke("Explode", 3f);
+        Invoke("Explode", 3.5f);
     }
     public void Explode()
     {

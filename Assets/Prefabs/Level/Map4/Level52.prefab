@@ -919,7 +919,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 13
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2148,10 +2148,10 @@ Tilemap:
     m_Data: {fileID: 266994872, guid: 125128dd92162ba478a76ddd6d07b6d6, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 53
+  - m_RefCount: 54
     m_Data: {fileID: 136625406, guid: 125128dd92162ba478a76ddd6d07b6d6, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -1238052977, guid: 125128dd92162ba478a76ddd6d07b6d6, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -1656989156, guid: 125128dd92162ba478a76ddd6d07b6d6, type: 3}
   - m_RefCount: 6
@@ -2418,6 +2418,8 @@ CompositeCollider2D:
       - X: 20375000
         Y: -40000000
       - X: 20000000
+        Y: -40000000
+      - X: 20000000
         Y: -40375000
       - X: 10812500
         Y: -40375000
@@ -2501,8 +2503,9 @@ CompositeCollider2D:
       - {x: 3.9062417, y: -3.0375001}
       - {x: 2.0812428, y: -3.0375063}
       - {x: 2.0375, y: -3.075012}
-      - {x: 2.0374925, y: -4.000007}
-      - {x: 1.9999893, y: -4.0375}
+      - {x: 2.0374706, y: -4}
+      - {x: 2, y: -4.000029}
+      - {x: 1.9999707, y: -4.0375}
       - {x: 1.0812428, y: -4.0375066}
       - {x: 1.0375, y: -4.075012}
       - {x: 1.0375139, y: -10.931258}
@@ -2664,7 +2667,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -2703,7 +2706,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.83, z: 10}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3925967256207519279}

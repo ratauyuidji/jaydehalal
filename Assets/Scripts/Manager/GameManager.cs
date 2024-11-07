@@ -9,7 +9,7 @@ using Hapiga.Tracking;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private IconHandler iconHandler;
+    //[SerializeField] private List<IconHandler> iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
     [SerializeField] private int maxReloadTime = 10;
@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addNadePanel;
     [SerializeField] private GameObject addBulletPanel;
     [SerializeField] private GameObject addSkipPanel;
-
     [SerializeField] private Animator transitionAnim;
 
     Coroutine CWin;
@@ -33,16 +32,22 @@ public class GameManager : MonoBehaviour
     private List<Enemy> enemylist = new List<Enemy>(); 
     private int currentStarsNum = 0;
     private int levelIndex;
+    private int levelHostageIndex;
+    private int levelNadeIndex;
     public StarDisplay starDisplay;
     private int currentReloadTime;
+    //private IconHandler activeIconHandler;
+
+
     private bool canReload = true;
     public bool hasWon = false;
     private bool hasLost = false;
+    private bool isPlayingHostageMode;
+    private bool isPlayingNadeMode;
+
     private GameObject playerarm;
     public Button x2Button;
 
-    public GameObject[] levelPrefabs;
-    private GameObject currentLevel;
     public Button addAmmoButton;
     public Button addNadeButton;
     public Button switchBazookaButton;
@@ -59,6 +64,18 @@ public class GameManager : MonoBehaviour
     public void SetUpWhenLoadLevel()
     {
         levelIndex = LevelManager.Instance.GetLevelIndex();
+        levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
+        levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
+        if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
+        {
+            isPlayingHostageMode = true;
+            isPlayingNadeMode = false;
+        }
+        else if(PlayerPrefs.GetString("SelectedMode") == "Nade")
+        {
+            isPlayingNadeMode = true;
+            isPlayingHostageMode = false;
+        }
         Debug.Log("level index get from levelmanager" + levelIndex);
         if (PlayerPrefs.HasKey(ReloadTimeKey))
         {
@@ -76,7 +93,20 @@ public class GameManager : MonoBehaviour
         hasLost = false;
         hasWon = false;
         useNumberOfShoot = 0;
-        iconHandler.ResetIcons();
+        if (isPlayingNadeMode)
+        {
+            //iconHandler[0].gameObject.SetActive(false);
+            //iconHandler[1].gameObject.SetActive(true);
+            //activeIconHandler = iconHandler[1];
+        }
+        else
+        {
+            //iconHandler[0].gameObject.SetActive(true);
+            //iconHandler[1].gameObject.SetActive(false);
+            //activeIconHandler = iconHandler[0];
+        }
+
+        LevelManager.Instance.activeIconHandler.ResetIcons();
         win.SetActive(false);
         lose.SetActive(false);
 
@@ -115,22 +145,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Added enemy to list: " + enemy[i].name);
         }
         Debug.Log("Total number of enemies in list: " + enemylist.Count);
-
-        var weaponScript = FindObjectOfType<Weapon>();
-        if (weaponScript != null)
-        {
-            playerarm = weaponScript.gameObject;
-        }
-        else
-        {
-            Debug.LogWarning("Không tìm thấy đối tượng Player có gắn script Weapon");
-        }
+        playerarm = GameObject.FindWithTag("Gun");
+        
     }
 
     public void UseShoot()
     {
         useNumberOfShoot++;
-        iconHandler.UseShot(useNumberOfShoot);
+        LevelManager.Instance.activeIconHandler.UseShot(useNumberOfShoot);
         CheckLastShoot();
     }
     public void PlusBullet()
@@ -145,7 +167,7 @@ public class GameManager : MonoBehaviour
             {
                 canReload = false;
             }
-            iconHandler.PlusShot(useNumberOfShoot);
+            LevelManager.Instance.activeIconHandler.PlusShot(useNumberOfShoot);
             Debug.Log("Số lần bắn còn lại: " + (maxNumberOfShoot - useNumberOfShoot));
         }
         else
@@ -173,7 +195,8 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator CheckAfterLastShoot()
     {
-        yield return new WaitForSeconds(3f);
+        float waitTime = isPlayingNadeMode ? 5f : 3f;
+        yield return new WaitForSeconds(waitTime);
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
@@ -213,7 +236,21 @@ public class GameManager : MonoBehaviour
         Debug.Log("money: " + moneyEarned);
         StartCoroutine(AnimateMoneyText(moneyEarned));
         CheckStar(remainShoot);
-        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        if (isPlayingHostageMode)
+        {
+            PlayerPrefs.SetInt("HLevel" + levelHostageIndex + "_Win", 1);
+
+        }
+        else if (isPlayingNadeMode)
+        {
+            PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        }
+
         win.SetActive(true);
         TextMeshProUGUI winText = win.transform.Find("WinText").GetComponent<TextMeshProUGUI>();
         if (winText != null)
@@ -338,7 +375,20 @@ public class GameManager : MonoBehaviour
             moneyEarnedText.text = "+" + 0;
         }
         CheckStar(0);
-        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        if (isPlayingHostageMode)
+        {
+            PlayerPrefs.SetInt("HLevel" + levelHostageIndex + "_Win", 1);
+
+        }
+        else if (isPlayingNadeMode)
+        {
+            PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        }
         win.SetActive(true);
         starDisplay.DisplayStar(0);
         playerarm.SetActive(false);
@@ -354,7 +404,21 @@ public class GameManager : MonoBehaviour
         ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
         changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
-        LevelManager.Instance.LoadLevel(levelIndex-1);
+        if (isPlayingHostageMode)
+        {
+            LevelManager.Instance.LoadHostageLevel(levelHostageIndex-1);
+            Debug.Log("Next Hostage level: " + levelHostageIndex);
+        }
+        else if (isPlayingNadeMode)
+        {
+            LevelManager.Instance.LoadNadeLevel(levelNadeIndex-1);
+            Debug.Log("Next Nade level: " + levelNadeIndex);
+        }
+        else
+        {
+            LevelManager.Instance.LoadLevel(levelIndex-1);
+            Debug.Log("Next Normal level: " + levelIndex);
+        }
         Debug.Log("level index khi ++" + levelIndex);
         transitionAnim.SetTrigger("Start");
     }
@@ -363,7 +427,21 @@ public class GameManager : MonoBehaviour
         ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
         changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
-        LevelManager.Instance.LoadLevel(levelIndex);
+        if (isPlayingHostageMode)
+        {
+            LevelManager.Instance.LoadHostageLevel(levelHostageIndex);
+            Debug.Log("Next Hostage level: " + levelHostageIndex);
+        }
+        else if (isPlayingNadeMode)
+        {
+            LevelManager.Instance.LoadNadeLevel(levelNadeIndex);
+            Debug.Log("Next Nade level: " + levelNadeIndex);
+        }
+        else
+        {
+            LevelManager.Instance.LoadLevel(levelIndex);
+            Debug.Log("Next Normal level: " + levelIndex);
+        }
         Debug.Log("level index khi ++" + levelIndex);
         transitionAnim.SetTrigger("Start"); 
     }
@@ -374,11 +452,31 @@ public class GameManager : MonoBehaviour
     public void CheckStar(int starsNum)
     {
         currentStarsNum = starsNum;
-        if(currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
+        if (isPlayingHostageMode)
         {
-            PlayerPrefs.SetInt("Lv" + levelIndex, currentStarsNum);
+            if (currentStarsNum > PlayerPrefs.GetInt("HLv" + levelHostageIndex))
+            {
+                PlayerPrefs.SetInt("HLv" + levelHostageIndex, currentStarsNum);
+                Debug.Log("star hostage is " + PlayerPrefs.GetInt("HLv" + levelIndex, starsNum));
+            }
         }
-        Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
+        else if (isPlayingNadeMode)
+        {
+            if (currentStarsNum > PlayerPrefs.GetInt("NLv" + levelNadeIndex))
+            {
+                PlayerPrefs.SetInt("NLv" + levelNadeIndex, currentStarsNum);
+                Debug.Log("star classic is " + PlayerPrefs.GetInt("NLv" + levelNadeIndex, starsNum));
+            }
+        }
+        else
+        {
+            if (currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
+            {
+                PlayerPrefs.SetInt("Lv" + levelIndex, currentStarsNum);
+                Debug.Log("star classic is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
+            }
+        }
+
     }
     public void AddReloadTime()
     {

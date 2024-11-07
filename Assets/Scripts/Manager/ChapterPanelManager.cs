@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,8 +19,11 @@ public class ChapterPanelManager : MonoBehaviour
     private Vector3 rightImageStartPos;
     private Vector3 leftImageEndPos;
     private Vector3 rightImageEndPos;
-
+    private GameObject playerarm;
+    public TextMeshProUGUI chapterText;
+    public TextMeshProUGUI mapText;
     private int levelIndex;
+
 
     void Start()
     {
@@ -39,16 +43,42 @@ public class ChapterPanelManager : MonoBehaviour
     public void Initialize(int levelIndex)
     {
         this.levelIndex = levelIndex;
-
+        if (levelIndex == 1)
+        {
+            chapterText.text = "CHAPTER 1";
+            mapText.text = "BULLET CITY";
+        }
+        else if (levelIndex == 17)
+        {
+            chapterText.text = "CHAPTER 2";
+            mapText.text = "SHOGUN'S CASTLE";
+        }
+        else if (levelIndex == 33)
+        {
+            chapterText.text = "CHAPTER 3";
+            mapText.text = "GRAVEYARD";
+        }
         if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33)
         {
+            var weaponScript = FindObjectOfType<Weapon>();
+            if (weaponScript != null)
+            {
+                playerarm = weaponScript.gameObject;
+            }
+            else
+            {
+                var nadeScript = FindObjectOfType<NadeWeapon>();
+                playerarm = nadeScript.gameObject;
+                Debug.Log("armnade");
+            }
+            playerarm.SetActive(false);
+            Debug.Log("tat arm");
             panel.SetActive(true);
             panelCanvasGroup.alpha = 1f;
             SetActiveImage(levelIndex);
             StartCoroutine(MoveImages());
         }
     }
-
     private void SetActiveImage(int levelIndex)
     {
         foreach (var imgParent in rightImageParents)
@@ -80,24 +110,6 @@ public class ChapterPanelManager : MonoBehaviour
         }
     }
 
-    IEnumerator FadeOutPanel()
-    {
-        yield return new WaitForSeconds(1f);
-
-        float elapsedTime = 0f;
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            panelCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-            yield return null;
-        }
-
-        panelCanvasGroup.alpha = 0f;
-        panel.SetActive(false);
-
-        ResetState();
-    }
-
     IEnumerator MoveImages()
     {
         yield return new WaitForSeconds(0.5f);
@@ -116,6 +128,24 @@ public class ChapterPanelManager : MonoBehaviour
         imageRightContainer.transform.localPosition = rightImageEndPos;
 
         StartCoroutine(FadeOutPanel());
+    }
+    IEnumerator FadeOutPanel()
+    {
+        yield return new WaitForSeconds(1f);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            panelCanvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
+            yield return null;
+        }
+
+        panelCanvasGroup.alpha = 0f;
+        panel.SetActive(false);
+        playerarm.SetActive(true);
+        Debug.Log("bat arm");
+        ResetState();
     }
 
     private void ResetState()

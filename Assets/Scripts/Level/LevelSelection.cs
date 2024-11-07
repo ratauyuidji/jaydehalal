@@ -71,10 +71,12 @@ public class LevelSelection : MonoBehaviour
     public void PressSelection()
     {
         Debug.Log("Button Pressed!");
-        Debug.Log(unlocked);
         if (unlocked)
         {
             PlayerPrefs.SetInt("SelectedLevel", levelId);
+            PlayerPrefs.SetString("SelectedMode", "Classic");
+            PlayerPrefs.Save();
+            Debug.Log("SelectedMode set to: " + PlayerPrefs.GetString("SelectedMode"));
             SceneManager.LoadScene(1);
         }
         else
@@ -82,19 +84,22 @@ public class LevelSelection : MonoBehaviour
             Debug.Log("Level is locked, cannot load scene.");
         }
     }
-    public void PressHostageSelection(int levelHId)
+
+    /*public void PressHostageSelection()
     {
-        Debug.Log("Button Pressed!");
-        Debug.Log(unlocked);
+        Debug.Log("Button Pressed for Hostage Level!");
         if (unlocked)
         {
-            PlayerPrefs.SetInt("SelectedLevel", levelHId);
+            PlayerPrefs.SetInt("SelectedHostageLevel", levelId);
+            PlayerPrefs.SetString("SelectedMode", "Hostage");
+            Debug.Log("SelectedMode set to: " + PlayerPrefs.GetString("SelectedMode"));
+            PlayerPrefs.Save();
             SceneManager.LoadScene(1);
         }
         else
         {
-            Debug.Log("Level is locked, cannot load scene.");
+            Debug.Log("Hostage Level is locked, cannot load scene.");
         }
-    }
+    }*/
 
 }

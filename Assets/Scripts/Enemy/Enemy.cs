@@ -41,10 +41,19 @@ public class Enemy : MonoBehaviour
     public void OnBulletHit(Collider2D other)
     {
         ActivateDeadSprite();
+        DisableChildrenHingeLimits();
         GameManager.Instance.RemoveEnemy(this);
     }
     public void ActivateDeadSprite()
     {
         head.gameObject.GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
+    }
+    public void DisableChildrenHingeLimits()
+    {
+        EnemyChildren[] enemyChildren = GetComponentsInChildren<EnemyChildren>();
+        foreach (var child in enemyChildren)
+        {
+            child.DisableHingeLimit();
+        }
     }
 }
