@@ -19,7 +19,6 @@ public class ChapterPanelManager : MonoBehaviour
     private Vector3 rightImageStartPos;
     private Vector3 leftImageEndPos;
     private Vector3 rightImageEndPos;
-    private GameObject playerarm;
     public TextMeshProUGUI chapterText;
     public TextMeshProUGUI mapText;
     private int levelIndex;
@@ -58,27 +57,57 @@ public class ChapterPanelManager : MonoBehaviour
             chapterText.text = "CHAPTER 3";
             mapText.text = "GRAVEYARD";
         }
-        if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33)
+        else if (levelIndex == 49)
         {
-            var weaponScript = FindObjectOfType<Weapon>();
-            if (weaponScript != null)
-            {
-                playerarm = weaponScript.gameObject;
-            }
-            else
-            {
-                var nadeScript = FindObjectOfType<NadeWeapon>();
-                playerarm = nadeScript.gameObject;
-                Debug.Log("armnade");
-            }
-            playerarm.SetActive(false);
-            Debug.Log("tat arm");
+            chapterText.text = "CHAPTER 4";
+            mapText.text = "FAR WEST";
+        }
+        else if (levelIndex == 65)
+        {
+            chapterText.text = "CHAPTER 5";
+            mapText.text = "FOREST";
+        }
+        else if (levelIndex == 81)
+        {
+            chapterText.text = "CHAPTER 6";
+            mapText.text = "FORTRESS";
+        }
+        else if (levelIndex == 97)
+        {
+            chapterText.text = "CHAPTER 7";
+            mapText.text = "PREHISTORY";
+        }
+        else if (levelIndex == 113)
+        {
+            chapterText.text = "CHAPTER 8";
+            mapText.text = "UNKNOW PLANET";
+        }
+        if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33 || levelIndex == 49 || levelIndex == 65 || levelIndex == 81 || levelIndex == 97 || levelIndex == 113)
+        {
+            //playerarm = GameObject.FindWithTag("Gun");
+            //Debug.Log("Found gun with name: " + playerarm?.name + " and tag: " + playerarm?.tag);
+            //StartCoroutine(TurnOffPlayerArm());
+            GameManager.Instance.canShot = false;
+            Debug.Log("turn off gun");
             panel.SetActive(true);
             panelCanvasGroup.alpha = 1f;
             SetActiveImage(levelIndex);
             StartCoroutine(MoveImages());
         }
+        else
+        {
+            GameManager.Instance.canShot = true;
+        }
     }
+    /*private IEnumerator TurnOffPlayerArm()
+    {
+        yield return null; // wait 1 frame
+        if (playerarm != null)
+        {
+            playerarm.SetActive(false);
+            Debug.Log("turn off gun in coroutine");
+        }
+    }*/
     private void SetActiveImage(int levelIndex)
     {
         foreach (var imgParent in rightImageParents)
@@ -104,6 +133,31 @@ public class ChapterPanelManager : MonoBehaviour
             rightImageParents[2].SetActive(true); 
             cityImages[2].SetActive(true);
         }
+        else if (levelIndex == 49 && rightImageParents.Count > 3 && cityImages.Count > 3)
+        {
+            rightImageParents[3].SetActive(true);
+            cityImages[3].SetActive(true);
+        }
+        else if (levelIndex == 65 && rightImageParents.Count > 4 && cityImages.Count > 4)
+        {
+            rightImageParents[4].SetActive(true);
+            cityImages[4].SetActive(true);
+        }
+        else if (levelIndex == 81 && rightImageParents.Count > 5 && cityImages.Count > 5)
+        {
+            rightImageParents[5].SetActive(true);
+            cityImages[5].SetActive(true);
+        }
+        else if (levelIndex == 97 && rightImageParents.Count > 6 && cityImages.Count > 6)
+        {
+            rightImageParents[6].SetActive(true);
+            cityImages[6].SetActive(true);
+        }
+        else if (levelIndex == 113 && rightImageParents.Count > 7 && cityImages.Count > 7)
+        {
+            rightImageParents[7].SetActive(true);
+            cityImages[7].SetActive(true);
+        }
         else
         {
             Debug.LogWarning("Không tìm thấy hình ảnh phù hợp cho levelIndex: " + levelIndex);
@@ -126,7 +180,6 @@ public class ChapterPanelManager : MonoBehaviour
 
         imageLeft.localPosition = leftImageEndPos;
         imageRightContainer.transform.localPosition = rightImageEndPos;
-
         StartCoroutine(FadeOutPanel());
     }
     IEnumerator FadeOutPanel()
@@ -143,8 +196,15 @@ public class ChapterPanelManager : MonoBehaviour
 
         panelCanvasGroup.alpha = 0f;
         panel.SetActive(false);
-        playerarm.SetActive(true);
-        Debug.Log("bat arm");
+        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
+        {
+            GameManager.Instance.canShot = false;
+        }
+        else
+        {
+            GameManager.Instance.canShot = true;
+        }
+        Debug.Log("turn on gun");
         ResetState();
     }
 

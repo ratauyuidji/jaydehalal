@@ -79,10 +79,6 @@ public class LevelManager : MonoBehaviour
             {
                 Destroy(bullet);
             }
-            foreach (Nade nade in FindObjectsOfType<Nade>())
-            {
-                Destroy(nade.gameObject);
-            }
         }
         StartCoroutine(WaitAndLoadLevel(index));
     }
@@ -165,9 +161,9 @@ public class LevelManager : MonoBehaviour
         if (currentLevelPrefab != null)
         {
             Destroy(currentLevelPrefab);
-            foreach (GameObject bullet in GameObject.FindGameObjectsWithTag("Bullet"))
+            foreach (GameObject nade in GameObject.FindGameObjectsWithTag("Nade"))
             {
-                Destroy(bullet);
+                Destroy(nade);
             }
         }
         StartCoroutine(WaitAndLoadNadeLevel(index));

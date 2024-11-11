@@ -9,7 +9,6 @@ using Hapiga.Tracking;
 
 public class GameManager : MonoBehaviour
 {
-    //[SerializeField] private List<IconHandler> iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
     [SerializeField] private int maxReloadTime = 10;
@@ -22,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addBulletPanel;
     [SerializeField] private GameObject addSkipPanel;
     [SerializeField] private Animator transitionAnim;
+    [SerializeField] private GameObject tutorialPanel;
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     private bool hasLost = false;
     private bool isPlayingHostageMode;
     private bool isPlayingNadeMode;
+    public bool canShot = true;
 
     private GameObject playerarm;
     public Button x2Button;
@@ -66,6 +67,14 @@ public class GameManager : MonoBehaviour
         levelIndex = LevelManager.Instance.GetLevelIndex();
         levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
         levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
+        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
+        {
+            //playerarm = GameObject.FindWithTag("Gun");
+            tutorialPanel.SetActive(true);
+            canShot = false;
+            //StartCoroutine(TurnOffPlayerArm());
+            Debug.Log("canshotlevel1" + canShot);
+        }
         if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
         {
             isPlayingHostageMode = true;
@@ -92,6 +101,7 @@ public class GameManager : MonoBehaviour
         }
         hasLost = false;
         hasWon = false;
+        //canShot = true;
         useNumberOfShoot = 0;
         if (isPlayingNadeMode)
         {
@@ -145,7 +155,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Added enemy to list: " + enemy[i].name);
         }
         Debug.Log("Total number of enemies in list: " + enemylist.Count);
-        playerarm = GameObject.FindWithTag("Gun");
+        //playerarm = GameObject.FindWithTag("Gun");
         
     }
 
@@ -272,7 +282,8 @@ public class GameManager : MonoBehaviour
             }
         }
         starDisplay.DisplayStar(remainShoot);
-        playerarm.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
 
         if (backgroundUI != null)
         {
@@ -280,21 +291,37 @@ public class GameManager : MonoBehaviour
             backgroundUI.blocksRaycasts = false;
         }
 
-        CompleteLevel(levelIndex);
+        if (isPlayingHostageMode)
+        {
+            CompleteLevel(levelHostageIndex, "Hostage");
+        }
+        else if (isPlayingNadeMode)
+        {
+            CompleteLevel(levelNadeIndex, "Nade");
+        }
+        else
+        {
+            CompleteLevel(levelIndex, "Classic");
+        }
         if (levelIndex >= 3)
         {
             AdManager.Instance.ShowInterstitialAds(null, false);
         }
     }
-    public void CompleteLevel(int level)
+    public void CompleteLevel(int level, string mode)
     {
-        TrackingManager.TrackEvent($"completed_level_{level:000}");
-        Debug.Log(level);
-        if (level == 64)
+        string modePrefix = mode switch
         {
-            //TrackingManager.TrackEvent($"archived_level_{level:000}");
-        }
+            "Classic" => "classic_level",
+            "Hostage" => "hostage_level",
+            "Nade" => "nade_level",
+            _ => "unknown_level"
+        };
+
+        TrackingManager.TrackEvent($"{modePrefix}_{level:000}");
+        Debug.Log($"Completed {mode} level: {level}");
     }
+
     private IEnumerator AnimateMoneyText(int moneyEarned)
     {
         float duration = 1.0f;
@@ -351,7 +378,11 @@ public class GameManager : MonoBehaviour
 
         lose.SetActive(true);
         CheckStar(0);
-        playerarm.SetActive(false);
+        if (playerarm != null)
+        {
+            //playerarm.SetActive(false);
+        }
+        canShot = false;
         if (backgroundUI != null)
         {
             backgroundUI.interactable = false;
@@ -391,7 +422,8 @@ public class GameManager : MonoBehaviour
         }
         win.SetActive(true);
         starDisplay.DisplayStar(0);
-        playerarm.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
         addSkipPanel.SetActive(false);
         if (backgroundUI != null)
         {
@@ -401,6 +433,7 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
+        StopAllCoroutines();
         ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
         changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
@@ -424,6 +457,7 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        StopAllCoroutines();
         ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
         changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
@@ -540,7 +574,8 @@ public class GameManager : MonoBehaviour
                 addSkipPanel.SetActive(true);
                 break;
         }
-        playerarm.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
     }
 
     public void TurnOffAddPanel()
@@ -551,7 +586,8 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnOnPlayerGun()
     {
         yield return new WaitForSeconds(0.5f);
-        playerarm.SetActive(true);
+        //playerarm.SetActive(true);
+        canShot = true;
     }
     private void DisableAllPanels()
     {
@@ -560,5 +596,14 @@ public class GameManager : MonoBehaviour
         addBulletPanel.SetActive(false);
         addSkipPanel.SetActive(false);
     }
-    
+    public void TurnOffInstructionPanel()
+    {
+        tutorialPanel.SetActive(false);
+        StartCoroutine(TurnOnCanShot());
+    }
+    private IEnumerator TurnOnCanShot()
+    {
+        yield return null; // wait 1 frame
+        canShot = true;
+    }
 }
