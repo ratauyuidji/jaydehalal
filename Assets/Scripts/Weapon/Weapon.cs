@@ -14,7 +14,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private float shootDelay;
     [SerializeField] private Laser laser;
 
-    private bool canShoot = true;
+    //private bool canShoot = true;
     private ChangeWeapon changeWeapon;
 
     Vector2 MousePos
@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
 
     private void Start()
     {
-        changeWeapon = FindObjectOfType<ChangeWeapon>();
+        //changeWeapon = FindObjectOfType<ChangeWeapon>();
     }
 
     private void Update()
@@ -38,7 +38,7 @@ public class Weapon : MonoBehaviour
 
         if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire())
         {
-            if (GameManager.Instance.HasEnoughShoot())
+            if (GameManager.Instance.HasEnoughShoot() && GameManager.Instance.canShot)
             {
                 Shoot();
                 GameManager.Instance.UseShoot();
@@ -58,6 +58,6 @@ public class Weapon : MonoBehaviour
     private IEnumerator WaitForNextShot()
     {
         yield return new WaitForSeconds(shootDelay);
-        canShoot = true;
+        //canShoot = true;
     }
 }

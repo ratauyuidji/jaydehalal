@@ -5,22 +5,36 @@ public class EnemyChildren : MonoBehaviour
     [SerializeField] private GameObject deathVFXPrefab;
     private bool isDeathVFXEnabled = true;
     private Enemy parentEnemy;
+    private HingeJoint2D hingeJoint2d;
+
 
     private void Start()
     {
+        hingeJoint2d = GetComponent<HingeJoint2D>();
         bool isVFXEnabled = PlayerPrefs.GetInt("ButtonState_3", 1) == 1;
         ToggleDeathVFX(isVFXEnabled);
-        parentEnemy = GetComponentInParent<Enemy>();
+        parentEnemy = GetComponentInParent<Enemy>();  
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (parentEnemy == null)
+        {
+            parentEnemy = GetComponentInParent<Enemy>();
+            if (parentEnemy == null)
+            {
+                Debug.LogWarning("Không tìm thấy đối tượng cha có component 'Enemy'.");
+                return;
+            }
+        }
+
         if (other.gameObject.CompareTag("CanDestroyBox") || other.gameObject.CompareTag("Wall") || other.gameObject.CompareTag("Enemy"))
         {
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentEnemy.damageThreshold)
             {
-                if (isDeathVFXEnabled) 
+                parentEnemy.DisableChildrenHingeLimits();
+                if (isDeathVFXEnabled)
                 {
                     Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
                 }
@@ -35,6 +49,7 @@ public class EnemyChildren : MonoBehaviour
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -51,5 +66,12 @@ public class EnemyChildren : MonoBehaviour
     public void ToggleDeathVFX(bool isEnabled)
     {
         isDeathVFXEnabled = isEnabled;
+    }
+    public void DisableHingeLimit()
+    {
+        if (hingeJoint2d != null)
+        {
+            hingeJoint2d.useLimits = false;
+        }
     }
 }

@@ -9,6 +9,7 @@ public class IconHandler : MonoBehaviour
     [SerializeField] private Color usedColor;
 
     private Color[] originalColors;
+    private int maxNumberOfShoot;
 
     private void Start()
     {
@@ -19,27 +20,40 @@ public class IconHandler : MonoBehaviour
         }
     }
 
-    public void UseShot(int shotNumber)
+    public void SetMaxNumberOfShoot(int maxShoot)
     {
+        maxNumberOfShoot = maxShoot;
+
         for (int i = 0; i < icons.Length; i++)
         {
-            if (shotNumber == i + 1) // icon from 0, shot from 1
-            {
-                icons[i].color = usedColor;
-                return;
-            }
+            icons[i].gameObject.SetActive(i < maxNumberOfShoot); // Tắt các icon không sử dụng
+        }
+    }
+
+    public void UseShot(int shotNumber)
+    {
+        if (shotNumber > 0 && shotNumber <= maxNumberOfShoot)
+        {
+            int index = maxNumberOfShoot - shotNumber;
+            icons[index].color = usedColor;
         }
     }
 
     public void PlusShot(int shotNumber)
     {
-        for (int i = 0; i < icons.Length; i++)
+        if (shotNumber >= 0 && shotNumber < maxNumberOfShoot)
         {
-            if (shotNumber == i) // icon from 0, shot from 1
-            {
-                icons[i].color = originalColors[i];
-                return;
-            }
+            int index = maxNumberOfShoot - shotNumber - 1;
+            icons[index].color = originalColors[index];
         }
     }
+    public void ResetIcons()
+    {
+        for (int i = 0; i < icons.Length; i++)
+        {
+            icons[i].color = originalColors[i];
+            icons[i].gameObject.SetActive(i < maxNumberOfShoot);
+        }
+    }
+
 }

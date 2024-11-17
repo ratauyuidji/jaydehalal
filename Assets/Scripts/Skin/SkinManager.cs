@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkinManager", menuName = "Skin Manager")]
 public class SkinManager : ScriptableObject
 {
+    public static SkinManager Instance;
     [SerializeField] public Skin[] skins;
     private const string Prefix = "Skin_";
     private const string SelectedSkin = "SelectedSkin";
@@ -15,6 +16,13 @@ public class SkinManager : ScriptableObject
         if (!IsUnlocked(0))
         {
             Unlock(0);
+        }
+    }
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
         }
     }
 
@@ -30,6 +38,32 @@ public class SkinManager : ScriptableObject
         else
         {
             return null;
+        }
+    }
+    public void UnlockSkin(SkinShopItem skinShopItem)
+    {
+        if (!IsUnlocked(9))
+        {
+            Unlock(9);
+            Debug.Log("Special skin unlocked ");
+            skinShopItem.CheckUnlock();
+        }
+        else
+        {
+            Debug.Log("Skin đã được mở khóa trước đó.");
+        }
+    }
+    public void UnlockSkin2(SkinShopItem skinShopItem)
+    {
+        if (!IsUnlocked(12))
+        {
+            Unlock(12);
+            Debug.Log("Special skin unlocked ");
+            skinShopItem.CheckUnlock();
+        }
+        else
+        {
+            Debug.Log("Skin đã được mở khóa trước đó.");
         }
     }
 

@@ -11,7 +11,7 @@ public class AddammoBtn : MonoBehaviour, IPointerClickHandler
     {
         if (bazooka != null)
         {
-            bazooka.AddAmmo(ammoAmount);
+            bazooka.AddAmmo();
         }
     }
 }

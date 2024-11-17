@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &113828456383114503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8267483498070752825}
+  - component: {fileID: 7128344037652979117}
+  m_Layer: 0
+  m_Name: ShopIAP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8267483498070752825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113828456383114503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 269.4177, y: 1074.0527, z: -0.7845346}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7128344037652979117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113828456383114503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bd5b01461f3d6642a8df4286c5f8147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cItem:
+    name: 4000gold
+    id: gold_4000
+    description: Get 4000 gold
+    price: 1.99
+  cItem2:
+    name: 15000gold
+    id: gold_15000
+    description: Get 15000 gold
+    price: 5.99
+  cItem3:
+    name: 30000gold
+    id: gold_30000
+    description: Get 30000 gold
+    price: 10.99
+  ncItem:
+    name: LimitedSkin1
+    id: skin_1
+    description: Get limited skin 1 and 3000 gold
+    price: 2.99
+  ncItem2:
+    name: LimitedSkin2
+    id: skin_2
+    description: Get limited skin 2 and 8000 gold
+    price: 4.99
+  skinManager: {fileID: 11400000, guid: f3a14ea3db12cbf4f81fec021be9b4e4, type: 2}
+  skinShopItem: {fileID: 0}
+  skinShopItem2: {fileID: 0}

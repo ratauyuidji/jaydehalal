@@ -9,7 +9,6 @@ using Hapiga.Tracking;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private IconHandler iconHandler;
     [SerializeField] private GameObject win;
     [SerializeField] private GameObject lose;
     [SerializeField] private int maxReloadTime = 10;
@@ -21,8 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addNadePanel;
     [SerializeField] private GameObject addBulletPanel;
     [SerializeField] private GameObject addSkipPanel;
-
     [SerializeField] private Animator transitionAnim;
+    [SerializeField] private GameObject tutorialPanel;
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
@@ -33,23 +32,60 @@ public class GameManager : MonoBehaviour
     private List<Enemy> enemylist = new List<Enemy>(); 
     private int currentStarsNum = 0;
     private int levelIndex;
+    private int levelHostageIndex;
+    private int levelNadeIndex;
     public StarDisplay starDisplay;
     private int currentReloadTime;
+    //private IconHandler activeIconHandler;
+
+
     private bool canReload = true;
     public bool hasWon = false;
     private bool hasLost = false;
-    private GameObject player;
+    private bool isPlayingHostageMode;
+    private bool isPlayingNadeMode;
+    public bool canShot = true;
+
+    private GameObject playerarm;
     public Button x2Button;
+
+    public Button addAmmoButton;
+    public Button addNadeButton;
+    public Button switchBazookaButton;
+    public Button switchNadeButton;
+
+
     private void Start()
     {
 #if !UNITY_EDITOR
         Application.targetFrameRate = 60;
 #endif
-
-        string sceneName = SceneManager.GetActiveScene().name;
-
-        levelIndex = ExtractLevelIndex(sceneName);
-        Debug.Log("Level Index: " + levelIndex);
+        
+    }
+    public void SetUpWhenLoadLevel()
+    {
+        levelIndex = LevelManager.Instance.GetLevelIndex();
+        levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
+        levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
+        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
+        {
+            //playerarm = GameObject.FindWithTag("Gun");
+            tutorialPanel.SetActive(true);
+            canShot = false;
+            //StartCoroutine(TurnOffPlayerArm());
+            Debug.Log("canshotlevel1" + canShot);
+        }
+        if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
+        {
+            isPlayingHostageMode = true;
+            isPlayingNadeMode = false;
+        }
+        else if(PlayerPrefs.GetString("SelectedMode") == "Nade")
+        {
+            isPlayingNadeMode = true;
+            isPlayingHostageMode = false;
+        }
+        Debug.Log("level index get from levelmanager" + levelIndex);
         if (PlayerPrefs.HasKey(ReloadTimeKey))
         {
             currentReloadTime = PlayerPrefs.GetInt(ReloadTimeKey);
@@ -65,16 +101,34 @@ public class GameManager : MonoBehaviour
         }
         hasLost = false;
         hasWon = false;
-        Weapon weaponScript = FindObjectOfType<Weapon>();
-
-        if (weaponScript != null)
+        //canShot = true;
+        useNumberOfShoot = 0;
+        if (isPlayingNadeMode)
         {
-            player = weaponScript.gameObject;
+            //iconHandler[0].gameObject.SetActive(false);
+            //iconHandler[1].gameObject.SetActive(true);
+            //activeIconHandler = iconHandler[1];
         }
         else
         {
-            Debug.LogWarning("Không tìm thấy đối tượng Player có gắn script Weapon");
+            //iconHandler[0].gameObject.SetActive(true);
+            //iconHandler[1].gameObject.SetActive(false);
+            //activeIconHandler = iconHandler[0];
         }
+
+        LevelManager.Instance.activeIconHandler.ResetIcons();
+        win.SetActive(false);
+        lose.SetActive(false);
+
+        if (backgroundUI != null)
+        {
+            backgroundUI.interactable = true;
+            backgroundUI.blocksRaycasts = true;
+        }
+        FindEnemyAndWeapon();
+        starDisplay.ResetStars();
+        //iconHandler.SetMaxNumberOfShoot(5);
+        Debug.Log("maxNumberOfShoot" + maxNumberOfShoot);
     }
     private void Update()
     {
@@ -90,27 +144,25 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+    private void FindEnemyAndWeapon()
+    {
+        enemylist.Clear();
         Enemy[] enemy = FindObjectsOfType<Enemy>();
-        for(int i = 0; i < enemy.Length; i++)
+        for (int i = 0; i < enemy.Length; i++)
         {
             enemylist.Add(enemy[i]);
+            Debug.Log("Added enemy to list: " + enemy[i].name);
         }
+        Debug.Log("Total number of enemies in list: " + enemylist.Count);
+        //playerarm = GameObject.FindWithTag("Gun");
+        
     }
-    private int ExtractLevelIndex(string sceneName)
-    {
-        for (int i = 0; i < sceneName.Length; i++)
-        {
-            if (char.IsDigit(sceneName[i]))
-            {
-                return int.Parse(sceneName.Substring(i));
-            }
-        }
-        return 0;
-    }
+
     public void UseShoot()
     {
         useNumberOfShoot++;
-        iconHandler.UseShot(useNumberOfShoot);
+        LevelManager.Instance.activeIconHandler.UseShot(useNumberOfShoot);
         CheckLastShoot();
     }
     public void PlusBullet()
@@ -125,7 +177,7 @@ public class GameManager : MonoBehaviour
             {
                 canReload = false;
             }
-            iconHandler.PlusShot(useNumberOfShoot);
+            LevelManager.Instance.activeIconHandler.PlusShot(useNumberOfShoot);
             Debug.Log("Số lần bắn còn lại: " + (maxNumberOfShoot - useNumberOfShoot));
         }
         else
@@ -153,7 +205,8 @@ public class GameManager : MonoBehaviour
     }
     private IEnumerator CheckAfterLastShoot()
     {
-        yield return new WaitForSeconds(3f);
+        float waitTime = isPlayingNadeMode ? 5f : 3f;
+        yield return new WaitForSeconds(waitTime);
         if (enemylist.Count == 0)
         {
             Debug.Log("Win");
@@ -193,7 +246,21 @@ public class GameManager : MonoBehaviour
         Debug.Log("money: " + moneyEarned);
         StartCoroutine(AnimateMoneyText(moneyEarned));
         CheckStar(remainShoot);
-        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        if (isPlayingHostageMode)
+        {
+            PlayerPrefs.SetInt("HLevel" + levelHostageIndex + "_Win", 1);
+
+        }
+        else if (isPlayingNadeMode)
+        {
+            PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        }
+
         win.SetActive(true);
         TextMeshProUGUI winText = win.transform.Find("WinText").GetComponent<TextMeshProUGUI>();
         if (winText != null)
@@ -215,7 +282,8 @@ public class GameManager : MonoBehaviour
             }
         }
         starDisplay.DisplayStar(remainShoot);
-        player.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
 
         if (backgroundUI != null)
         {
@@ -223,21 +291,37 @@ public class GameManager : MonoBehaviour
             backgroundUI.blocksRaycasts = false;
         }
 
-        CompleteLevel(SceneManager.GetActiveScene().buildIndex);
-        if (SceneManager.GetActiveScene().buildIndex >= 3)
+        if (isPlayingHostageMode)
+        {
+            CompleteLevel(levelHostageIndex, "Hostage");
+        }
+        else if (isPlayingNadeMode)
+        {
+            CompleteLevel(levelNadeIndex, "Nade");
+        }
+        else
+        {
+            CompleteLevel(levelIndex, "Classic");
+        }
+        if (levelIndex >= 3)
         {
             AdManager.Instance.ShowInterstitialAds(null, false);
         }
     }
-    public void CompleteLevel(int level)
+    public void CompleteLevel(int level, string mode)
     {
-        TrackingManager.TrackEvent($"completed_level_{level:000}");
-        Debug.Log(level);
-        if (level == 64)
+        string modePrefix = mode switch
         {
-            //TrackingManager.TrackEvent($"archived_level_{level:000}");
-        }
+            "Classic" => "classic_level",
+            "Hostage" => "hostage_level",
+            "Nade" => "nade_level",
+            _ => "unknown_level"
+        };
+
+        TrackingManager.TrackEvent($"{modePrefix}_{level:000}");
+        Debug.Log($"Completed {mode} level: {level}");
     }
+
     private IEnumerator AnimateMoneyText(int moneyEarned)
     {
         float duration = 1.0f;
@@ -294,7 +378,11 @@ public class GameManager : MonoBehaviour
 
         lose.SetActive(true);
         CheckStar(0);
-        player.SetActive(false);
+        if (playerarm != null)
+        {
+            //playerarm.SetActive(false);
+        }
+        canShot = false;
         if (backgroundUI != null)
         {
             backgroundUI.interactable = false;
@@ -318,10 +406,24 @@ public class GameManager : MonoBehaviour
             moneyEarnedText.text = "+" + 0;
         }
         CheckStar(0);
-        PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        if (isPlayingHostageMode)
+        {
+            PlayerPrefs.SetInt("HLevel" + levelHostageIndex + "_Win", 1);
+
+        }
+        else if (isPlayingNadeMode)
+        {
+            PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
+
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
+        }
         win.SetActive(true);
         starDisplay.DisplayStar(0);
-        player.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
         addSkipPanel.SetActive(false);
         if (backgroundUI != null)
         {
@@ -331,20 +433,51 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StopAllCoroutines();
+        ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
+        changeWeapon.PrepareForNextLevel();
+        transitionAnim.SetTrigger("End");
+        if (isPlayingHostageMode)
+        {
+            LevelManager.Instance.LoadHostageLevel(levelHostageIndex-1);
+            Debug.Log("Next Hostage level: " + levelHostageIndex);
+        }
+        else if (isPlayingNadeMode)
+        {
+            LevelManager.Instance.LoadNadeLevel(levelNadeIndex-1);
+            Debug.Log("Next Nade level: " + levelNadeIndex);
+        }
+        else
+        {
+            LevelManager.Instance.LoadLevel(levelIndex-1);
+            Debug.Log("Next Normal level: " + levelIndex);
+        }
+        Debug.Log("level index khi ++" + levelIndex);
+        transitionAnim.SetTrigger("Start");
     }
     public void NextLevel()
     {
+        StopAllCoroutines();
+        ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
+        changeWeapon.PrepareForNextLevel();
         transitionAnim.SetTrigger("End");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        transitionAnim.SetTrigger("Start");
-    }
-    IEnumerator LoadLevel()
-    {
-        transitionAnim.SetTrigger("End");
-        yield return new WaitForSeconds(0.00001f);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        transitionAnim.SetTrigger("Start");        
+        if (isPlayingHostageMode)
+        {
+            LevelManager.Instance.LoadHostageLevel(levelHostageIndex);
+            Debug.Log("Next Hostage level: " + levelHostageIndex);
+        }
+        else if (isPlayingNadeMode)
+        {
+            LevelManager.Instance.LoadNadeLevel(levelNadeIndex);
+            Debug.Log("Next Nade level: " + levelNadeIndex);
+        }
+        else
+        {
+            LevelManager.Instance.LoadLevel(levelIndex);
+            Debug.Log("Next Normal level: " + levelIndex);
+        }
+        Debug.Log("level index khi ++" + levelIndex);
+        transitionAnim.SetTrigger("Start"); 
     }
     public void LoadMenu()
     {
@@ -353,13 +486,33 @@ public class GameManager : MonoBehaviour
     public void CheckStar(int starsNum)
     {
         currentStarsNum = starsNum;
-        if(currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
+        if (isPlayingHostageMode)
         {
-            PlayerPrefs.SetInt("Lv" + levelIndex, currentStarsNum);
+            if (currentStarsNum > PlayerPrefs.GetInt("HLv" + levelHostageIndex))
+            {
+                PlayerPrefs.SetInt("HLv" + levelHostageIndex, currentStarsNum);
+                Debug.Log("star hostage is " + PlayerPrefs.GetInt("HLv" + levelIndex, starsNum));
+            }
         }
-        Debug.Log("star is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
+        else if (isPlayingNadeMode)
+        {
+            if (currentStarsNum > PlayerPrefs.GetInt("NLv" + levelNadeIndex))
+            {
+                PlayerPrefs.SetInt("NLv" + levelNadeIndex, currentStarsNum);
+                Debug.Log("star classic is " + PlayerPrefs.GetInt("NLv" + levelNadeIndex, starsNum));
+            }
+        }
+        else
+        {
+            if (currentStarsNum > PlayerPrefs.GetInt("Lv" + levelIndex))
+            {
+                PlayerPrefs.SetInt("Lv" + levelIndex, currentStarsNum);
+                Debug.Log("star classic is " + PlayerPrefs.GetInt("Lv" + levelIndex, starsNum));
+            }
+        }
+
     }
-    public void AddReloadTime(int reload)
+    public void AddReloadTime()
     {
         AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
     }
@@ -372,7 +525,7 @@ public class GameManager : MonoBehaviour
         }
         UpdateReloadText();
         SaveReloadTime();
-        GameManager.Instance.TurnOffAddPanel();
+        TurnOffAddPanel();
     }
 
     private void UpdateReloadText()
@@ -421,7 +574,8 @@ public class GameManager : MonoBehaviour
                 addSkipPanel.SetActive(true);
                 break;
         }
-        player.SetActive(false);
+        //playerarm.SetActive(false);
+        canShot = false;
     }
 
     public void TurnOffAddPanel()
@@ -432,7 +586,8 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnOnPlayerGun()
     {
         yield return new WaitForSeconds(0.5f);
-        player.SetActive(true);
+        //playerarm.SetActive(true);
+        canShot = true;
     }
     private void DisableAllPanels()
     {
@@ -441,5 +596,14 @@ public class GameManager : MonoBehaviour
         addBulletPanel.SetActive(false);
         addSkipPanel.SetActive(false);
     }
-    
+    public void TurnOffInstructionPanel()
+    {
+        tutorialPanel.SetActive(false);
+        StartCoroutine(TurnOnCanShot());
+    }
+    private IEnumerator TurnOnCanShot()
+    {
+        yield return null; // wait 1 frame
+        canShot = true;
+    }
 }

@@ -11,7 +11,7 @@ public class ThrowNade : MonoBehaviour
     [SerializeField] private Transform startPosition;
     [SerializeField] private float maxDistance = 3.5f;
     [SerializeField] private int maxAmmo = 10;
-    [SerializeField] private TextMeshProUGUI ammoText;
+    private TextMeshProUGUI nadeText;
     private ChangeWeapon changeWeapon;
     public RotateArm rotateArm;
     public GameObject nadePrefab;
@@ -129,7 +129,7 @@ public class ThrowNade : MonoBehaviour
         return baseThrowForce * normalizedLength;
     }
 
-    public void AddNade(int ammo)
+    public void AddNade()
     {
         AdManager.Instance.ShowRewardedVideo(CloseRewardCallback);
     }
@@ -147,10 +147,15 @@ public class ThrowNade : MonoBehaviour
 
     private void UpdateNadeNumberText()
     {
-        if (ammoText != null)
+        if (nadeText != null)
         {
-            ammoText.text = currentNadeNumber.ToString();
+            nadeText.text = currentNadeNumber.ToString();
         }
+    }
+    public void SetNadeText(TextMeshProUGUI text)
+    {
+        nadeText = text;
+        UpdateNadeNumberText();
     }
 
     private void SaveNadeNumber()

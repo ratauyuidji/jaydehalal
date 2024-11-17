@@ -2739,7 +2739,6 @@ MonoBehaviour:
   shootDelay: 0
   laser: {fileID: 491594609}
   maxAmmo: 10
-  ammoText: {fileID: 1233540202309736166}
 --- !u!212 &979881719
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2843,7 +2842,6 @@ MonoBehaviour:
   startPosition: {fileID: 1625814817}
   maxDistance: 2
   maxAmmo: 10
-  ammoText: {fileID: 856371128}
   rotateArm: {fileID: 1618793481}
   nadePrefab: {fileID: 7993856341392900034, guid: 98b2c9bc8f260094c9be85a1fba92594, type: 3}
   throwPoint: {fileID: 1952631422}
@@ -4934,7 +4932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1876957720
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8061,9 +8059,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1179317004}
     - target: {fileID: 1964905060022094201, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1964905060022094201, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1179317004}
+    - target: {fileID: 1964905060022094201, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddReloadTime
+      objectReference: {fileID: 0}
     - target: {fileID: 2050923386600579709, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -52.440002
@@ -8175,6 +8181,10 @@ PrefabInstance:
     - target: {fileID: 3492005491834196674, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815662573855929724, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3815662573855929724, guid: 92a90a19d0a2d534aa782f671905f639, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

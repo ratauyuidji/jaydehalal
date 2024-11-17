@@ -10,8 +10,11 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI completedLevelsMap1Text;
     [SerializeField] private TextMeshProUGUI completedLevelsMap2Text;
+    [SerializeField] private TextMeshProUGUI completedLevelsMap3Text;
     [SerializeField] private TextMeshProUGUI starMap1Text;
     [SerializeField] private TextMeshProUGUI starMap2Text;
+    [SerializeField] private TextMeshProUGUI starMap3Text;
+
 
     public static UIManager Instance;
     public GameObject mapSelectionPanel;
@@ -28,11 +31,12 @@ public class UIManager : MonoBehaviour
     private Vector3[] initialPositions;
     private int starMap1;
     private int starMap2;
-
+    private int starMap3;
 
 
     private void Awake()
     {
+        TransferAndDeletePlayerPrefs();
         if (Instance == null)
         {
             Instance = this;
@@ -70,11 +74,14 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = GetCompletedLevels1Count();
         int completedLevels2Count = GetCompletedLevels2Count();
+        int completedLevels3Count = GetCompletedLevels3Count();
 
-        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "64";
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "160";
         completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "32";
+        completedLevelsMap3Text.text = completedLevels3Count.ToString() + "/" + "32";
         starMap1Text.text = starMap1.ToString();
         starMap2Text.text = starMap2.ToString();
+        starMap3Text.text = starMap3.ToString();
     }
     public void UpdateLockedStarUI()
     {
@@ -96,7 +103,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars0 = 0;
-                    for (int lv = 1; lv <= 64; lv++)
+                    for (int lv = 1; lv <= 160; lv++)
                     {
                         totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -107,15 +114,21 @@ public class UIManager : MonoBehaviour
 
                 case 1:
                     int totalStars1 = 0;
-                    for (int lv = 65; lv <= 96; lv++)
+                    for (int lv = 1; lv <= 32; lv++)
                     {
-                        totalStars1 += PlayerPrefs.GetInt("Lv" + lv);
+                        totalStars1 += PlayerPrefs.GetInt("HLv" + lv);
                     }
                     unlockedStarsText[i].text = totalStars1.ToString();// + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     starMap2 = totalStars1;
                     break;
                 case 2:
-                    unlockedStarsText[i].text = 0.ToString(); ;// + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    int totalStars2 = 0;
+                    for (int lv = 1; lv <= 32; lv++)
+                    {
+                        totalStars2 += PlayerPrefs.GetInt("NLv" + lv);
+                    }
+                    unlockedStarsText[i].text = totalStars2.ToString();// + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    starMap3 = totalStars2;
                     break;
             }
         }
@@ -123,11 +136,15 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 96; i++)
+        for (int i = 1; i <= 160; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
-        startText.text = stars.ToString() + "/" + 288;
+        for (int i = 1; i <= 32; i++)
+        {
+            stars += PlayerPrefs.GetInt("HLv" + i);
+        }
+        startText.text = stars.ToString() + "/" + 672;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -187,12 +204,12 @@ public class UIManager : MonoBehaviour
     }
     public void LoadHighestUnlockedLevelMode1()
     {
-        LoadHighestUnlockedLevel(1, 63);
+        LoadHighestUnlockedLevel(1, 160);
     }
 
     public void LoadHighestUnlockedLevelMode2()
     {
-        LoadHighestUnlockedLevel(65, 95);
+        LoadHighestUnlockedLevel(1, 32);
     }
 
     private void LoadHighestUnlockedLevel(int start, int end)
@@ -203,7 +220,7 @@ public class UIManager : MonoBehaviour
         {
             if (PlayerPrefs.GetInt("Lv" + i) >= 0 && PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
-                highestUnlockedLevel = i + 1;
+                highestUnlockedLevel = i+1;
             }
             else
             {
@@ -211,9 +228,12 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        string levelName = "Level" + highestUnlockedLevel;
-        Debug.Log("Loading highest unlocked level: " + levelName);
-        SceneManager.LoadScene(levelName);
+        //string levelName = "Level" + highestUnlockedLevel;
+        Debug.Log("Loading highest unlocked level: " + highestUnlockedLevel);
+        //SceneManager.LoadScene(levelName);
+        PlayerPrefs.SetInt("SelectedLevel", highestUnlockedLevel);
+        PlayerPrefs.SetString("SelectedMode", "Classic");
+        SceneManager.LoadScene(1);
     }
     public void TurnOnSettingPanel()
     {
@@ -239,7 +259,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = 0;
 
-        for (int i = 1; i <= 64; i++)
+        for (int i = 1; i <= 160; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {
@@ -253,9 +273,9 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels2Count = 0;
 
-        for (int i = 65; i <= 96; i++)
+        for (int i = 1; i <= 32; i++)
         {
-            if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
+            if (PlayerPrefs.GetInt("HLevel" + i + "_Win") == 1)
             {
                 completedLevels2Count++;
             }
@@ -263,4 +283,53 @@ public class UIManager : MonoBehaviour
 
         return completedLevels2Count;
     }
+    public int GetCompletedLevels3Count()
+    {
+        int completedLevels3Count = 0;
+
+        for (int i = 1; i <= 32; i++)
+        {
+            if (PlayerPrefs.GetInt("NLevel" + i + "_Win") == 1)
+            {
+                completedLevels3Count++;
+            }
+        }
+
+        return completedLevels3Count;
+    }
+    void ClearPlayerPrefsForLevels()
+    {
+        if (PlayerPrefs.GetInt("GameUpdated", 0) == 0)
+        {
+            for (int levelIndex = 64; levelIndex <= 96; levelIndex++)
+            {
+                PlayerPrefs.DeleteKey("Lv" + levelIndex);
+                PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 0);
+            }
+            PlayerPrefs.SetInt("GameUpdated", 1);
+            PlayerPrefs.Save();
+        }
+    }
+    void TransferAndDeletePlayerPrefs()
+    {
+        if (PlayerPrefs.GetInt("DataTransferred", 0) == 0)
+        {
+            for (int oldLevelIndex = 65, newLevelIndex = 1; oldLevelIndex <= 96; oldLevelIndex++, newLevelIndex++)
+            {
+                int stars = PlayerPrefs.GetInt("Lv" + oldLevelIndex, 0);
+                PlayerPrefs.SetInt("HLv" + newLevelIndex, stars);
+
+                int winStatus = PlayerPrefs.GetInt("Level" + oldLevelIndex + "_Win", 0);
+                PlayerPrefs.SetInt("HLevel" + newLevelIndex + "_Win", winStatus);
+
+                PlayerPrefs.DeleteKey("Lv" + oldLevelIndex);
+                PlayerPrefs.DeleteKey("Level" + oldLevelIndex + "_Win");
+            }
+
+            PlayerPrefs.SetInt("DataTransferred", 1);
+            PlayerPrefs.Save();
+        }
+    }
+
+
 }

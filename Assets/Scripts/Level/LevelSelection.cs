@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,10 +12,21 @@ public class LevelSelection : MonoBehaviour
     public Image lockImage;
     public GameObject[] stars;
     public Sprite starSprite;
+    public TextMeshProUGUI levelText;
+    private int levelId;
     
     private void Start()
     {
+        Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(PressSelection);
+        }
         //PlayerPrefs.DeleteAll();
+        levelText = GetComponentInChildren<TextMeshProUGUI>();
+        levelId = int.Parse(gameObject.name);
+        levelText.text = levelId.ToString();
     }
 
     private void Update()
@@ -27,7 +39,7 @@ public class LevelSelection : MonoBehaviour
         //if current lv is 5, the pre should be 4
         int previousLevelNum = int.Parse(gameObject.name) - 1;
         if (PlayerPrefs.GetInt("Lv" + previousLevelNum.ToString()) >= 0 &&
-        PlayerPrefs.GetInt("Level" + previousLevelNum.ToString() + "_Win") == 1)//If star > 0, next level can play
+        PlayerPrefs.GetInt("Level" + previousLevelNum.ToString() + "_Win") == 1)//If star >= 0 and win, next level can play
         {
             unlocked = true;
         }
@@ -56,19 +68,38 @@ public class LevelSelection : MonoBehaviour
             }
         }
     }
-    public void PressSelection(int levelId)
+    public void PressSelection()
     {
         Debug.Log("Button Pressed!");
-        Debug.Log(unlocked);
-        if(unlocked)
+        if (unlocked)
         {
-            string levelname = "Level" + (levelId);
-            SceneManager.LoadScene(levelname);
+            PlayerPrefs.SetInt("SelectedLevel", levelId);
+            PlayerPrefs.SetString("SelectedMode", "Classic");
+            PlayerPrefs.Save();
+            Debug.Log("SelectedMode set to: " + PlayerPrefs.GetString("SelectedMode"));
+            SceneManager.LoadScene(1);
         }
         else
         {
             Debug.Log("Level is locked, cannot load scene.");
         }
     }
-    
+
+    /*public void PressHostageSelection()
+    {
+        Debug.Log("Button Pressed for Hostage Level!");
+        if (unlocked)
+        {
+            PlayerPrefs.SetInt("SelectedHostageLevel", levelId);
+            PlayerPrefs.SetString("SelectedMode", "Hostage");
+            Debug.Log("SelectedMode set to: " + PlayerPrefs.GetString("SelectedMode"));
+            PlayerPrefs.Save();
+            SceneManager.LoadScene(1);
+        }
+        else
+        {
+            Debug.Log("Hostage Level is locked, cannot load scene.");
+        }
+    }*/
+
 }
