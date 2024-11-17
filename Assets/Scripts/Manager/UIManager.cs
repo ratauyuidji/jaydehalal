@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
         int completedLevels2Count = GetCompletedLevels2Count();
         int completedLevels3Count = GetCompletedLevels3Count();
 
-        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "192";
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "160";
         completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "32";
         completedLevelsMap3Text.text = completedLevels3Count.ToString() + "/" + "32";
         starMap1Text.text = starMap1.ToString();
@@ -103,7 +103,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars0 = 0;
-                    for (int lv = 1; lv <= 192; lv++)
+                    for (int lv = 1; lv <= 160; lv++)
                     {
                         totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -136,7 +136,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 192; i++)
+        for (int i = 1; i <= 160; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
@@ -144,7 +144,7 @@ public class UIManager : MonoBehaviour
         {
             stars += PlayerPrefs.GetInt("HLv" + i);
         }
-        startText.text = stars.ToString() + "/" + 576;
+        startText.text = stars.ToString() + "/" + 672;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -204,7 +204,7 @@ public class UIManager : MonoBehaviour
     }
     public void LoadHighestUnlockedLevelMode1()
     {
-        LoadHighestUnlockedLevel(1, 192);
+        LoadHighestUnlockedLevel(1, 160);
     }
 
     public void LoadHighestUnlockedLevelMode2()
@@ -259,7 +259,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = 0;
 
-        for (int i = 1; i <= 192; i++)
+        for (int i = 1; i <= 160; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {

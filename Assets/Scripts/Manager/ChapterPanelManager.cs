@@ -82,7 +82,17 @@ public class ChapterPanelManager : MonoBehaviour
             chapterText.text = "CHAPTER 8";
             mapText.text = "UNKNOW PLANET";
         }
-        if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33 || levelIndex == 49 || levelIndex == 65 || levelIndex == 81 || levelIndex == 97 || levelIndex == 113)
+        else if (levelIndex == 129)
+        {
+            chapterText.text = "CHAPTER 9";
+            mapText.text = "PRIVATE SHIP";
+        }
+        else if (levelIndex == 145)
+        {
+            chapterText.text = "CHAPTER 10";
+            mapText.text = "CASTLE";
+        }
+        if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33 || levelIndex == 49 || levelIndex == 65 || levelIndex == 81 || levelIndex == 97 || levelIndex == 113 || levelIndex == 129 || levelIndex == 145)
         {
             //playerarm = GameObject.FindWithTag("Gun");
             //Debug.Log("Found gun with name: " + playerarm?.name + " and tag: " + playerarm?.tag);
@@ -157,6 +167,16 @@ public class ChapterPanelManager : MonoBehaviour
         {
             rightImageParents[7].SetActive(true);
             cityImages[7].SetActive(true);
+        }
+        else if (levelIndex == 129 && rightImageParents.Count > 8 && cityImages.Count > 8)
+        {
+            rightImageParents[8].SetActive(true);
+            cityImages[8].SetActive(true);
+        }
+        else if (levelIndex == 145 && rightImageParents.Count > 9 && cityImages.Count > 9)
+        {
+            rightImageParents[9].SetActive(true);
+            cityImages[9].SetActive(true);
         }
         else
         {

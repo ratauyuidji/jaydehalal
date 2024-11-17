@@ -9,12 +9,12 @@ public class SkinShopItem : MonoBehaviour
 {
     [SerializeField] private SkinManager skinManager;
     [SerializeField] private int skinIndex;
-    [SerializeField] private Button buyButton;
+    public Button buyButton;
     [SerializeField] private TextMeshProUGUI costText;
-    [SerializeField] private GameObject equippedIndicator;
-    [SerializeField] private GameObject equippedBanner;
-    [SerializeField] private GameObject backgroundImage;
-    [SerializeField] private GameObject lockImage;
+    public GameObject equippedIndicator;
+    public GameObject equippedBanner;
+    public GameObject backgroundImage;
+    public GameObject lockImage;
     [SerializeField] private ShopManager shopManager;
     [SerializeField] private TextMeshProUGUI skinNameText;
     [SerializeField] private RectTransform moneyPanel;
@@ -24,6 +24,20 @@ public class SkinShopItem : MonoBehaviour
     private Vector3 moneyPanelOriginalPosition;
 
     void Start()
+    {
+        CheckUnlock();
+        UpdateCosDisplay();
+        if (skinNameText != null)
+        {
+            skinNameText.text = skinManager.GetSelectedSkin().nameSkin;
+        }
+        UpdateEquippedIndicator();
+    }
+    private void Update()
+    {
+        UpdateCosDisplay();
+    }
+    public void CheckUnlock()
     {
         skin = skinManager.skins[skinIndex];
         Image childImage = childGameObject.GetComponent<Image>();
@@ -50,16 +64,6 @@ public class SkinShopItem : MonoBehaviour
             equippedIndicator.SetActive(false);
             equippedBanner.SetActive(false);
         }
-        UpdateCosDisplay();
-        if (skinNameText != null)
-        {
-            skinNameText.text = skinManager.GetSelectedSkin().nameSkin;
-        }
-        UpdateEquippedIndicator();
-    }
-    private void Update()
-    {
-        UpdateCosDisplay();
     }
     public void OnSkinPressed()
     {
