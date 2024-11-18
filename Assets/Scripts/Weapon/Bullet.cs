@@ -51,7 +51,7 @@ public class Bullet : Projectile
             Vector2 impactDirection = transform.position - other.transform.position;
             erb.AddForce(impactDirection * -60f, ForceMode2D.Impulse);
 
-            if (other.gameObject.CompareTag("Hostages"))
+            if (other.gameObject.CompareTag("Hostages") || other.gameObject.CompareTag("Player"))
             {
                 GameManager.Instance.LoseGame();
             }

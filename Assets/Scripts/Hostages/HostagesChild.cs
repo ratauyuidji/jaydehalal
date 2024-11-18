@@ -7,12 +7,17 @@ public class HostagesChild : MonoBehaviour
     [SerializeField] private GameObject deathVFXPrefab;
     private bool isDeathVFXEnabled = true;
     private Hostages parentHostages;
+    private HingeJoint2D hingeJoint2d;
+    private Rigidbody2D rb;
 
     private void Start()
     {
+        hingeJoint2d = GetComponent<HingeJoint2D>();
         bool isVFXEnabled = PlayerPrefs.GetInt("ButtonState_3", 1) == 1;
         ToggleDeathVFX(isVFXEnabled);
         parentHostages = GetComponentInParent<Hostages>();
+        rb = GetComponent<Rigidbody2D>();
+        //rb.isKinematic = true;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -22,6 +27,7 @@ public class HostagesChild : MonoBehaviour
             float impactVelocity = other.relativeVelocity.magnitude;
             if (impactVelocity > parentHostages.damageThreshold)
             {
+                parentHostages.DisableChildrenHingeLimits();
                 if (isDeathVFXEnabled)
                 {
                     Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);
@@ -53,5 +59,13 @@ public class HostagesChild : MonoBehaviour
     public void ToggleDeathVFX(bool isEnabled)
     {
         isDeathVFXEnabled = isEnabled;
+    }
+    public void DisableHingeLimit()
+    {
+        if (hingeJoint2d != null)
+        {
+            hingeJoint2d.useLimits = false;
+            rb.isKinematic = false;
+        }
     }
 }

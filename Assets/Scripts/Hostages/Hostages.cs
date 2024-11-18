@@ -36,4 +36,12 @@ public class Hostages : MonoBehaviour
     {
         head.gameObject.GetComponent<SpriteRenderer>().sprite = deadHeadSprite;
     }
+    public void DisableChildrenHingeLimits()
+    {
+        HostagesChild[] hostageChildren = GetComponentsInChildren<HostagesChild>();
+        foreach (var child in hostageChildren)
+        {
+            child.DisableHingeLimit();
+        }
+    }
 }
