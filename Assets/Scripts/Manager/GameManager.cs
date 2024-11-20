@@ -88,13 +88,16 @@ public class GameManager : MonoBehaviour
             tutorialPanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
+            Debug.Log("canshot" + canShot);
         }
         else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 1)
         {
             tutorialHostagePanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
-        } else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
+            Debug.Log("canshot" + canShot);
+        } 
+        else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
         {
             tutorialNadePanel.SetActive(true);
             canShot = false;
@@ -329,7 +332,7 @@ public class GameManager : MonoBehaviour
         {
             CompleteLevel(levelIndex, "Classic");
         }
-        if (levelIndex >= 3)
+        if (levelIndex >= 3 || levelHostageIndex >= 3 || levelNadeIndex >= 3)
         {
             AdManager.Instance.ShowInterstitialAds(null, false);
         }

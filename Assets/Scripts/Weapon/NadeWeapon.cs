@@ -38,7 +38,7 @@ public class NadeWeapon : MonoBehaviour
         {
             if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire())
             {
-                if (GameManager.Instance.HasEnoughShoot())
+                if (GameManager.Instance.HasEnoughShoot() && GameManager.Instance.canShot)
                 {
                     ThrowGrenade();
                     GameManager.Instance.UseShoot();

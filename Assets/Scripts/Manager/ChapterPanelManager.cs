@@ -216,7 +216,7 @@ public class ChapterPanelManager : MonoBehaviour
 
         panelCanvasGroup.alpha = 0f;
         panel.SetActive(false);
-        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
+        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1 || PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelIndex == 1 || PlayerPrefs.GetString("SelectedMode") == "Nade" && levelIndex == 1)
         {
             GameManager.Instance.canShot = false;
         }
