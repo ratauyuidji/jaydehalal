@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject addSkipPanel;
     [SerializeField] private Animator transitionAnim;
     [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private GameObject tutorialHostagePanel;
+    [SerializeField] private GameObject tutorialNadePanel;
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
@@ -69,12 +71,22 @@ public class GameManager : MonoBehaviour
         levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
         if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
         {
-            //playerarm = GameObject.FindWithTag("Gun");
             tutorialPanel.SetActive(true);
             canShot = false;
-            //StartCoroutine(TurnOffPlayerArm());
             Debug.Log("canshotlevel1" + canShot);
         }
+        else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 1)
+        {
+            tutorialHostagePanel.SetActive(true);
+            canShot = false;
+            Debug.Log("canshotlevel1" + canShot);
+        } else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
+        {
+            tutorialNadePanel.SetActive(true);
+            canShot = false;
+            Debug.Log("canshotlevel1" + canShot);
+        }
+            
         if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
         {
             isPlayingHostageMode = true;
@@ -599,6 +611,8 @@ public class GameManager : MonoBehaviour
     public void TurnOffInstructionPanel()
     {
         tutorialPanel.SetActive(false);
+        tutorialHostagePanel.SetActive(false);
+        tutorialNadePanel.SetActive(false);
         StartCoroutine(TurnOnCanShot());
     }
     private IEnumerator TurnOnCanShot()
