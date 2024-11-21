@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private GameObject tutorialHostagePanel;
     [SerializeField] private GameObject tutorialNadePanel;
+    [SerializeField] private GameObject winButton;
 
     Coroutine CWin;
     Coroutine CCheckEnemy;
@@ -69,6 +70,19 @@ public class GameManager : MonoBehaviour
         levelIndex = LevelManager.Instance.GetLevelIndex();
         levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
         levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
+        if(PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 160)
+        {
+            winButton.SetActive(false);
+        }
+        else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 32)
+        {
+            winButton.SetActive(false);
+        }
+        else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 32)
+        {
+            winButton.SetActive(false);
+        }
+
         if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
         {
             tutorialPanel.SetActive(true);
