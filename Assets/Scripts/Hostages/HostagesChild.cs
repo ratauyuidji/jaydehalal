@@ -50,6 +50,7 @@ public class HostagesChild : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             parentHostages.ActivateDeadSprite();
+            parentHostages.DisableChildrenHingeLimits();
             if (isDeathVFXEnabled)
             {
                 Instantiate(deathVFXPrefab, this.transform.position, Quaternion.identity);

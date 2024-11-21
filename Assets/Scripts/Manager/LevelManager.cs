@@ -13,10 +13,12 @@ public class LevelManager : MonoBehaviour
     public GameObject[] levelPrefabs;
     public GameObject[] hostageLevelPrefabs;
     public GameObject[] nadeLevelPrefabs;
+    public GameObject[] ffLevelPrefabs;
     private GameObject currentLevelPrefab;
     private int levelIndex;
     private int levelHostageIndex;
     private int levelNadeIndex;
+    private int levelFFIndex;
     public Button addAmmoButton;
     public Button addNadeButton;
     public Button switchBazookaButton;
@@ -26,6 +28,7 @@ public class LevelManager : MonoBehaviour
     public int[] maxNumberOfShoots;
     public int[] hostageMaxNumberOfShoots;
     public int[] nadeMaxNumberOfShoots;
+    public int[] ffMaxNumberOfShoots;
     public IconHandler activeIconHandler;
     public GameObject testLevelPrefab;
     private void Awake()
@@ -58,6 +61,12 @@ public class LevelManager : MonoBehaviour
                 levelNadeIndex = PlayerPrefs.GetInt("SelectedNadeLevel");
                 Debug.Log("Hostage Level Index đã chọn từ menu: " + levelNadeIndex);
                 LoadNadeLevel(levelNadeIndex - 1);
+            }
+            else if (selectedMode == "FriendlyFire" && PlayerPrefs.HasKey("SelectedFFLevel"))
+            {
+                levelFFIndex = PlayerPrefs.GetInt("SelectedFFLevel");
+                Debug.Log("Friendly Fire Level Index đã chọn từ menu: " + levelFFIndex);
+                LoadFFLevel(levelFFIndex - 1);
             }
             else
             {
@@ -235,6 +244,10 @@ public class LevelManager : MonoBehaviour
     {
         return levelNadeIndex;
     }
+    public int GetFFLevelIndex()
+    {
+        return levelFFIndex;
+    }
     private void SetActiveIconHandler(int index)
     {
         for (int i = 0; i < iconHandler.Count; i++)
@@ -242,5 +255,51 @@ public class LevelManager : MonoBehaviour
             iconHandler[i].gameObject.SetActive(i == index);
         }
         activeIconHandler = iconHandler[index];
+    }
+
+
+
+    public void LoadFFLevel(int index)
+    {
+        SetActiveIconHandler(0);
+        if (currentLevelPrefab != null)
+        {
+            Destroy(currentLevelPrefab);
+            foreach (GameObject bullet in GameObject.FindGameObjectsWithTag("Bullet"))
+            {
+                Destroy(bullet);
+            }
+        }
+        StartCoroutine(WaitAndLoadFFLevel(index));
+    }
+
+    private IEnumerator WaitAndLoadFFLevel(int index)
+    {
+        yield return new WaitForEndOfFrame();
+        if (testLevelPrefab != null)
+        {
+            currentLevelPrefab = Instantiate(testLevelPrefab);
+            levelIndex = 0;
+            activeIconHandler.SetMaxNumberOfShoot(4);
+            GameManager.Instance.maxNumberOfShoot = 4;
+            Debug.Log("using test level prefab with bullet = 4");
+        }
+        else if (index >= 0 && index < ffLevelPrefabs.Length)
+        {
+            currentLevelPrefab = Instantiate(ffLevelPrefabs[index]);
+            levelFFIndex = index + 1;
+            chapterPanelManager.Initialize(levelFFIndex);
+            Debug.Log("Hostage Level Index from prefab name: " + levelFFIndex);
+            Debug.Log("Tên prefab: " + currentLevelPrefab.name);
+            activeIconHandler.SetMaxNumberOfShoot(ffMaxNumberOfShoots[index]);
+            GameManager.Instance.maxNumberOfShoot = ffMaxNumberOfShoots[index];
+            Debug.Log("Số đạn: " + GameManager.Instance.maxNumberOfShoot);
+        }
+        else
+        {
+            Debug.LogError("Index out of bounds for hostage levels!");
+        }
+        GetButton();
+        GameManager.Instance.SetUpWhenLoadLevel();
     }
 }

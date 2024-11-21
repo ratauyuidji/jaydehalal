@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private int levelIndex;
     private int levelHostageIndex;
     private int levelNadeIndex;
+    private int levelFFIndex;
     public StarDisplay starDisplay;
     private int currentReloadTime;
     //private IconHandler activeIconHandler;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     private bool hasLost = false;
     private bool isPlayingHostageMode;
     private bool isPlayingNadeMode;
+    private bool isPlayingFFMode;
     public bool canShot = true;
 
     private GameObject playerarm;
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
         levelIndex = LevelManager.Instance.GetLevelIndex();
         levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
         levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
+        levelFFIndex = LevelManager.Instance.GetFFLevelIndex();
         if(PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 160)
         {
             winButton.SetActive(false);
@@ -82,22 +85,23 @@ public class GameManager : MonoBehaviour
         {
             winButton.SetActive(false);
         }
+        else if (PlayerPrefs.GetString("SelectedMode") == "FriendlyFire" && levelFFIndex == 32)
+        {
+            winButton.SetActive(false);
+        }
 
         if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
         {
             tutorialPanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
-            Debug.Log("canshot" + canShot);
         }
         else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 1)
         {
             tutorialHostagePanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
-            Debug.Log("canshot" + canShot);
-        } 
-        else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
+        } else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
         {
             tutorialNadePanel.SetActive(true);
             canShot = false;
@@ -108,11 +112,19 @@ public class GameManager : MonoBehaviour
         {
             isPlayingHostageMode = true;
             isPlayingNadeMode = false;
+            isPlayingFFMode = false;
         }
         else if(PlayerPrefs.GetString("SelectedMode") == "Nade")
         {
             isPlayingNadeMode = true;
             isPlayingHostageMode = false;
+            isPlayingFFMode = false;
+        }
+        else if(PlayerPrefs.GetString("SelectedMode") == "FriendlyFire")
+        {
+            isPlayingFFMode= true;
+            isPlayingHostageMode = false;
+            isPlayingNadeMode=false;
         }
         Debug.Log("level index get from levelmanager" + levelIndex);
         if (PlayerPrefs.HasKey(ReloadTimeKey))
@@ -132,19 +144,6 @@ public class GameManager : MonoBehaviour
         hasWon = false;
         //canShot = true;
         useNumberOfShoot = 0;
-        if (isPlayingNadeMode)
-        {
-            //iconHandler[0].gameObject.SetActive(false);
-            //iconHandler[1].gameObject.SetActive(true);
-            //activeIconHandler = iconHandler[1];
-        }
-        else
-        {
-            //iconHandler[0].gameObject.SetActive(true);
-            //iconHandler[1].gameObject.SetActive(false);
-            //activeIconHandler = iconHandler[0];
-        }
-
         LevelManager.Instance.activeIconHandler.ResetIcons();
         win.SetActive(false);
         lose.SetActive(false);
@@ -285,6 +284,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
 
         }
+        else if (isPlayingFFMode)
+        {
+            PlayerPrefs.SetInt("FLevel" + levelNadeIndex + "_Win", 1);
+
+        }
         else
         {
             PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
@@ -328,11 +332,15 @@ public class GameManager : MonoBehaviour
         {
             CompleteLevel(levelNadeIndex, "Nade");
         }
+        else if (isPlayingFFMode)
+        {
+            CompleteLevel(levelFFIndex, "FriendlyFire");
+        }
         else
         {
             CompleteLevel(levelIndex, "Classic");
         }
-        if (levelIndex >= 3 || levelHostageIndex >= 3 || levelNadeIndex >= 3)
+        if (levelIndex >= 3 || levelFFIndex >=3 || levelHostageIndex >= 3 || levelNadeIndex >= 3)
         {
             AdManager.Instance.ShowInterstitialAds(null, false);
         }
@@ -344,6 +352,7 @@ public class GameManager : MonoBehaviour
             "Classic" => "classic_level",
             "Hostage" => "hostage_level",
             "Nade" => "nade_level",
+            "FriendlyFire" => "friendlyfire_level",
             _ => "unknown_level"
         };
 
@@ -445,6 +454,11 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("NLevel" + levelNadeIndex + "_Win", 1);
 
         }
+        else if (isPlayingFFMode)
+        {
+            PlayerPrefs.SetInt("FLevel" + levelFFIndex + "_Win", 1);
+
+        }
         else
         {
             PlayerPrefs.SetInt("Level" + levelIndex + "_Win", 1);
@@ -476,6 +490,11 @@ public class GameManager : MonoBehaviour
             LevelManager.Instance.LoadNadeLevel(levelNadeIndex-1);
             Debug.Log("Next Nade level: " + levelNadeIndex);
         }
+        else if (isPlayingFFMode)
+        {
+            LevelManager.Instance.LoadFFLevel(levelFFIndex-1);
+            Debug.Log("Next Nade level: " + levelFFIndex);
+        }
         else
         {
             LevelManager.Instance.LoadLevel(levelIndex-1);
@@ -499,6 +518,11 @@ public class GameManager : MonoBehaviour
         {
             LevelManager.Instance.LoadNadeLevel(levelNadeIndex);
             Debug.Log("Next Nade level: " + levelNadeIndex);
+        }
+        else if (isPlayingFFMode)
+        {
+            LevelManager.Instance.LoadFFLevel(levelFFIndex);
+            Debug.Log("Next Nade level: " + levelFFIndex);
         }
         else
         {
@@ -529,6 +553,14 @@ public class GameManager : MonoBehaviour
             {
                 PlayerPrefs.SetInt("NLv" + levelNadeIndex, currentStarsNum);
                 Debug.Log("star classic is " + PlayerPrefs.GetInt("NLv" + levelNadeIndex, starsNum));
+            }
+        }
+        else if (isPlayingFFMode)
+        {
+            if (currentStarsNum > PlayerPrefs.GetInt("FLv" + levelNadeIndex))
+            {
+                PlayerPrefs.SetInt("FLv" + levelNadeIndex, currentStarsNum);
+                Debug.Log("star classic is " + PlayerPrefs.GetInt("FLv" + levelNadeIndex, starsNum));
             }
         }
         else

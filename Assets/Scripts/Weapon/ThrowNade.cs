@@ -59,7 +59,7 @@ public class ThrowNade : MonoBehaviour
         }
         else if (canThrow)
         {
-            if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire())
+            if (InputManager.wasLeftMouseButtonReleased && GameManager.Instance.RaycastForCanFire() && GameManager.Instance.canShot)
             {
                 if (currentNadeNumber > 0)
                 {

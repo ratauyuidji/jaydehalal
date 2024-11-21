@@ -28,7 +28,7 @@ public class MapSelection : MonoBehaviour
         }
         else //lock
         {
-            unlocked.gameObject.SetActive(false);
+            //unlocked.gameObject.SetActive(false);
             locked.gameObject.SetActive(true);
         }
     }

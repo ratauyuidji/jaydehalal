@@ -11,13 +11,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI completedLevelsMap1Text;
     [SerializeField] private TextMeshProUGUI completedLevelsMap2Text;
     [SerializeField] private TextMeshProUGUI completedLevelsMap3Text;
+    [SerializeField] private TextMeshProUGUI completedLevelsMap4Text;
+
     [SerializeField] private TextMeshProUGUI starMap1Text;
     [SerializeField] private TextMeshProUGUI starMap2Text;
     [SerializeField] private TextMeshProUGUI starMap3Text;
+    [SerializeField] private TextMeshProUGUI starMap4Text;
+
 
 
     public static UIManager Instance;
     public GameObject mapSelectionPanel;
+    public GameObject otherMissionPanel;
     public GameObject[] levelSelectionPanels;
     public GameObject settingPanel;
     public GameObject shopPanel;
@@ -32,6 +37,8 @@ public class UIManager : MonoBehaviour
     private int starMap1;
     private int starMap2;
     private int starMap3;
+    private int starMap4;
+
 
 
     private void Awake()
@@ -75,13 +82,16 @@ public class UIManager : MonoBehaviour
         int completedLevels1Count = GetCompletedLevels1Count();
         int completedLevels2Count = GetCompletedLevels2Count();
         int completedLevels3Count = GetCompletedLevels3Count();
+        int completedLevels4Count = GetCompletedLevels4Count();
 
         completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "160";
         completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "32";
         completedLevelsMap3Text.text = completedLevels3Count.ToString() + "/" + "32";
+        completedLevelsMap4Text.text = completedLevels4Count.ToString() + "/" + "32";
         starMap1Text.text = starMap1.ToString();
         starMap2Text.text = starMap2.ToString();
         starMap3Text.text = starMap3.ToString();
+        starMap4Text.text = starMap4.ToString();
     }
     public void UpdateLockedStarUI()
     {
@@ -130,6 +140,15 @@ public class UIManager : MonoBehaviour
                     unlockedStarsText[i].text = totalStars2.ToString();// + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
                     starMap3 = totalStars2;
                     break;
+                case 3:
+                    int totalStars3 = 0;
+                    for (int lv = 1; lv <= 32; lv++)
+                    {
+                        totalStars3 += PlayerPrefs.GetInt("FLv" + lv);
+                    }
+                    unlockedStarsText[i].text = totalStars3.ToString();// + "/" + (mapSelection[i].endLevel - mapSelection[i].startLevel + 1) * 3;
+                    starMap4 = totalStars3;
+                    break;
             }
         }
     }
@@ -144,13 +163,18 @@ public class UIManager : MonoBehaviour
         {
             stars += PlayerPrefs.GetInt("HLv" + i);
         }
-        startText.text = stars.ToString() + "/" + 672;
+        for (int i =1;  i <= 32; i++)
+        {
+            stars += PlayerPrefs.GetInt("NLv" + i);
+        }
+        startText.text = stars.ToString() + "/" + 768;
     }
     public void PressMapButton(int mapIndex)
     {
         if (mapSelection[mapIndex].isUnlock == true)
         {
             mapSelectionPanel.gameObject.SetActive(false);
+            otherMissionPanel.gameObject.SetActive(false);
             StartCoroutine(ShowPanel(levelSelectionPanels[mapIndex], mapIndex));
 
             LevelSelection[] levels = levelSelectionPanels[mapIndex].GetComponentsInChildren<LevelSelection>();
@@ -197,10 +221,15 @@ public class UIManager : MonoBehaviour
             map.UnlockMap();
         }
         mapSelectionPanel.gameObject.SetActive(true);
+        otherMissionPanel.gameObject.SetActive(true);
         for(int i = 0;i < mapSelection.Length; i++)
         {
             levelSelectionPanels[i].gameObject.SetActive(false);
         }
+    }
+    public void BackOtherMissionPanel()
+    {
+
     }
     public void LoadHighestUnlockedLevelMode1()
     {
@@ -209,7 +238,15 @@ public class UIManager : MonoBehaviour
 
     public void LoadHighestUnlockedLevelMode2()
     {
-        LoadHighestUnlockedLevel(1, 32);
+        LoadHighestHostageUnlockedLevel(1, 32);
+    }
+    public void LoadHighestUnlockedLevelMode3()
+    {
+        LoadHighestNadeUnlockedLevel(1, 32);
+    }
+    public void LoadHighestUnlockedLevelMode4()
+    {
+        LoadHighestFFUnlockedLevel(1, 32);
     }
 
     private void LoadHighestUnlockedLevel(int start, int end)
@@ -233,6 +270,66 @@ public class UIManager : MonoBehaviour
         //SceneManager.LoadScene(levelName);
         PlayerPrefs.SetInt("SelectedLevel", highestUnlockedLevel);
         PlayerPrefs.SetString("SelectedMode", "Classic");
+        SceneManager.LoadScene(1);
+    }
+    private void LoadHighestHostageUnlockedLevel(int start, int end)
+    {
+        int highestUnlockedLevel = start;
+
+        for (int i = start; i <= end; i++)
+        {
+            if (PlayerPrefs.GetInt("HLv" + i) >= 0 && PlayerPrefs.GetInt("HLevel" + i + "_Win") == 1)
+            {
+                highestUnlockedLevel = i + 1;
+            }
+            else
+            {
+                break; // stop if level lock
+            }
+        }
+        Debug.Log("Loading highest unlocked level: " + highestUnlockedLevel);
+        PlayerPrefs.SetInt("SelectedHostageLevel", highestUnlockedLevel);
+        PlayerPrefs.SetString("SelectedMode", "Hostage");
+        SceneManager.LoadScene(1);
+    }
+    private void LoadHighestNadeUnlockedLevel(int start, int end)
+    {
+        int highestUnlockedLevel = start;
+
+        for (int i = start; i <= end; i++)
+        {
+            if (PlayerPrefs.GetInt("NLv" + i) >= 0 && PlayerPrefs.GetInt("NLevel" + i + "_Win") == 1)
+            {
+                highestUnlockedLevel = i + 1;
+            }
+            else
+            {
+                break; // stop if level lock
+            }
+        }
+        Debug.Log("Loading highest unlocked level: " + highestUnlockedLevel);
+        PlayerPrefs.SetInt("SelectedNadeLevel", highestUnlockedLevel);
+        PlayerPrefs.SetString("SelectedMode", "Nade");
+        SceneManager.LoadScene(1);
+    }
+    private void LoadHighestFFUnlockedLevel(int start, int end)
+    {
+        int highestUnlockedLevel = start;
+
+        for (int i = start; i <= end; i++)
+        {
+            if (PlayerPrefs.GetInt("FLv" + i) >= 0 && PlayerPrefs.GetInt("FLevel" + i + "_Win") == 1)
+            {
+                highestUnlockedLevel = i + 1;
+            }
+            else
+            {
+                break; // stop if level lock
+            }
+        }
+        Debug.Log("Loading highest unlocked level: " + highestUnlockedLevel);
+        PlayerPrefs.SetInt("SelectedFFLevel", highestUnlockedLevel);
+        PlayerPrefs.SetString("SelectedMode", "FriendlyFire");
         SceneManager.LoadScene(1);
     }
     public void TurnOnSettingPanel()
@@ -296,6 +393,20 @@ public class UIManager : MonoBehaviour
         }
 
         return completedLevels3Count;
+    }
+    public int GetCompletedLevels4Count()
+    {
+        int completedLevels4Count = 0;
+
+        for (int i = 1; i <= 32; i++)
+        {
+            if (PlayerPrefs.GetInt("FLevel" + i + "_Win") == 1)
+            {
+                completedLevels4Count++;
+            }
+        }
+
+        return completedLevels4Count;
     }
     void ClearPlayerPrefsForLevels()
     {
