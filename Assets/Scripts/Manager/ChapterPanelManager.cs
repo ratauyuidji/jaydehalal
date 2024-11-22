@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ChapterPanelManager : MonoBehaviour
 {
@@ -12,8 +12,14 @@ public class ChapterPanelManager : MonoBehaviour
 
     public RectTransform imageLeft;
     public GameObject imageRightContainer;
-    public List<GameObject> rightImageParents;
-    public List<GameObject> cityImages;
+    public List<GameObject> rightImageParentsPrefabs;
+    public List<GameObject> cityImagePrefabs;
+    public Transform rightImageParentContainer;
+    public Transform cityImageParentContainer;
+
+    private GameObject currentRightImage;
+    private GameObject currentCityImage;
+
     public float moveDuration = 1f;
     private Vector3 leftImageStartPos;
     private Vector3 rightImageStartPos;
@@ -23,6 +29,27 @@ public class ChapterPanelManager : MonoBehaviour
     public TextMeshProUGUI mapText;
     private int levelIndex;
 
+    private readonly Dictionary<int, (string chapter, string map)> chapterData = new Dictionary<int, (string, string)>
+    {
+        { 1, ("CHAPTER 1", "BULLET CITY") },
+        { 17, ("CHAPTER 2", "SHOGUN'S CASTLE") },
+        { 33, ("CHAPTER 3", "GRAVEYARD") },
+        { 49, ("CHAPTER 4", "FAR WEST") },
+        { 65, ("CHAPTER 5", "FOREST") },
+        { 81, ("CHAPTER 6", "FORTRESS") },
+        { 97, ("CHAPTER 7", "PREHISTORY") },
+        { 113, ("CHAPTER 8", "UNKNOWN PLANET") },
+        { 129, ("CHAPTER 9", "PRIVATE SHIP") },
+        { 145, ("CHAPTER 10", "CASTLE") },
+        { 161, ("CHAPTER 11", "ROMAN") },
+        { 177, ("CHAPTER 12", "SNOW FOREST") },
+        { 193, ("CHAPTER 13", "BULLET CITY II") },
+        { 209, ("CHAPTER 14", "CIRCUS") },
+        { 225, ("CHAPTER 15", "PRISON") },
+        { 241, ("CHAPTER 1", "BULLET CITY II") },
+        { 257, ("CHAPTER 2", "SHOGUN'S CASTLE II") }
+
+    };
 
     void Start()
     {
@@ -42,66 +69,19 @@ public class ChapterPanelManager : MonoBehaviour
     public void Initialize(int levelIndex)
     {
         this.levelIndex = levelIndex;
-        if (levelIndex == 1)
+
+        if (chapterData.TryGetValue(levelIndex, out var chapterInfo))
         {
-            chapterText.text = "CHAPTER 1";
-            mapText.text = "BULLET CITY";
-        }
-        else if (levelIndex == 17)
-        {
-            chapterText.text = "CHAPTER 2";
-            mapText.text = "SHOGUN'S CASTLE";
-        }
-        else if (levelIndex == 33)
-        {
-            chapterText.text = "CHAPTER 3";
-            mapText.text = "GRAVEYARD";
-        }
-        else if (levelIndex == 49)
-        {
-            chapterText.text = "CHAPTER 4";
-            mapText.text = "FAR WEST";
-        }
-        else if (levelIndex == 65)
-        {
-            chapterText.text = "CHAPTER 5";
-            mapText.text = "FOREST";
-        }
-        else if (levelIndex == 81)
-        {
-            chapterText.text = "CHAPTER 6";
-            mapText.text = "FORTRESS";
-        }
-        else if (levelIndex == 97)
-        {
-            chapterText.text = "CHAPTER 7";
-            mapText.text = "PREHISTORY";
-        }
-        else if (levelIndex == 113)
-        {
-            chapterText.text = "CHAPTER 8";
-            mapText.text = "UNKNOW PLANET";
-        }
-        else if (levelIndex == 129)
-        {
-            chapterText.text = "CHAPTER 9";
-            mapText.text = "PRIVATE SHIP";
-        }
-        else if (levelIndex == 145)
-        {
-            chapterText.text = "CHAPTER 10";
-            mapText.text = "CASTLE";
-        }
-        if (levelIndex == 1 || levelIndex == 17 || levelIndex == 33 || levelIndex == 49 || levelIndex == 65 || levelIndex == 81 || levelIndex == 97 || levelIndex == 113 || levelIndex == 129 || levelIndex == 145)
-        {
-            //playerarm = GameObject.FindWithTag("Gun");
-            //Debug.Log("Found gun with name: " + playerarm?.name + " and tag: " + playerarm?.tag);
-            //StartCoroutine(TurnOffPlayerArm());
+            chapterText.text = chapterInfo.chapter;
+            mapText.text = chapterInfo.map;
+
             GameManager.Instance.canShot = false;
-            Debug.Log("turn off gun");
+            Debug.Log("Turn off gun");
+
             panel.SetActive(true);
             panelCanvasGroup.alpha = 1f;
-            SetActiveImage(levelIndex);
+
+            SetActiveImages(levelIndex);
             StartCoroutine(MoveImages());
         }
         else
@@ -109,78 +89,45 @@ public class ChapterPanelManager : MonoBehaviour
             GameManager.Instance.canShot = true;
         }
     }
-    /*private IEnumerator TurnOffPlayerArm()
+
+    private void SetActiveImages(int levelIndex)
     {
-        yield return null; // wait 1 frame
-        if (playerarm != null)
+        // Xóa hình ảnh cũ
+        if (currentRightImage != null)
         {
-            playerarm.SetActive(false);
-            Debug.Log("turn off gun in coroutine");
+            Destroy(currentRightImage);
         }
-    }*/
-    private void SetActiveImage(int levelIndex)
-    {
-        foreach (var imgParent in rightImageParents)
+
+        if (currentCityImage != null)
         {
-            imgParent.SetActive(false);
+            Destroy(currentCityImage);
         }
-        foreach (var cityImage in cityImages)
+
+        // Tìm vị trí tương ứng trong danh sách prefab
+        int index = chapterData.Keys.ToList().IndexOf(levelIndex);
+
+        if (index >= 0 && index < rightImageParentsPrefabs.Count)
         {
-            cityImage.SetActive(false);
-        }
-        if (levelIndex == 1 && rightImageParents.Count > 0 && cityImages.Count > 0)
-        {
-            rightImageParents[0].SetActive(true);
-            cityImages[0].SetActive(true);
-        }
-        else if (levelIndex == 17 && rightImageParents.Count > 1 && cityImages.Count > 1)
-        {
-            rightImageParents[1].SetActive(true);
-            cityImages[1].SetActive(true);
-        }
-        else if (levelIndex == 33 && rightImageParents.Count > 2 && cityImages.Count > 2)
-        {
-            rightImageParents[2].SetActive(true); 
-            cityImages[2].SetActive(true);
-        }
-        else if (levelIndex == 49 && rightImageParents.Count > 3 && cityImages.Count > 3)
-        {
-            rightImageParents[3].SetActive(true);
-            cityImages[3].SetActive(true);
-        }
-        else if (levelIndex == 65 && rightImageParents.Count > 4 && cityImages.Count > 4)
-        {
-            rightImageParents[4].SetActive(true);
-            cityImages[4].SetActive(true);
-        }
-        else if (levelIndex == 81 && rightImageParents.Count > 5 && cityImages.Count > 5)
-        {
-            rightImageParents[5].SetActive(true);
-            cityImages[5].SetActive(true);
-        }
-        else if (levelIndex == 97 && rightImageParents.Count > 6 && cityImages.Count > 6)
-        {
-            rightImageParents[6].SetActive(true);
-            cityImages[6].SetActive(true);
-        }
-        else if (levelIndex == 113 && rightImageParents.Count > 7 && cityImages.Count > 7)
-        {
-            rightImageParents[7].SetActive(true);
-            cityImages[7].SetActive(true);
-        }
-        else if (levelIndex == 129 && rightImageParents.Count > 8 && cityImages.Count > 8)
-        {
-            rightImageParents[8].SetActive(true);
-            cityImages[8].SetActive(true);
-        }
-        else if (levelIndex == 145 && rightImageParents.Count > 9 && cityImages.Count > 9)
-        {
-            rightImageParents[9].SetActive(true);
-            cityImages[9].SetActive(true);
+            // Tải prefab hình ảnh phải
+            currentRightImage = Instantiate(rightImageParentsPrefabs[index], rightImageParentContainer);
+            currentRightImage.transform.localPosition = Vector3.zero;
+            currentRightImage.transform.localRotation = Quaternion.identity;
         }
         else
         {
-            Debug.LogWarning("Không tìm thấy hình ảnh phù hợp cho levelIndex: " + levelIndex);
+            Debug.LogWarning("Không tìm thấy prefab hình ảnh phải phù hợp cho levelIndex: " + levelIndex);
+        }
+
+        if (index >= 0 && index < cityImagePrefabs.Count)
+        {
+            // Tải prefab hình ảnh thành phố
+            currentCityImage = Instantiate(cityImagePrefabs[index], cityImageParentContainer);
+            currentCityImage.transform.localPosition = Vector3.zero;
+            currentCityImage.transform.localRotation = Quaternion.identity;
+        }
+        else
+        {
+            Debug.LogWarning("Không tìm thấy prefab hình ảnh thành phố phù hợp cho levelIndex: " + levelIndex);
         }
     }
 
@@ -188,13 +135,12 @@ public class ChapterPanelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         float elapsedTime = 0f;
+
         while (elapsedTime < moveDuration)
         {
             elapsedTime += Time.deltaTime;
-
             imageLeft.localPosition = Vector3.Lerp(leftImageStartPos, leftImageEndPos, elapsedTime / moveDuration);
             imageRightContainer.transform.localPosition = Vector3.Lerp(rightImageStartPos, rightImageEndPos, elapsedTime / moveDuration);
-
             yield return null;
         }
 
@@ -202,11 +148,12 @@ public class ChapterPanelManager : MonoBehaviour
         imageRightContainer.transform.localPosition = rightImageEndPos;
         StartCoroutine(FadeOutPanel());
     }
+
     IEnumerator FadeOutPanel()
     {
         yield return new WaitForSeconds(1f);
-
         float elapsedTime = 0f;
+
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
@@ -216,8 +163,8 @@ public class ChapterPanelManager : MonoBehaviour
 
         panelCanvasGroup.alpha = 0f;
         panel.SetActive(false);
-        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1 || PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelIndex == 1 
-            || PlayerPrefs.GetString("SelectedMode") == "Nade" && levelIndex == 1 || PlayerPrefs.GetString("SelectedMode") == "FriendlyFire" && levelIndex == 1)
+
+        if (levelIndex == 1 || levelIndex == 241)
         {
             GameManager.Instance.canShot = false;
         }
@@ -225,12 +172,24 @@ public class ChapterPanelManager : MonoBehaviour
         {
             GameManager.Instance.canShot = true;
         }
-        Debug.Log("turn on gun");
+        Debug.Log("Turn on gun");
         ResetState();
     }
 
     private void ResetState()
     {
+        if (currentRightImage != null)
+        {
+            Destroy(currentRightImage);
+            currentRightImage = null;
+        }
+
+        if (currentCityImage != null)
+        {
+            Destroy(currentCityImage);
+            currentCityImage = null;
+        }
+
         imageLeft.localPosition = leftImageStartPos;
         imageRightContainer.transform.localPosition = rightImageStartPos;
 

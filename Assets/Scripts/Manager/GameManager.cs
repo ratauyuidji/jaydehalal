@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     private bool isPlayingNadeMode;
     private bool isPlayingFFMode;
     public bool canShot = true;
+    public bool removeAd = false;
 
     private GameObject playerarm;
     public Button x2Button;
@@ -575,7 +576,14 @@ public class GameManager : MonoBehaviour
     }
     public void AddReloadTime()
     {
-        AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
+        if (!removeAd)
+        {
+            AdManager.Instance.ShowRewardedVideo(CloseRewardCallbackReload);
+        }
+        else
+        {
+            CloseRewardCallbackReload();
+        }
     }
     void CloseRewardCallbackReload()
     {

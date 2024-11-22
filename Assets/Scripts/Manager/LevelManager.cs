@@ -288,7 +288,7 @@ public class LevelManager : MonoBehaviour
         {
             currentLevelPrefab = Instantiate(ffLevelPrefabs[index]);
             levelFFIndex = index + 1;
-            chapterPanelManager.Initialize(levelFFIndex);
+            chapterPanelManager.Initialize(levelFFIndex + 240);
             Debug.Log("Hostage Level Index from prefab name: " + levelFFIndex);
             Debug.Log("Tên prefab: " + currentLevelPrefab.name);
             activeIconHandler.SetMaxNumberOfShoot(ffMaxNumberOfShoots[index]);

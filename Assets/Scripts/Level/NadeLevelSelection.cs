@@ -31,8 +31,8 @@ public class NadeLevelSelection : MonoBehaviour
 
     private void Update()
     {
-        UpdateLevelImage();
-        UpdateLevelStatus();
+        //UpdateLevelImage();
+        //UpdateLevelStatus();
     }
     public void UpdateLevelStatus()
     {

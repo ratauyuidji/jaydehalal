@@ -177,11 +177,47 @@ public class UIManager : MonoBehaviour
             otherMissionPanel.gameObject.SetActive(false);
             StartCoroutine(ShowPanel(levelSelectionPanels[mapIndex], mapIndex));
 
-            LevelSelection[] levels = levelSelectionPanels[mapIndex].GetComponentsInChildren<LevelSelection>();
-            foreach (LevelSelection level in levels)
+            switch (mapIndex)
             {
-                level.UpdateLevelStatus();
-                level.UpdateLevelImage();
+                case 0: // Classic Levels
+                    LevelSelection[] levels = levelSelectionPanels[mapIndex].GetComponentsInChildren<LevelSelection>();
+                    foreach (LevelSelection level in levels)
+                    {
+                        level.UpdateLevelStatus();
+                        level.UpdateLevelImage();
+                    }
+                    break;
+
+                case 1: // Hostage Levels
+                    HostageLevelSelection[] hlevels = levelSelectionPanels[mapIndex].GetComponentsInChildren<HostageLevelSelection>();
+                    foreach (HostageLevelSelection hlevel in hlevels)
+                    {
+                        hlevel.UpdateLevelStatus();
+                        hlevel.UpdateLevelImage();
+                    }
+                    break;
+
+                case 2: // Nade Levels
+                    NadeLevelSelection[] nlevels = levelSelectionPanels[mapIndex].GetComponentsInChildren<NadeLevelSelection>();
+                    foreach (NadeLevelSelection nlevel in nlevels)
+                    {
+                        nlevel.UpdateLevelStatus();
+                        nlevel.UpdateLevelImage();
+                    }
+                    break;
+
+                case 3: // Friendly Fire Levels
+                    FFLevelSelecton[] flevels = levelSelectionPanels[mapIndex].GetComponentsInChildren<FFLevelSelecton>();
+                    foreach (FFLevelSelecton flevel in flevels)
+                    {
+                        flevel.UpdateLevelStatus();
+                        flevel.UpdateLevelImage();
+                    }
+                    break;
+
+                default:
+                    Debug.LogWarning("Invalid mapIndex: " + mapIndex);
+                    break;
             }
         }
         else
@@ -189,6 +225,7 @@ public class UIManager : MonoBehaviour
             Debug.Log("You cannot open this map now");
         }
     }
+
 
     private IEnumerator ShowPanel(GameObject panel, int mapIndex)
     {
