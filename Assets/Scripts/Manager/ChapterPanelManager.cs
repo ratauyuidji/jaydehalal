@@ -92,7 +92,7 @@ public class ChapterPanelManager : MonoBehaviour
 
     private void SetActiveImages(int levelIndex)
     {
-        // Xóa hình ảnh cũ
+        // delete old pic 
         if (currentRightImage != null)
         {
             Destroy(currentRightImage);
@@ -108,7 +108,6 @@ public class ChapterPanelManager : MonoBehaviour
 
         if (index >= 0 && index < rightImageParentsPrefabs.Count)
         {
-            // Tải prefab hình ảnh phải
             currentRightImage = Instantiate(rightImageParentsPrefabs[index], rightImageParentContainer);
             currentRightImage.transform.localPosition = Vector3.zero;
             currentRightImage.transform.localRotation = Quaternion.identity;
@@ -120,7 +119,6 @@ public class ChapterPanelManager : MonoBehaviour
 
         if (index >= 0 && index < cityImagePrefabs.Count)
         {
-            // Tải prefab hình ảnh thành phố
             currentCityImage = Instantiate(cityImagePrefabs[index], cityImageParentContainer);
             currentCityImage.transform.localPosition = Vector3.zero;
             currentCityImage.transform.localRotation = Quaternion.identity;
