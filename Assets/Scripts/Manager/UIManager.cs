@@ -84,7 +84,7 @@ public class UIManager : MonoBehaviour
         int completedLevels3Count = GetCompletedLevels3Count();
         int completedLevels4Count = GetCompletedLevels4Count();
 
-        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "160";
+        completedLevelsMap1Text.text = completedLevels1Count.ToString() + "/" + "240";
         completedLevelsMap2Text.text = completedLevels2Count.ToString() + "/" + "32";
         completedLevelsMap3Text.text = completedLevels3Count.ToString() + "/" + "32";
         completedLevelsMap4Text.text = completedLevels4Count.ToString() + "/" + "32";
@@ -113,7 +113,7 @@ public class UIManager : MonoBehaviour
             {
                 case 0:
                     int totalStars0 = 0;
-                    for (int lv = 1; lv <= 160; lv++)
+                    for (int lv = 1; lv <= 240; lv++)
                     {
                         totalStars0 += PlayerPrefs.GetInt("Lv" + lv);
                     }
@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
     public void UpdateStarUI()
     {
         stars = 0;
-        for (int i = 1; i <= 160; i++)
+        for (int i = 1; i <= 240; i++)
         {
             stars += PlayerPrefs.GetInt("Lv" + i);
         }
@@ -167,7 +167,7 @@ public class UIManager : MonoBehaviour
         {
             stars += PlayerPrefs.GetInt("NLv" + i);
         }
-        startText.text = stars.ToString() + "/" + 768;
+        startText.text = stars.ToString() + "/" + 1008;
     }
     public void PressMapButton(int mapIndex)
     {
@@ -270,7 +270,7 @@ public class UIManager : MonoBehaviour
     }
     public void LoadHighestUnlockedLevelMode1()
     {
-        LoadHighestUnlockedLevel(1, 160);
+        LoadHighestUnlockedLevel(1, 240);
     }
 
     public void LoadHighestUnlockedLevelMode2()
@@ -393,7 +393,7 @@ public class UIManager : MonoBehaviour
     {
         int completedLevels1Count = 0;
 
-        for (int i = 1; i <= 160; i++)
+        for (int i = 1; i <= 240; i++)
         {
             if (PlayerPrefs.GetInt("Level" + i + "_Win") == 1)
             {

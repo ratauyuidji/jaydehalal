@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private GameObject tutorialHostagePanel;
     [SerializeField] private GameObject tutorialNadePanel;
+    [SerializeField] private GameObject tutorialFFPanel;
     [SerializeField] private GameObject winButton;
 
     Coroutine CWin;
@@ -70,23 +71,17 @@ public class GameManager : MonoBehaviour
     }
     public void SetUpWhenLoadLevel()
     {
+        string selectedMode = PlayerPrefs.GetString("SelectedMode");
+
         levelIndex = LevelManager.Instance.GetLevelIndex();
         levelHostageIndex = LevelManager.Instance.GetHostageLevelIndex();
         levelNadeIndex = LevelManager.Instance.GetNadeLevelIndex();
         levelFFIndex = LevelManager.Instance.GetFFLevelIndex();
-        if(PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 160)
-        {
-            winButton.SetActive(false);
-        }
-        else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 32)
-        {
-            winButton.SetActive(false);
-        }
-        else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 32)
-        {
-            winButton.SetActive(false);
-        }
-        else if (PlayerPrefs.GetString("SelectedMode") == "FriendlyFire" && levelFFIndex == 32)
+
+        if ((selectedMode == "Classic" && levelIndex == 160) ||
+        (selectedMode == "Hostage" && levelHostageIndex == 32) ||
+        (selectedMode == "Nade" && levelNadeIndex == 32) ||
+        (selectedMode == "FriendlyFire" && levelFFIndex == 32))
         {
             winButton.SetActive(false);
         }
@@ -108,7 +103,13 @@ public class GameManager : MonoBehaviour
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
         }
-            
+        else if (PlayerPrefs.GetString("SelectedMode") == "FriendlyFire" && levelFFIndex == 1)
+        {
+            tutorialFFPanel.SetActive(true);
+            canShot = false;
+            Debug.Log("canshotlevel1" + canShot);
+        }
+
         if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
         {
             isPlayingHostageMode = true;
@@ -506,6 +507,7 @@ public class GameManager : MonoBehaviour
     }
     public void NextLevel()
     {
+        DestroyAllParticleSystems();
         StopAllCoroutines();
         ChangeWeapon changeWeapon = FindObjectOfType<ChangeWeapon>();
         changeWeapon.PrepareForNextLevel();
@@ -670,11 +672,21 @@ public class GameManager : MonoBehaviour
         tutorialPanel.SetActive(false);
         tutorialHostagePanel.SetActive(false);
         tutorialNadePanel.SetActive(false);
+        tutorialFFPanel.SetActive(false);
         StartCoroutine(TurnOnCanShot());
     }
     private IEnumerator TurnOnCanShot()
     {
         yield return null; // wait 1 frame
         canShot = true;
+    }
+    private void DestroyAllParticleSystems()
+    {
+        ParticleSystem[] allPS = FindObjectsOfType<ParticleSystem>();
+
+        foreach (ParticleSystem ps in allPS)
+        {
+            Destroy(ps.gameObject);
+        }
     }
 }
