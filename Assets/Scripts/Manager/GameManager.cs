@@ -86,43 +86,43 @@ public class GameManager : MonoBehaviour
             winButton.SetActive(false);
         }
 
-        if (PlayerPrefs.GetString("SelectedMode") == "Classic" && levelIndex == 1)
+        if (selectedMode == "Classic" && levelIndex == 1)
         {
             tutorialPanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
         }
-        else if (PlayerPrefs.GetString("SelectedMode") == "Hostage" && levelHostageIndex == 1)
+        else if (selectedMode == "Hostage" && levelHostageIndex == 1)
         {
             tutorialHostagePanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
-        } else if (PlayerPrefs.GetString("SelectedMode") == "Nade" && levelNadeIndex == 1)
+        } else if (selectedMode == "Nade" && levelNadeIndex == 1)
         {
             tutorialNadePanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
         }
-        else if (PlayerPrefs.GetString("SelectedMode") == "FriendlyFire" && levelFFIndex == 1)
+        else if (selectedMode == "FriendlyFire" && levelFFIndex == 1)
         {
             tutorialFFPanel.SetActive(true);
             canShot = false;
             Debug.Log("canshotlevel1" + canShot);
         }
 
-        if (PlayerPrefs.GetString("SelectedMode") == "Hostage")
+        if (selectedMode == "Hostage")
         {
             isPlayingHostageMode = true;
             isPlayingNadeMode = false;
             isPlayingFFMode = false;
         }
-        else if(PlayerPrefs.GetString("SelectedMode") == "Nade")
+        else if(selectedMode == "Nade")
         {
             isPlayingNadeMode = true;
             isPlayingHostageMode = false;
             isPlayingFFMode = false;
         }
-        else if(PlayerPrefs.GetString("SelectedMode") == "FriendlyFire")
+        else if(selectedMode == "FriendlyFire")
         {
             isPlayingFFMode= true;
             isPlayingHostageMode = false;
@@ -186,7 +186,6 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("Total number of enemies in list: " + enemylist.Count);
         //playerarm = GameObject.FindWithTag("Gun");
-        
     }
 
     public void UseShoot()
